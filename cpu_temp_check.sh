@@ -24,10 +24,9 @@ then
 	read -p "Press any key to stop test." key
 	kill -9 $? 
 	#pkill -f start.sh
-	echo " "
 else
-	echo "****** CPU temp test pass! ******" | tee -a $TEMP_LOG
-	echo " "
+	echo "****** The SPEC is $C, CPU temp is $TCHK test pass! ******" | tee -a $TEMP_LOG
+	echo " " | tee -a $TEMP_LOG
 fi
 
 #while [ $TCHK -gt $C ]

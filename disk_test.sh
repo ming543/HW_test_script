@@ -2,13 +2,11 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-USB_LOG=/run/initramfs/memory/data/logfile
 DEVICE=/dev/sda1
 DISK_SIZE=$1
 DISK_SPEED=$2
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/disk.tmp
 
-#USB_LOG=/mnt/live/memory/data/logfile
 #---Create burnintest script file
 #	---Run burnintest
 
@@ -39,7 +37,7 @@ then
 		kill -9 $?
 		echo ""
 	else
-		echo "******The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "****** The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
@@ -47,7 +45,7 @@ fi
 
 DISK_SPEED_CHK(){
 MCHK=$(grep "buffered" $TEMP_LOG | cut -c 63)
-SCHK=$(grep "buffered" $TEMP_LOG | cut -c 55-58)
+SCHK=$(grep "buffered" $TEMP_LOG | cut -c 56-58)
 if [ $MCHK = M ]
 then
 	if [ $SCHK -lt $DISK_SPEED ]
@@ -59,7 +57,7 @@ then
 		kill -9 $?
 		echo ""	
 	else
-		echo "******The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "****** The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi

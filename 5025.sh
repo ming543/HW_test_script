@@ -16,7 +16,7 @@ SN_GET(){
 	read -p "Please input serial number: " SN 
 	echo $SN-$(date '+%Y%m%d%H%M%S') > $SN_TMP
 	SN_LOG=$(<$SN_TMP)
-        echo SN_NAME: $SN_LOG >> $USB_LOG/$SN_LOG.log	
+        echo Serial Number: $SN_LOG >> $USB_LOG/$SN_LOG.log	
 }
 
 
@@ -25,13 +25,13 @@ SN_GET(){
 SN_GET
 #input spec of cpu temp to script ex.30
 ./cpu_temp_check.sh 50
-cat $TEMP_LOG/temp.tmp >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/temp.tmp | grep "test pass" >> $USB_LOG/$SN_LOG.log	
 #input spec of memory (MByte) to script ex.8000
 ./memory_check.sh 5833
-cat $TEMP_LOG/mem.tmp >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/mem.tmp | grep "test pass"  >> $USB_LOG/$SN_LOG.log	
 #input spec of disk size and speed to script
 ./disk_test.sh 110 200
-cat $TEMP_LOG/disk.tmp >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/disk.tmp | grep "test pass" >> $USB_LOG/$SN_LOG.log	
 
 #BURNIN
 #LOG_CHECK

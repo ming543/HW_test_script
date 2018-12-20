@@ -1,4 +1,5 @@
               total        used        free      shared  buff/cache   available
-Mem:           5833         360        3034          37        2438        5145
+Mem:           5833         371        3021          37        2440        5134
 Swap:           511           0         511
-****** Memory size is 5833 MByte, pass test! ******
+****** The SPEC is 5833, Memory size is 5833 MByte, test pass! ******
+ 
