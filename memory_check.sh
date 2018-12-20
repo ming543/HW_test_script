@@ -2,8 +2,8 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-DMI_LOG=/run/initramfs/memory/data/script/dmi.tmp
-MEM_LOG=/run/initramfs/memory/data/script/mem.tmp
+DMI_LOG=/run/initramfs/memory/data/HW_test_script/tmp/dmi.tmp
+MEM_LOG=/run/initramfs/memory/data/HW_test_script/tmp/mem.tmp
 M=$1
 #USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile

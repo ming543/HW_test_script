@@ -2,15 +2,12 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-USB_BURN=/run/initramfs/memory/data/burnintest/64bit
-USB_RUN=/run/initramfs/memory/data/script
 USB_LOG=/run/initramfs/memory/data/logfile
 DEVICE=/dev/sda1
 DISK_SIZE=119
 DISK_SPEED=200
-TEMP_LOG=/run/initramfs/memory/data/script/disk.tmp
+TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/disk.tmp
 
-#USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile
 #---Create burnintest script file
 #	---Run burnintest
@@ -33,15 +30,19 @@ GCHK=$(grep "1000" $TEMP_LOG | cut -c 58)
 DCHK=$(grep "1000" $TEMP_LOG | cut -c 54-56)
 if [ $GCHK = G ]
 then
-	while [ $DCHK -le $DISK_SIZE ]
-	do
-	echo "Disk size is "$DCHK $GCHK" Bytes, SEPC is "$DISK_SIZE $GCHK
-
-	exit 
-	done
-else
-	echo "Disk size is "$DCHK $GCHK" Bytes, SPEC is "$DISK_SIZE $GCHK
-	exit
+	if [ $DCHK -le $DISK_SIZE ]
+	then
+		clear
+		sh fail_red.sh
+		echo "****** Disk size is $DCHK $GCHK Bytes, SEPC is $DISK_SIZE $GCHK, please check! ******" | tee -a $TEMP_LOG
+		read -p "Press any key to stop test." key
+		kill -9 $?
+		echo ""
+	
+	else
+		echo "Disk size is "$DCHK $GCHK" Bytes, SPEC is "$DISK_SIZE $GCHK
+		exit
+fi
 fi
 }
 

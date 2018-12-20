@@ -2,10 +2,10 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-USB_BURN=/run/initramfs/memory/data/script
-TEMP_LOG=/run/initramfs/memory/data/script/temp.log
+USB_BURN=/run/initramfs/memory/data/HW_test_script
+TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/temp.log
 USB_LOG=/run/initramfs/memory/data/logfile
-SN_TMP=/run/initramfs/memory/data/script/sn.tmp
+SN_TMP=/run/initramfs/memory/data/HW_test_script/tmp/sn.tmp
 #USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile
 
