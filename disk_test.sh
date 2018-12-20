@@ -38,27 +38,30 @@ then
 		read -p "Press any key to stop test." key
 		kill -9 $?
 		echo ""
-	
 	else
-		echo "Disk size is "$DCHK $GCHK" Bytes, SPEC is "$DISK_SIZE $GCHK
-		exit
-fi
+		echo "****** disk size test pass! ******" | tee -a $TEMP_LOG
+		echo " "
+	fi
 fi
 }
 
 DISK_SPEED_CHK(){
 MCHK=$(grep "buffered" $TEMP_LOG | cut -c 63)
-DCHK=$(grep "buffered" $TEMP_LOG | cut -c 55-58)
+SCHK=$(grep "buffered" $TEMP_LOG | cut -c 55-58)
 if [ $MCHK = M ]
 then
-	while [ $DCHK -le $DISK_SPEED ]
-	do
-	echo "Disk speed is "$DCHK $MCHK" Bytes, SPEC is "$DISK_SPEED $MCHK
-	exit 
-	done
-else
-	echo "Disk speed is "$DCHK $MCHK" Bytes, SPEC is "$DISK_SPEED $MCHK
-	exit
+	if [ $SCHK -le $DISK_SPEED ]
+	then
+		clear
+		sh fail_red.sh
+		echo "****** Disk speed is $SCHK $MCHK Bytes, SEPC is $DISK_SPEED $MCHK, please check! ******" | tee -a $TEMP_LOG
+		read -p "Press any key to stop test." key
+		kill -9 $?
+		echo ""	
+	else
+		echo "****** disk speed test pass! ******" | tee -a $TEMP_LOG
+		echo " "
+	fi
 fi
 }
 
