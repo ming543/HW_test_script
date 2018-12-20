@@ -39,7 +39,7 @@ then
 		kill -9 $?
 		echo ""
 	else
-		echo "****** disk size test pass! ******" | tee -a $TEMP_LOG
+		echo "****** disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
@@ -59,7 +59,7 @@ then
 		kill -9 $?
 		echo ""	
 	else
-		echo "****** disk speed test pass! ******" | tee -a $TEMP_LOG
+		echo "****** disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
