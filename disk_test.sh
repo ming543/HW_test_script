@@ -4,8 +4,8 @@
 
 USB_LOG=/run/initramfs/memory/data/logfile
 DEVICE=/dev/sda1
-DISK_SIZE=119
-DISK_SPEED=200
+DISK_SIZE=$1
+DISK_SPEED=$2
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/disk.tmp
 
 #USB_LOG=/mnt/live/memory/data/logfile
