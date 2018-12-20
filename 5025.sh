@@ -24,11 +24,15 @@ SN_GET(){
 #---Start Function---
 SN_GET
 #input spec of cpu temp to script ex.30
-./cpu_temp_check.sh 30
+./cpu_temp_check.sh 50
 cat $TEMP_LOG/temp.tmp >> $USB_LOG/$SN_LOG.log	
 #input spec of memory (MByte) to script ex.8000
-./memory_check.sh 8000
+./memory_check.sh 5833
 cat $TEMP_LOG/mem.tmp >> $USB_LOG/$SN_LOG.log	
+#input spec of disk size and speed to script
+./disk_test.sh 110 200
+cat $TEMP_LOG/disk.tmp >> $USB_LOG/$SN_LOG.log	
+
 #BURNIN
 #LOG_CHECK
 

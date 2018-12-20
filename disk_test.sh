@@ -30,7 +30,7 @@ GCHK=$(grep "1000" $TEMP_LOG | cut -c 58)
 DCHK=$(grep "1000" $TEMP_LOG | cut -c 54-56)
 if [ $GCHK = G ]
 then
-	if [ $DCHK -le $DISK_SIZE ]
+	if [ $DCHK -lt $DISK_SIZE ]
 	then
 		clear
 		sh fail_red.sh
@@ -39,7 +39,7 @@ then
 		kill -9 $?
 		echo ""
 	else
-		echo "****** disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "******The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
@@ -50,7 +50,7 @@ MCHK=$(grep "buffered" $TEMP_LOG | cut -c 63)
 SCHK=$(grep "buffered" $TEMP_LOG | cut -c 55-58)
 if [ $MCHK = M ]
 then
-	if [ $SCHK -le $DISK_SPEED ]
+	if [ $SCHK -lt $DISK_SPEED ]
 	then
 		clear
 		sh fail_red.sh
@@ -59,7 +59,7 @@ then
 		kill -9 $?
 		echo ""	
 	else
-		echo "****** disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "******The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
