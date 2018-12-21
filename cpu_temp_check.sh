@@ -29,15 +29,6 @@ else
 	echo " " | tee -a $TEMP_LOG
 fi
 
-#while [ $TCHK -gt $C ]
-#do
-#	clear
-#	echo "CPU temp over "$C"C, please check!" | tee -a $TEMP_LOG
-#	echo ""
-#	sensors -A 
-#	sleep 2
-#	exit 0
-#	done
 
 
 

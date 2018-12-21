@@ -3,7 +3,7 @@
 # Script for gamming system function test by EFCO Sam
 
 USB_RUN=/run/initramfs/memory/data/script
-HOST=192.168.1.100
+HOST=192.168.1.254
 IPERF=100
 LOG=iperf.log
 
