@@ -25,21 +25,36 @@ SN_GET(){
 
 #---Start Function---
 SN_GET
+
 #input spec of BI  to script ex.disk
 ./auto_burn_cli.sh nodisk
 cat $BI_LOG | grep "passed" >> $USB_LOG/$SN_LOG.log
+
 #input spec of cpu temp to script ex.30
 clear
 ./cpu_temp_check.sh 70
 cat $TEMP_LOG/temp.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+
 #input spec of memory (MByte) to script ex.8000
 clear
 ./memory_check.sh 5833
 cat $TEMP_LOG/mem.tmp | grep "passed"  >> $USB_LOG/$SN_LOG.log	
+
 #input spec of disk size and speed to script
 clear
 ./disk_test.sh 110 200
 cat $TEMP_LOG/disk.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+
+#COM test
+clear
+./com1_loop_test.sh 
+cat $TEMP_LOG/com1.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+
+#vga test
+clear
+./vga_test.sh 
+cat $TEMP_LOG/vga.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+
 #Show pass to log
 clear
 echo "Serial Number:$SN "
