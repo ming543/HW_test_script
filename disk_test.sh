@@ -37,7 +37,7 @@ then
 		kill -9 $?
 		echo ""
 	else
-		echo "****** The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "****** The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test passed! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi
@@ -57,7 +57,7 @@ then
 		kill -9 $?
 		echo ""	
 	else
-		echo "****** The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test pass! ******" | tee -a $TEMP_LOG
+		echo "****** The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test passed! ******" | tee -a $TEMP_LOG
 		echo " "
 	fi
 fi

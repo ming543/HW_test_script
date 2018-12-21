@@ -54,17 +54,18 @@ esac
 
 $USB_BURN/bit_cmd_line_x64
 
-BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 20-21} )
+BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
+
 	if [ "$BICHK" != "PASSED" ]
 	then
 		clear
 		sh fail_red.sh
 		echo " ****** BI test check ******" | tee -a $BI_LOG
 		read -p "Press any key to stop test." key
-		kill -9 $? 
 		cat $BI_LOG
+		kill -9 $? 
 	else
-		echo "****** The BI test pass! ******" | tee -a $BI_LOG
+		echo "****** The BI test passed! ******" | tee -a $BI_LOG
 		echo " " | tee -a $BI_LOG
 	fi
 

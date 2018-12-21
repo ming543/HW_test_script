@@ -27,7 +27,7 @@ then
 	#pkill -f start.sh
 	echo " "
 else
-	echo "****** The SPEC is $TCHK, Memory size is $TCHK MByte test pass! ******" | tee -a $MEM_LOG
+	echo "****** The SPEC is $TCHK, Memory size is $TCHK MByte test passed! ******" | tee -a $MEM_LOG
 	echo " " | tee -a $MEM_LOG
 fi
 

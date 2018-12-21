@@ -5,6 +5,7 @@
 USB_BURN=/run/initramfs/memory/data/HW_test_script
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp
 USB_LOG=/run/initramfs/memory/data/logfile
+BI_LOG=/tmp/BiTLog2.log
 SN_TMP=/run/initramfs/memory/data/HW_test_script/tmp/sn.tmp
 #USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile
@@ -24,20 +25,25 @@ SN_GET(){
 #---Start Function---
 SN_GET
 #input spec of BI  to script ex.disk
-./auto_burn_cli.sh disk
-cat /tmp/BiTLog2.log | grep "TEST RUN PASSED" >> $USB_LOG/$SN_LOG.log
+./auto_burn_cli.sh nodisk
+cat $BI_LOG | grep "passed" >> $USB_LOG/$SN_LOG.log
 #input spec of cpu temp to script ex.30
-./cpu_temp_check.sh 50
-cat $TEMP_LOG/temp.tmp | grep "test pass" >> $USB_LOG/$SN_LOG.log	
+clear
+./cpu_temp_check.sh 70
+cat $TEMP_LOG/temp.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
 #input spec of memory (MByte) to script ex.8000
+clear
 ./memory_check.sh 5833
-cat $TEMP_LOG/mem.tmp | grep "test pass"  >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/mem.tmp | grep "passed"  >> $USB_LOG/$SN_LOG.log	
 #input spec of disk size and speed to script
+clear
 ./disk_test.sh 110 200
-cat $TEMP_LOG/disk.tmp | grep "test pass" >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/disk.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+#Show pass to log
+clear
+echo "Serial Number:$SN "
+sh pass_green.sh |tee -a $USB_LOG/$SN_LOG.log
 
-#BURNIN
-#LOG_CHECK
 
 
 

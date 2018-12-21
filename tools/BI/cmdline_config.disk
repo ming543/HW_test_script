@@ -56,9 +56,9 @@ LogMode ClearAppend
 ## Duty cycles
 <DutyCycles>
 ## Auto stop after XXX minutes
-AutoStopMinutes 0
+AutoStopMinutes 1
 ## Auto stop after XXX cycles
-AutoStopCycles 1
+AutoStopCycles 0
 ## Duty cycle load for each test, 1-100
 CPU 100
 CDDVD 100
@@ -97,7 +97,7 @@ Cycle
 <Test>
 ## The device to be tested
 #Device /media/sda1
-Device /dev/sda1
+Device /dev/sda2
 ## The test mode - Cyclic, Sequential, HighLow, Binary1, Binary2, Zeros, Ones, Random, RandomSeeking
 TestMode Cyclic
 ##File size as % of disk space 1-15%

@@ -25,7 +25,7 @@ then
 	kill -9 $? 
 	#pkill -f start.sh
 else
-	echo "****** The SPEC is $C, CPU temp is $TCHK test pass! ******" | tee -a $TEMP_LOG
+	echo "****** The SPEC is $C, CPU temp is $TCHK test passed! ******" | tee -a $TEMP_LOG
 	echo " " | tee -a $TEMP_LOG
 fi
 
