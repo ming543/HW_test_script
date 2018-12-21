@@ -1,5 +1,12 @@
 #!/bin/bash
-USB_RUN=/run/initramfs/memory/data/script
+USB_RUN=/run/initramfs/memory/data/HW_test_script
+TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/model.tmp
+
+ONE=5025
+TWO=
+THREE=
+FOUR=
+FIVE=
 
 show_menu(){
     clear	
@@ -11,14 +18,15 @@ show_menu(){
     ENTER_LINE=`echo "\033[33m"`
     echo -e "${MENU}******EFCO Production Test*******************${NORMAL}"
     echo -e "${MENU}*********************************************${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 1)${MENU} 5025 test ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 2)${MENU} test ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 3)${MENU} test ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 4)${MENU} test ${NORMAL}"
-    echo -e "${MENU}**${NUMBER} 5)${MENU} ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $ONE test ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $TWO test ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $THREE test ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $FOUR test ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $FIVE test ${NORMAL}"
     echo -e "${MENU}*********************************************${NORMAL}"
-    echo -e "${ENTER_LINE}Please enter a menu option and enter or ${RED_TEXT}enter to exit. ${NORMAL}"
+    echo -e "${ENTER_LINE}Please input the model name to start test or ${RED_TEXT}enter to exit. ${NORMAL}"
     read opt
+    rm $TEMP_LOG
 }
 function option_picked() {
     COLOR='\033[01;31m' # bold red
@@ -35,24 +43,33 @@ while [ opt != '' ]
             exit;
     else
         case $opt in
-        1) clear;
-        option_picked "Option 1 Picked";
-        sh $USB_RUN/5025.sh; #The 3 terabyte
+        $ONE) clear;
+        echo "Test Model: $ONE" | tee -a $TEMP_LOG ;
+        sh $USB_RUN/$ONE.sh; 
         show_menu;
         ;;
 
-        2) clear;
-        option_picked "Option 2 Picked";
+        $TWO) clear;
+        echo "Test Model: $TWO" | tee -a $TEMP_LOG ;
+        sh $USB_RUN/$TWO.sh; 
         show_menu;
         ;;
 
-        3) clear;
-        option_picked "Option 3 Picked";
+        $THREE) clear;
+        echo "Test Model: $THREE" | tee -a $TEMP_LOG;
+        sh $USB_RUN/$THREE.sh; 
         show_menu;
         ;;
 
-        4) clear;
-        option_picked "Option 4 Picked";
+        $FOUR) clear;
+        echo "Test Model: $FOUR" | tee -a $TEMP_LOG;
+        sh $USB_RUN/$FOUR.sh; 
+        show_menu;
+        ;;
+
+        $FIVE) clear;
+        echo "Test Model: $FIVE" | tee -a $TEMP_LOG;
+        sh $USB_RUN/$FIVE.sh; 
         show_menu;
         ;;
 

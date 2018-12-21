@@ -17,7 +17,8 @@ SN_GET(){
 	read -p "Please input serial number: " SN 
 	echo $SN-$(date '+%Y%m%d%H%M%S') > $SN_TMP
 	SN_LOG=$(<$SN_TMP)
-        echo Serial Number: $SN_LOG >> $USB_LOG/$SN_LOG.log	
+        cat $TEMP_LOG/model.tmp >> $USB_LOG/$SN_LOG.log	
+        echo Serial Number: $SN >> $USB_LOG/$SN_LOG.log	
 }
 
 
@@ -42,8 +43,9 @@ cat $TEMP_LOG/disk.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log
 #Show pass to log
 clear
 echo "Serial Number:$SN "
-sh pass_green.sh |tee -a $USB_LOG/$SN_LOG.log
-
+sh pass_green.sh 
+echo "****** ALL_TEST_PASSED! ****** " >> $USB_LOG/$SN_LOG.log
+read -p "Press Enter to end test" end
 
 
 
