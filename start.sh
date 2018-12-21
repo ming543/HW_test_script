@@ -18,7 +18,7 @@ show_menu(){
     ENTER_LINE=`echo "\033[33m"`
     echo -e "${MENU}******EFCO Production Test*******************${NORMAL}"
     echo -e "${MENU}*********************************************${NORMAL}"
-    echo -e "${MENU}**${NUMBER} Model: $ONE test ${NORMAL}"
+    echo -e "${MENU}**${NUMBER} Model: $ONE ${NORMAL}"
     echo -e "${MENU}**${NUMBER} Model: $TWO test ${NORMAL}"
     echo -e "${MENU}**${NUMBER} Model: $THREE test ${NORMAL}"
     echo -e "${MENU}**${NUMBER} Model: $FOUR test ${NORMAL}"
