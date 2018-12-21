@@ -96,7 +96,8 @@ Cycle
 ## Test a device
 <Test>
 ## The device to be tested
-##Device /dev/sda1
+#Device /media/sda1
+Device /dev/sda1
 ## The test mode - Cyclic, Sequential, HighLow, Binary1, Binary2, Zeros, Ones, Random, RandomSeeking
 TestMode Cyclic
 ##File size as % of disk space 1-15%

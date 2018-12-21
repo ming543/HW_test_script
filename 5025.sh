@@ -23,6 +23,9 @@ SN_GET(){
 
 #---Start Function---
 SN_GET
+#input spec of BI  to script ex.disk
+./auto_burn_cli.sh disk
+cat /tmp/BiTLog2.log | grep "TEST RUN PASSED" >> $USB_LOG/$SN_LOG.log
 #input spec of cpu temp to script ex.30
 ./cpu_temp_check.sh 50
 cat $TEMP_LOG/temp.tmp | grep "test pass" >> $USB_LOG/$SN_LOG.log	

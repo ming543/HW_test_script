@@ -2,7 +2,7 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-USB_BURN=/run/initramfs/memory/data/HW_test_script/burnintest/64bit
+USB_BURN=/run/initramfs/memory/data/HW_test_script/tools/BI
 USB_RUN=/run/initramfs/memory/data/HW_test_script
 USB_LOG=/run/initramfs/memory/data/logfile
 #USB_BURN=/mnt/live/memory/data/burnintest
