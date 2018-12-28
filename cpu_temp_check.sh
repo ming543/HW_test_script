@@ -20,10 +20,11 @@ if [ $TCHK -gt $C ]
 then
 	clear
 	sh fail_red.sh
-	echo "****** CPU temp is $TCHK C the spec is $C C, please check! ******" | tee -a $TEMP_LOG
+	echo "****** CPU temp is $TCHK C the spec is $C C, test failed! ******" | tee -a $TEMP_LOG
 	read -p "Press any key to stop test." key
-	kill -9 $? 
+	#kill -9 $? 
 	#pkill -f start.sh
+	exit 1
 else
 	echo "****** The SPEC is $C, CPU temp is $TCHK test passed! ******" | tee -a $TEMP_LOG
 	echo " " | tee -a $TEMP_LOG

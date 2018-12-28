@@ -28,12 +28,15 @@ SN_GET
 
 #input spec of BI  to script ex.disk
 ./auto_burn_cli.sh nodisk
-cat $BI_LOG | grep "passed" >> $USB_LOG/$SN_LOG.log
+cat $BI_LOG | grep "ed!" >> $USB_LOG/$SN_LOG.log
 
 #input spec of cpu temp to script ex.30
 clear
-./cpu_temp_check.sh 70
-cat $TEMP_LOG/temp.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+./cpu_temp_check.sh 40
+if ["$?" -ne 0] ; then 
+cat $TEMP_LOG/temp.tmp | grep "ed!" >> $USB_LOG/$SN_LOG.log
+exit 1
+fi	
 
 #input spec of memory (MByte) to script ex.8000
 clear
@@ -48,7 +51,7 @@ cat $TEMP_LOG/disk.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log
 #COM test
 clear
 ./com1_loop_test.sh 
-cat $TEMP_LOG/com1.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+cat $TEMP_LOG/com1.tmp | grep "******" >> $USB_LOG/$SN_LOG.log	
 
 #vga test
 clear
@@ -61,9 +64,5 @@ echo "Serial Number:$SN "
 sh pass_green.sh 
 echo "****** ALL_TEST_PASSED! ****** " >> $USB_LOG/$SN_LOG.log
 read -p "Press Enter to end test" end
-
-
-
-
-
+exit 0
 
