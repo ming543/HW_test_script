@@ -2,6 +2,9 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
+#For Debug
+set -xv
+
 USB_BURN=/run/initramfs/memory/data/HW_test_script
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp
 USB_LOG=/run/initramfs/memory/data/logfile
