@@ -1,0 +1,14 @@
+#
+
+bi_chk_disk(){
+	read -p "Test with HDD? - (Y/N)" TYN
+	if [ "$TYN" == "N" -o "$TYN" == "n" ]; then
+	CFG=food.cfg
+	elif [ "$TYN" == "Y" -o "$TYN" == "y" ]; then
+        CFG=food_disk.cfg
+	else
+	echo "Please input Y or N"
+	sleep 3
+	exit 0
+	fi                
+}

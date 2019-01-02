@@ -1,0 +1,13 @@
+
+#---Create burnintest script file
+bi_gui_config(){
+	echo SETSERIAL '"'"$SN"'"' >> sn.bits
+	#echo SETMACHINETYPE '"'"Giant"'"' >> sn.bits
+	echo SETLOG '"'"$USB_LOG/$SN_LOG.log"'"' >> sn.bits
+	echo LOAD '"'"$USB_BURN/$CFG"'"' >> sn.bits
+	echo RUN CONFIG >> sn.bits
+	echo SLEEP 1000 >> sn.bits
+	echo EXIT >> sn.bits 
+#	---Run burnintest
+	$USB_BURN/burnintest.sh -S sn.bits
+}

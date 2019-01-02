@@ -1,0 +1,42 @@
+bi_cli_auto(){
+
+# Script for gamming system function test by EFCO Sam
+BI_LOG=/tmp/BiTLog2.log
+USB_BURN=/run/initramfs/memory/data/HW_test_script/tools/BI
+USB_LOG=/run/initramfs/memory/data/logfile
+           . ./fail_red
+rm -r $BI_LOG
+rm -r $USB_BURN/cmdline_config.txt
+case $1 in
+	"disk")
+		cp $USB_BURN/cmdline_config.disk $USB_BURN/cmdline_config.txt
+		;;
+	"nodisk")
+		cp $USB_BURN/cmdline_config.nodisk $USB_BURN/cmdline_config.txt
+		;;
+	*)
+		"Usage {disk|nodisk|}"
+		;;
+esac
+
+$USB_BURN/bit_cmd_line_x64
+
+BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
+
+	if [ "$BICHK" != "PASSED" ]
+	then
+		clear
+		fail_red
+		echo " ****** BI test check failed! ******" | tee -a $BI_LOG
+		read -p "Press any key to stop test." key
+		cat $BI_LOG
+		kill -9 $? 
+	else
+		echo "****** The BI test passed! ******" | tee -a $BI_LOG
+		echo " " | tee -a $BI_LOG
+	fi
+           }
+
+
+
+

@@ -9,25 +9,17 @@ USB_BURN=/run/initramfs/memory/data/HW_test_script
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp
 USB_LOG=/run/initramfs/memory/data/logfile
 BI_LOG=/tmp/BiTLog2.log
-SN_TMP=/run/initramfs/memory/data/HW_test_script/tmp/sn.tmp
+
 #USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile
-source cpu_temp_check.lib
+. ./lib/cpu_temp_check.lib
+. ./lib/sn_get.lib
 
-#---Get SN---
-SN_GET(){
-	rm -f $SN_TMP
-	read -p "請輸入序號: " SN 
-	echo $SN-$(date '+%Y%m%d%H%M%S') > $SN_TMP
-	SN_LOG=$(<$SN_TMP)
-        cat $TEMP_LOG/model.tmp >> $USB_LOG/$SN_LOG.log	
-        echo Serial Number: $SN >> $USB_LOG/$SN_LOG.log	
-}
 
 
 
 #---Start Function---
-SN_GET
+sn_get
 
 #input spec of BI  to script ex.disk
 ./auto_burn_cli.sh nodisk
