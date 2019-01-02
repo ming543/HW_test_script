@@ -12,12 +12,12 @@ BI_LOG=/tmp/BiTLog2.log
 SN_TMP=/run/initramfs/memory/data/HW_test_script/tmp/sn.tmp
 #USB_BURN=/mnt/live/memory/data/burnintest
 #USB_LOG=/mnt/live/memory/data/logfile
-
+source cpu_temp_check.lib
 
 #---Get SN---
 SN_GET(){
 	rm -f $SN_TMP
-	read -p "Please input serial number: " SN 
+	read -p "請輸入序號: " SN 
 	echo $SN-$(date '+%Y%m%d%H%M%S') > $SN_TMP
 	SN_LOG=$(<$SN_TMP)
         cat $TEMP_LOG/model.tmp >> $USB_LOG/$SN_LOG.log	
@@ -35,7 +35,7 @@ cat $BI_LOG | grep "ed!" >> $USB_LOG/$SN_LOG.log
 
 #input spec of cpu temp to script ex.30
 clear
-./cpu_temp_check.sh 40
+cpu_temp_check 40
 if ["$?" -ne 0] ; then 
 cat $TEMP_LOG/temp.tmp | grep "ed!" >> $USB_LOG/$SN_LOG.log
 exit 1
