@@ -1,13 +1,9 @@
-#!/bin/bash
-# REVISON:R3 
-# Script for gamming system function test by EFCO Sam
+# Script function for system CPU temp check by EFCO Sam
 cpu_temp_check()
 {
 TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/temp.tmp
 DMI_LOG=/run/initramfs/memory/data/HW_test_script/tmp/dmi.tmp
 C=$1
-#USB_BURN=/mnt/live/memory/data/burnintest
-#USB_LOG=/mnt/live/memory/data/logfile
 #---get dmidecode info
 rm -r $DMI_LOG
 dmidecode > $DMI_LOG
@@ -23,10 +19,11 @@ then
 	read -p "Press any key to stop test." key
 	#kill -9 $? 
 	#pkill -f start.sh
-	exit 1
+	return 1
 else
 	echo "****** The SPEC is $C, CPU temp is $TCHK test passed! ******" | tee -a $TEMP_LOG
 	echo " " | tee -a $TEMP_LOG
+	return 0
 fi
 }
 
