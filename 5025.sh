@@ -3,61 +3,36 @@
 # Script for gamming system function test by EFCO Sam
 
 #For Debug
-set -xv
-
-USB_BURN=/run/initramfs/memory/data/HW_test_script
-TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp
-USB_LOG=/run/initramfs/memory/data/logfile
-BI_LOG=/tmp/BiTLog2.log
-
-#USB_BURN=/mnt/live/memory/data/burnintest
-#USB_LOG=/mnt/live/memory/data/logfile
-. ./lib/cpu_temp_check.lib
-. ./lib/sn_get.lib
-
-
-
+#set -xv
 
 #---Start Function---
-sn_get
+. ./lib/loc_var.lib
 
-#input spec of BI  to script ex.disk
-./auto_burn_cli.sh nodisk
-cat $BI_LOG | grep "ed!" >> $USB_LOG/$SN_LOG.log
+#request sn of UUT
+. ./lib/sn_get.lib
 
-#input spec of cpu temp to script ex.30
-clear
-cpu_temp_check 40
-if ["$?" -ne 0] ; then 
-cat $TEMP_LOG/temp.tmp | grep "ed!" >> $USB_LOG/$SN_LOG.log
-exit 1
-fi	
+#input spec of BI to script ex.disk/nodisk
+. ./lib/bi_cli_auto.lib nodisk
+
+#input spec of cpu temp to script ex.70
+. ./lib/cpu_temp_check.lib 70
 
 #input spec of memory (MByte) to script ex.8000
-clear
-./memory_check.sh 5833
-cat $TEMP_LOG/mem.tmp | grep "passed"  >> $USB_LOG/$SN_LOG.log	
+. ./lib/memory_check.lib 5833
 
 #input spec of disk size and speed to script
-clear
-./disk_test.sh 110 200
-cat $TEMP_LOG/disk.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+. ./lib/disk_test.lib 110 200
 
 #COM test
-clear
-./com1_loop_test.sh 
-cat $TEMP_LOG/com1.tmp | grep "******" >> $USB_LOG/$SN_LOG.log	
+. ./lib/com1_loop_test.lib
 
 #vga test
-clear
-./vga_test.sh 
-cat $TEMP_LOG/vga.tmp | grep "passed" >> $USB_LOG/$SN_LOG.log	
+. ./lib/vga_test.lib
+  
+#Show ALL TEST PASS to log
+. ./lib/pass_green.lib
 
-#Show pass to log
-clear
-echo "Serial Number:$SN "
-sh pass_green.sh 
-echo "****** ALL_TEST_PASSED! ****** " >> $USB_LOG/$SN_LOG.log
-read -p "Press Enter to end test" end
-exit 0
+
+
+
 

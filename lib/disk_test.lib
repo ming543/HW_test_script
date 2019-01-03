@@ -1,69 +1,62 @@
 #!/bin/bash
-# REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
 DEVICE=/dev/sda1
 DISK_SIZE=$1
 DISK_SPEED=$2
-TEMP_LOG=/run/initramfs/memory/data/HW_test_script/tmp/disk.tmp
-
-#---Create burnintest script file
-#	---Run burnintest
+DISK_LOG=$TMP_LOC/disk.tmp
 
 
 DISK_INFO(){
-	#hdparm -I -t $DEVICE >> disk.tmp
-	hdparm -I -t $DEVICE | tee -a $TEMP_LOG
+	hdparm -I -t $DEVICE | tee -a $DISK_LOG
 }
 
 
 DISK_READ(){
-	echo "dd read test $DEVICE" >> $TEMP_LOG
+	echo "dd read test $DEVICE" | tee -a $DISK_LOG
 	dd if=$DEVICE of=/dev/nell bs=1M count=1000 >> $TEMP_LOG 2>&1
 	#dd if=/dev/sda1 of=/dev/nell bs=1M count=1000 | tee -a disk.tmp 2>&1
 }
 
 DISK_SIZE_CHK(){
-GCHK=$(grep "1000" $TEMP_LOG | cut -c 58)
-DCHK=$(grep "1000" $TEMP_LOG | cut -c 54-56)
+GCHK=$(grep "1000" $DISK_LOG | cut -c 58)
+DCHK=$(grep "1000" $DISK_LOG | cut -c 54-56)
 if [ $GCHK = G ]
 then
 	if [ $DCHK -lt $DISK_SIZE ]
 	then
 		clear
-		sh fail_red.sh
-		echo "****** Disk size is $DCHK $GCHK Bytes, SEPC is $DISK_SIZE $GCHK, please check! ******" | tee -a $TEMP_LOG
+		. ./lib/fail_red.lib
+		echo "****** Disk size is $DCHK $GCHK Bytes, SEPC is $DISK_SIZE $GCHK, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		read -p "Press any key to stop test." key
-		kill -9 $?
-		echo ""
+		exit 1
 	else
-		echo "****** The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test passed! ******" | tee -a $TEMP_LOG
-		echo " "
+		echo "****** The SPEC is $DISK_SIZE, disk size is $DCHK $GCHK test passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		
 	fi
 fi
 }
 
 DISK_SPEED_CHK(){
-MCHK=$(grep "buffered" $TEMP_LOG | cut -c 63)
-SCHK=$(grep "buffered" $TEMP_LOG | cut -c 56-58)
+MCHK=$(grep "buffered" $DISK_LOG | cut -c 63)
+SCHK=$(grep "buffered" $DISK_LOG | cut -c 56-58)
 if [ $MCHK = M ]
 then
 	if [ $SCHK -lt $DISK_SPEED ]
 	then
 		clear
-		sh fail_red.sh
-		echo "****** Disk speed is $SCHK $MCHK Bytes, SEPC is $DISK_SPEED $MCHK, please check! ******" | tee -a $TEMP_LOG
+		. ./lib/fail_red.lib
+		echo "****** Disk speed is $SCHK $MCHK Bytes, SEPC is $DISK_SPEED $MCHK, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		read -p "Press any key to stop test." key
-		kill -9 $?
-		echo ""	
+		exit 1
 	else
-		echo "****** The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test passed! ******" | tee -a $TEMP_LOG
-		echo " "
+		echo "****** The SPEC is $DISK_SPEED, disk speed is $SCHK $MCHK test passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sleep 1
 	fi
 fi
 }
 
-rm -r $TEMP_LOG
+rm -r $DISK_LOG
 DISK_INFO
 #DISK_READ
 DISK_SIZE_CHK

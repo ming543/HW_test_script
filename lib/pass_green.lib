@@ -1,4 +1,8 @@
-pass_green(){
+#!/bin/bash
+#Show pass to log
+clear
+echo "Serial Number:$SN "
+
 #show big green pass
 printf "\E[1;32;48m"
 echo " ************************************************* "
@@ -17,5 +21,7 @@ echo " "
 echo " ************************************************* "
 printf "\E[0m"
 echo ""
-}
 
+echo "****** ALL_TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
+read -p "Press Enter to end test" end
+exit 0

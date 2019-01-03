@@ -1,40 +1,37 @@
-com1_loop_test(){
-# REVISON:R3 
+#!/bin/bash
 # Script for gamming system function test by EFCO Sam
 
-COM1_LOG=/run/initramfs/memory/data/HW_test_script/tmp/com1.tmp
+COM_LOG=$TMP_LOC/com.tmp
 COM=/dev/ttyUSB0
-           . ./fail_red
 COM_LOOP(){
-	rm -r $COM1_LOG
+	rm -r $COM_LOG
 	stty -F $COM 115200 raw -echo #config serial port
 	exec 3<$COM #redirect serial output to FD 3
-	cat <&3 > $COM1_LOG & #redirect serial output to file
+	cat <&3 > $COM_LOG & #redirect serial output to file
 	PID=$! #save PID to kill cat
 	echo "5555AAAA" > $COM # send command to serial port
-	sleep 0.2s # wait for response
+	sleep 0.5s # wait for response
 	kill $PID # kill cat process
 	exec 3<&- #free FD 3
 }
 
-for (( c=0; c<=10; c++))
+for (( c=1; c<=3; c++))
 do
 	COM_LOOP
-	LCHK=$(grep "5555AAAA" "$COM1_LOG" )
+	LCHK=$(grep "5555AAAA" "$COM_LOG" )
 	if [ $LCHK == "5555AAAA" ]
 		then
-		echo "****** The RS232 port $COM test $c passed! ******" | tee -a $COM1_LOG
+		echo "****** The RS232 port $COM test $c passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sleep 
 	else
 		clear
-		sh fail_red.sh
-		echo "****** RS232 looptest failed $LCHK, please check! ******" | tee -a $COM1_LOG
+		. ./lib/fail_red.lib
+		echo "****** RS232 looptest failed $LCHK, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		read -p "Press any key to stop test." key
-		kill -9 $? 
-		#pkill -f start.sh
-
+		exit 1
 	fi
 done
-           }
+
 
 
 

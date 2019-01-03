@@ -1,10 +1,10 @@
-vga_test(){       
-       # Script for gamming system function test by EFCO Sam
+#!/bin/bash     
+# Script for gamming system function test by EFCO Sam
 
-VGA_LOG=/run/initramfs/memory/data/HW_test_script/tmp/vga.tmp
+VGA_LOG=$TMP_LOC/vga.tmp
 OUT=VGA-0
-           . ./fail_red.lib           
-           #---Check vga function
+                  
+#---Check vga function
 rm -r $VGA_LOG
 xrandr --output $OUT --auto
 clear
@@ -13,12 +13,13 @@ read -p "$OUT display work - [Enter], $OUT Fail - [N]" UYN
 	if [ "$UYN" == "N" -o "$UYN" == "n" ]; 
 	then
 		clear
-		fail_red
-		echo "****** The $OUT test failed! ******" | tee -a $VGA_LOG
+		. ./lib/fail_red.lib
+		echo "****** The $OUT test failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		read -p "Press any key to stop test." key
-		kill -9 $? 
+		exit 1
 	else
-		echo "****** The $OUT test passed! ******" | tee -a $VGA_LOG 
+		echo "****** The $OUT test passed! ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		sleep 1
 	fi
-           }
+   
 

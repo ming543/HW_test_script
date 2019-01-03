@@ -1,8 +1,7 @@
 acpitz-virtual-0
-temp1:        +89.0°C  (crit = +114.0°C)
+temp1:        +56.0°C  (crit = +114.0°C)
 
 coretemp-isa-0000
-Core 0:       +67.0°C  (high = +95.0°C, crit = +105.0°C)
-Core 2:       +70.0°C  (high = +95.0°C, crit = +105.0°C)
+Core 0:       +47.0°C  (high = +95.0°C, crit = +105.0°C)
+Core 2:       +52.0°C  (high = +95.0°C, crit = +105.0°C)
 
-****** CPU temp is 67 C the spec is 40 C, test failed! ******

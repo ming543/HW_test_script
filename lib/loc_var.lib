@@ -1,0 +1,7 @@
+
+#loction_var
+SCR_LOC=/run/initramfs/memory/data/HW_test_script
+TMP_LOC=/run/initramfs/memory/data/HW_test_script/tmp
+LIB_LOC=/run/initramfs/memory/data/HW_test_script/lib
+LOG_LOC=/run/initramfs/memory/data/logfile
+MODEL_LOG=$TMP_LOC/model.tmp

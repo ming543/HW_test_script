@@ -1,6 +1,10 @@
 #!/bin/bash
-#set -xv
-. ./lib/loc_var.lib
+
+SCR_LOC=/run/initramfs/memory/data/HW_test_script
+TMP_LOC=/run/initramfs/memory/data/HW_test_script/tmp
+LIB_LOC=/run/initramfs/memory/data/HW_test_script/lib
+LOG_LOC=/run/initramfs/memory/data/logfile
+MODEL_LOG=$TMP_LOC/model.tmp
 
 ONE=5025
 TWO=
@@ -45,32 +49,31 @@ while [ opt != '' ]
         case $opt in
         $ONE) clear;
         echo "Test Model: $ONE" | tee -a $MODEL_LOG ;
-        sh $SCR_LOC/$ONE.sh; 
-        #. ./$SCR_LOC/$ONE.sh; 
+        sh $SRC_LOC/$ONE.sh; 
         show_menu;
         ;;
 
         $TWO) clear;
         echo "Test Model: $TWO" | tee -a $MODEL_LOG ;
-        sh $SCR_LOC/$TWO.sh; 
+        sh $SRC_LOC/$TWO.sh; 
         show_menu;
         ;;
 
         $THREE) clear;
         echo "Test Model: $THREE" | tee -a $MODEL_LOG;
-        sh $SCR_LOC/$THREE.sh; 
+        sh $SRC_LOC/$THREE.sh; 
         show_menu;
         ;;
 
         $FOUR) clear;
         echo "Test Model: $FOUR" | tee -a $MODEL_LOG;
-        sh $SCR_LOC/$FOUR.sh; 
+        sh $SRC_LOC/$FOUR.sh; 
         show_menu;
         ;;
 
         $FIVE) clear;
         echo "Test Model: $FIVE" | tee -a $MODEL_LOG;
-        sh $SCR_LOC/$FIVE.sh; 
+        sh $SRC_LOC/$FIVE.sh; 
         show_menu;
         ;;
 
