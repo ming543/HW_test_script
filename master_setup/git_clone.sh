@@ -1,5 +1,5 @@
 #!/bin/bash
-#git user is ming543@gmail.com aa22
+#git user is ming543@gmail.com samle
 #git clone script
 git clone https://github.com/ming543/HW_test_script.git /run/initramfs/memory/data/HW_test_script/
 #git clone server
