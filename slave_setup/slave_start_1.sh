@@ -2,10 +2,10 @@
 # REVISON:R3 
 # Script for gamming system function test by EFCO Sam
 
-USB_RUN=/run/initramfs/memory/data/script
-SERVER_RUN=/run/initramfs/memory/data/server
+SCR_LOC=/run/initramfs/memory/data/HW_test_script
 HOST=192.168.1.1
-LAN1=enp3s0
+#LAN1=enp3s0
+LAN1=enx00e04c680030
 
 #set timezone to Taipei
 timedatectl set-timezone "Asia/Taipei"

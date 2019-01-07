@@ -105,7 +105,7 @@ fbpid=$!
 
 sleep 5
 {
-	sh /run/initramfs/memory/data/master/server_start.sh &
+	sh /run/initramfs/memory/data/HW_test_script/master_setup/server_start.sh &
 	sh /run/initramfs/memory/data/HW_test_script/x.sh &
 
 }&
