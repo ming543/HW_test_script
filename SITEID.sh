@@ -17,7 +17,8 @@
 . ./lib/siteid_temp_test.lib 18 26
 
 #door check
-. ./lib/siteid_door_test.lib
+. ./lib/siteid_door_open_test.lib
+. ./lib/siteid_door_close_test.lib
 
 #memory check
 . ./lib/siteid_memory_test.lib
