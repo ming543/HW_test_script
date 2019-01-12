@@ -3,7 +3,7 @@
 
 DMI_LOG=$TMP_LOC/dmi.tmp
 MEM_LOG=$TMP_LOC/mem.tmp
-M=$1
+#M=$1
 
 
 #---get dmidecode info
@@ -16,7 +16,7 @@ free -m | tee -a $MEM_LOG
 
 
 TCHK=$(grep "Mem" "$MEM_LOG" | cut -c 16-19)
-if [ $TCHK -ne $M ]
+if [ $TCHK -ne $1 ]
 then
 	clear
 	. ./lib/fail_red.lib
