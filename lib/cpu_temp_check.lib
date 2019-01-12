@@ -1,7 +1,7 @@
 # Script function for system CPU temp check by EFCO Sam
 TEMP_LOG=$TMP_LOC/temp.tmp
 DMI_LOG=$TMP_LOC/dmi.tmp
-C=$1
+#C=$1
 
 #---get dmidecode info
 rm -r $DMI_LOG
@@ -11,7 +11,7 @@ rm -r $TEMP_LOG
 clear
 sensors -A | tee -a $TEMP_LOG 
 TCHK=$(grep "Core 0" "$TEMP_LOG" | cut -c 16-17)
-if [ $TCHK -gt $C ]
+if [ $TCHK -gt $1 ]
 then
 	clear
         . ./lib/fail_red.lib
