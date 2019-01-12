@@ -1,0 +1,29 @@
+#!/bin/bash
+#script for site id sn check
+#SITEID_LOG=$TMP_LOC/siteid.tmp
+
+#---chech site id sn
+#rm -r $SITEID_LOG
+clear
+
+#sample curl www.hotmail.com/when/junk.cgi?birthyear=1905&press=OK
+curl 10.0.0.100 | tee -a $LOG_LOC/$SN_LOG.log
+
+SNCHK=$(grep "1000" $LOG_LOC/$SN_LOG.log | cut -c 54-56)
+OKCHK=$(grep "1000" $LOG_LOC/$SN_LOG.log | cut -c 54-56)
+if [ $SNCHK != 0000 ]
+  then
+	  if [ $OKCHK != "OK" ]
+	  then
+		  clear
+		  . ./lib/fail_red.lib
+		  echo "****** The SN is $SNCHK , please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		  read -p "Press any key to stop test." key
+		  exit 1
+	  else
+		  echo "****** The SN is $SNCHK, test passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		
+	  fi
+  else
+  echo "****** The SN should not be 0000, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+fi
