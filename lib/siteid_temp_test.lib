@@ -1,0 +1,28 @@
+#!/bin/bash
+#script for site id temp check
+#SITEID_LOG=$TMP_LOC/siteid.tmp
+
+#---chech site id sn
+#rm -r $SITEID_LOG
+clear
+
+#sample curl www.hotmail.com/when/junk.cgi?birthyear=1905&press=OK
+curl 10.0.0.100 | tee -a $LOG_LOC/$SN_LOG.log
+
+TMPCHK=$(grep "1000" $LOG_LOC/$SN_LOG.log | cut -c 54-56)
+OKCHK=$(grep "1000" $LOG_LOC/$SN_LOG.log | cut -c 54-56)
+if [ $TMPCHK -ge $1 ] && [ $TMPCHK -le $2 ]
+  then
+	  if [ $OKCHK != "OK" ] 
+	  then
+		  clear
+		  . ./lib/fail_red.lib
+		  echo "****** The TEMP is $TMPCHK , please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		  read -p "Press any key to stop test." key
+		  exit 1
+	  else
+		  echo "****** The TEMP is $TMPCHK, test passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+	  fi
+  else
+  echo "****** The TEMP is $TMPCHK over spec $1 ~ $2 , please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+fi
