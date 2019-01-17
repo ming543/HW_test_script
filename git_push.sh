@@ -10,6 +10,7 @@
 #pull data
 #git pull
 
+git status
 #add all modifed file
 git add .
 
