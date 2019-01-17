@@ -3,35 +3,44 @@
 
 COM_LOG=$TMP_LOC/com.tmp
 COM=/dev/ttyUSB0
-COM_LOOP(){
-	rm -r $COM_LOG
-	stty -F $COM 115200 raw -echo #config serial port
-	exec 3<$COM #redirect serial output to FD 3
-	cat <&3 > $COM_LOG & #redirect serial output to file
-	PID=$! #save PID to kill cat
-	echo "5555AAAA" > $COM # send command to serial port
-	sleep 0.5s # wait for response
-	kill $PID # kill cat process
-	exec 3<&- #free FD 3
-}
 
-for (( c=1; c<=3; c++))
-do
-	COM_LOOP
-	LCHK=$(grep "5555AAAA" "$COM_LOG" )
-	if [ $LCHK == "5555AAAA" ]
-		then
-		echo "****** The RS232 port $COM test $c passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
-		sleep 
-	else
-		clear
-		. ./lib/fail_red.lib
-		echo "****** RS232 looptest failed $LCHK, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
-		read -p "Press any key to stop test." key
-		exit 1
-	fi
-done
+if [ -f "$COM" ];
+then
+	COM_LOOP(){
+		rm -r $COM_LOG
+		stty -F $COM 115200 raw -echo #config serial port
+		exec 3<$COM #redirect serial output to FD 3
+		cat <&3 > $COM_LOG & #redirect serial output to file
+		PID=$! #save PID to kill cat
+		echo "5555AAAA" > $COM # send command to serial port
+		sleep 0.5s # wait for response
+		kill $PID # kill cat process
+		exec 3<&- #free FD 3
+	}
 
+	for (( c=1; c<=3; c++))
+	do
+		COM_LOOP
+		LCHK=$(grep "5555AAAA" "$COM_LOG" )
+		if [ $LCHK == "5555AAAA" ]
+			then
+			echo "****** The RS232 port $COM test $c passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+			sleep 1
+		else
+			clear
+			. ./lib/fail_red.lib
+			echo "****** RS232 looptest failed $LCHK, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+			read -p "Press any key to stop test." key
+			exit 1
+		fi
+	done
+else
+	clear
+	. ./lib/fail_red.lib
+	echo "****** The $COM PORT not find, please check! ******" | tee -a $LOG_LOC/$SN_LOG.log
+	read -p "Press any key to stop test." key
+	exit 1
+fi
 
 
 

@@ -1,12 +1,24 @@
 
 #---Get SN---
-#. ./lib/loc_var.lib
+#set -xv
+#. ./loc_var.lib
+DCHK=$(grep "Model" "$MODEL_LOG" | cut -c 13-20)
+
+if [ -d "$LOG_LOC/$DCHK" ]
+then
+        echo ""
+else
+	echo "Directory not exists."
+	mkdir $LOG_LOC/$DCHK
+fi
+LOG_LOC=$LOG_LOC/$DCHK
 SN_TMP=$TMP_LOC/sn.tmp
 rm -f $SN_TMP
 read -p "Please input SN: " SN 
-echo $SN-$(date '+%Y%m%d%H%M%S') > $SN_TMP
+echo $SN-$(date '+%Y%m%d%H%M') > $SN_TMP
 SN_LOG=$(<$SN_TMP)
-#echo Model: $0 >> $LOG_LOC/$SN_LOG.log
-cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
+#cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
+grep "Model" "$MODEL_LOG" >> $LOG_LOC/$SN_LOG.log 
 echo Serial Number: $SN >> $LOG_LOC/$SN_LOG.log	
+
 

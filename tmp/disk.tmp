@@ -89,4 +89,4 @@ Logical Unit WWN Device Identifier: 50026b7679016d9a
 	IEEE OUI	: 0026b7
 	Unique ID	: 679016d9a
 Checksum: correct
- Timing buffered disk reads: 746 MB in  3.01 seconds = 248.09 MB/sec
+ Timing buffered disk reads: 734 MB in  3.00 seconds = 244.64 MB/sec
