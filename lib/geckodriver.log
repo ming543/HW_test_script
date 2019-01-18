@@ -107,3 +107,44 @@ console.log: Accessibility service init or shutdown observer does not exist.
 1547719394000	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.pGaQ05AeWE1h"
 1547719402575	Marionette	INFO	Listening on port 38469
 1547719403297	Marionette	WARN	TLS certificate errors will be ignored for this session
+Gdk-Message: firefox-esr: Fatal IO error 11 (Resource temporarily unavailable) on X server :0.0.
+
+Gdk-Message: /usr/lib/firefox-esr/firefox-esr: Fatal IO error 11 (Resource temporarily unavailable) on X server :0.0.
+
+Gdk-Message: /usr/lib/firefox-esr/firefox-esr: Fatal IO error 11 (Resource temporarily unavailable) on X server :0.0.
+
+1547803773260	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.kRCYejRTgLOC"
+1547803792995	Marionette	INFO	Listening on port 35005
+1547803793020	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1547803949574	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.MZOg6Ot0zt2r"
+1547803955840	Marionette	INFO	Listening on port 44427
+1547803956457	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+1547804027631	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.CydIQ7obDs9W"
+1547804034737	Marionette	INFO	Listening on port 40041
+1547804035350	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+1547804305593	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.KvUcmYUIFHTp"
+1547804314247	Marionette	INFO	Listening on port 34857
+1547804315234	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+1547805094460	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.DJKe1JIrnt47"
+1547805102921	Marionette	INFO	Listening on port 40223
+1547805103602	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1547805164956	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.dYB8AITtvxAE"
+1547805173446	Marionette	INFO	Listening on port 41867
+1547805173484	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+1547805595335	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.txgRaQbkgm6C"
+1547805603196	Marionette	INFO	Listening on port 39477
+1547805603918	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1547805767290	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.5auQdBL4xxPS"
+1547805775081	Marionette	INFO	Listening on port 37447
+1547805775656	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: Accessibility service init or shutdown observer does not exist.

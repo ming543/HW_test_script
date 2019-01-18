@@ -8,10 +8,12 @@ driver = webdriver.Firefox(executable_path=r'/run/initramfs/memory/data/HW_test_
 driver.get("http://eip.efco.com.tw/tw/index.htm?lang=tw")
 
 #elem = driver.find_element_by_xpath("//frame[@name='txtAccount']").send_keys("samlee")
-frame = driver.find_element_by_xpath('//frame[@name="loginFrameData"]')
+#elem = driver.find_element_by_xpath('//frame[@name="loginFrameData"]')
 #driver.switch_to.frame(frame)
-#elem = driver.find_element_by_xpath("//*[@name='txtAccount']")
+elem = driver.find_element_by_xpath(//input[@type="text" and @name="txtAccount"])
+#elem = driver.find_element_by_xpath('/html/frameset/frame#loginPage/html/body/form/table/tbody/tr/td/table.righttable_bg/tbody/tr/td/table/tbody/tr/td/input.chgtable02/txtAccount')
 #elem = driver.find_element_by_name('txtAccount')
+print(elem)
 elem.clear()
 elem.send_keys("samlee")
 
