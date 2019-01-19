@@ -1,0 +1,100 @@
+<selenium.webdriver.firefox.webdriver.WebDriver (session="2ebdac44-6757-4685-b34f-110005b2c0a2")>
+Transmax Manufacturing Test Suite
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+<!-- make sure page not cached by browser -->
+<meta http-equiv="PRAGMA" content="NO-CACHE">
+
+<!-- load style sheet -->
+<link rel="stylesheet" type="text/css" href="/css/css.css">
+
+<!-- load our javascript functions -->
+<script type="text/javascript" src="/input_process.js">
+</script>
+
+<title>Transmax Manufacturing Test Suite</title>
+</head>
+
+<!-- 1 second base timer -->
+<body onload="populateTables(1000)">
+<table rules="ALL">
+  <tbody><tr>
+    <td id="title" colspan="2"><table rules="NONE"><tbody><tr align="LEFT"><td class="td_nopad"><img alt="FIELD PROCESSOR TEST SUITE" src="/images/tmax_title.jpg"></td><td class="td_nopad_center"><img alt="TRANSMAX" src="/images/transmax_logo.gif"></td><td class="td_nopad"></td></tr><tr align="LEFT"><td class="td_nopad">Version: 0.82
+<br>Field Processor Time:&nbsp;&nbsp;&nbsp;&nbsp;19:46 Saturday, 29th March 2008</td><td class="td_nopad_center"><img alt="" src="/images/barcode.png"></td><td class="td_nopad"></td></tr></tbody></table></td>
+  </tr>
+  <tr>
+    <td id="board-info" colspan="2"><table rules="NONE"><tbody><tr><td width="280px">Board Information<br><pre>Board Type:          MINI
+Board Revision:      1
+CPU Serial Number:   000000183166
+CPU Module Revision: 0x4130
+CPU BIOS Revision:   0x4</pre></td><td width="180px">Temperature Sensors<br><pre>51.0degC [CPU] - Unknown
+40.0degC [Board] - Unknown
+</pre></td><td>Voltage Sensors<br><pre>1.264v [Core_A] - Active
+2.608v [Core_B] - Active
+3.360v [3.3V Onboard] - Active
+5.120v [5V Input] - Active
+3.056v [CMOS Battery] - Active
+</pre></td></tr></tbody></table>
+</td>
+  </tr>
+  <tr>
+    <td id="ethernet-info" colspan="2"><table rules="NONE"><tbody><tr><td width="280px"><strong>Ethernet Information</strong></td><td width="180">IP Address</td><td>MAC Address</td></tr><tr><td width="280px">Interface 0 (eth0)</td><td width="180px">10.0.0.100</td><td>00:13:95:01:a6:d1</td></tr></tbody></table>
+</td>
+  </tr>
+  <!--tr>
+    <td id="usb-test" colspan="2">
+    </td>
+  </tr-->
+  <tr>
+    <td id="usb-status" colspan="2"><strong>USB Test Status</strong> : <strong>Waiting On: </strong>[ Device in Port 1 ] [ Device in Port 2 ] </td>
+  </tr>
+  <tr>
+    <td id="serial-test"><strong>Serial Port Testing</strong>
+<form id="SerialTestForm" method="GET" action="/cgi-bin/serial-test"><input name="REQUEST_TYPE" value="REQTYPE_SERIALTESTS" type="HIDDEN">
+<table rules="NONE" <tr=""><tbody><tr><td class="td_nopad">Mode:</td><td class="td_nopad"><select id="SerialModeSelect" name="SERIALTESTS_MODE"><option value="232">232</option><option value="485">485</option></select></td></tr></tbody></table>
+<input id="SerialCmdButton" name="SerialCmdButton" onclick="js_submit_serialtest('SERIALTESTS_START')" value="Start Tests" type="BUTTON"><input name="SERIALTESTS_START" value="Start Tests" type="HIDDEN">
+</form></td>
+    <td id="serial-status"><strong>Serial Port Test Status</strong><br><strong>RS232: </strong>Waiting on [CONSOLE ID      SIO 1   SIO 2   SIO 3   SIO 4   ] <strong>&nbsp;&nbsp;RS485: </strong>Waiting on [SIO 1   SIO 2   SIO 3   SIO 4   ] <br><pre>CONSOLE No Test Running
+ID      No Test Running
+SIO 1   No Test Running
+SIO 2   No Test Running
+SIO 3   No Test Running
+SIO 4   No Test Running
+<table rules="NONE"></table></pre></td>
+  </tr>
+  <tr>
+    <td id="cf-test" width="100px">
+    </td>
+    <td id="cf-status">
+    </td>
+  </tr>
+  <!--tr>
+    <td width="450px" id="memtest-test">
+    </td>
+    <td id="memtest-status">
+    </td>
+  </tr -->
+  <tr>
+    <td id="datetime" colspan="2">
+      <table rules="NONE">
+      <tbody><tr><td width="100px">
+      <form method="GET" action="/cgi-bin/datetime_set">
+        <input id="datetime_set_button" onclick="js_submit_set_datetime()" name="datetime_set_button" value="Set Field Processor Date/Time to System Time" type="BUTTON">
+      </form>
+      </td>
+      <td id="datetime_current">System Time:&nbsp;&nbsp;13:57.14 2019/01/19</td>
+      </tr>
+    
+  
+  <tr>
+    <td id="runcmd" colspan="2"><strong>Commands</strong>
+<form method="GET" action="/cgi-bin/runcmd">
+<input name="REQUEST_TYPE" value="REQTYPE_RUNCMD" type="HIDDEN"><input id="RunCmdAdvancedOptionsButton" onclick="js_submit_runcmd('CMD-ADVANCEDOPTIONS', 'AdvancedOptions')" name="CMD-ADVANCEDOPTIONS" value="Enable Advanced Options &amp; Information" type="BUTTON"></form><br><hr size="1" noshade=""><br><pre></pre></td>
+  </tr>
+</tbody></table>
+<strong>
+<a href="siteid_test.html">Go To Site Identifier Testing</a>
+</strong>
+
+
+</td></tr></tbody></table></body></html>
