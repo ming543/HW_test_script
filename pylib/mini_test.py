@@ -1,29 +1,18 @@
 import time, os
-import Tkinter as tk
+from showbox import showbox
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-#Check box
- def box(s):                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                	    
-    win = tk.Tk()
-    win.title("Check BOK")
-    win.geometry("500x100+500+300")
-    label = tk.Label(win, font=('Arial', 16), text='Connect loopback cable ' + str(s) )
-    label.pack()
-    button=tk.Button(win, text="OK", bg="green", command=quit)
-    #button.geometry("50x50")
-    button.pack()
-    win.mainloop()
 
 #Start the firefox
 driver = webdriver.Firefox(executable_path=r'/run/initramfs/memory/data/HW_test_script/tools/geckodriver')
 driver.get("http://10.0.0.100")
 
 #485 Check box
-box(485)
+showbox().textbox('Please link loopback cable of 485')
 
 #Test of RS485
 Select(driver.find_element_by_id("SerialModeSelect")).select_by_value('485')
