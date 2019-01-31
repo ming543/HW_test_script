@@ -17,7 +17,8 @@ xset s off -dpms
 #set IP
 ifconfig $LAN1 $HOST
 #enable WLAN
-sh $SERVER_RUN/wlan_setup.sh
+#sh $SERVER_RUN/wlan_setup.sh
+sh $SERVER_RUN/wlan_setup_asus.sh
 #start ssh server
 /etc/init.d/ssh start
 #start iperf server
