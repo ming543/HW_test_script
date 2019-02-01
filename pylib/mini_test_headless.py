@@ -1,3 +1,4 @@
+
 import time, os
 from showbox import showbox
 from selenium import webdriver
@@ -11,7 +12,10 @@ fireFoxOptions.set_headless()
 
 #Start the firefox
 driver = webdriver.Firefox(firefox_options=fireFoxOptions, executable_path=r'/run/initramfs/memory/data/HW_test_script/tools/geckodriver')
-driver.get("http://10.0.0.100")
+#driver.get("http://10.0.0.100")
+driver.get("http://httpbin.org/user-agent")
+print(driver.page_source)
+driver.close
 
 #485 Check box
 showbox().textbox('Please link loopback cable of 485')
