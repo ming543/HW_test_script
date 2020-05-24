@@ -1,2 +1,2 @@
-# HW_test_script
-samlee@efco.com.tw
+# hw_test_script
+sam.lee@efcotec.com
