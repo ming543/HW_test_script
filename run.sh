@@ -25,18 +25,11 @@ function display_output(){
 	dialog --backtitle "Linux Shell Script Tutorial" --title "${t}" --clear --msgbox "$(<$OUTPUT)" ${h} ${w}
 }
 #
-# Purpose - display current system date & time
 #
-function show_date(){
-	echo "Today is $(date) @ $(hostname -f)." >$OUTPUT
-    display_output 6 60 "Date and Time"
-}
-#
-# Purpose - display a calendar
-#
-function show_calendar(){
-	cal >$OUTPUT
-	display_output 13 25 "Calendar"
+function u7_100(){
+	clear
+	sh /data/hw_test/u7_100 
+	exit 0
 }
 #
 # set infinite loop
@@ -50,10 +43,10 @@ dialog --clear  --help-button --backtitle "Linux Shell Script Tutorial" \
 --menu "You can use the UP/DOWN arrow keys, the first \n\
 letter of the choice as a hot key, or the \n\
 number keys 1-9 to choose an option.\n\
-Choose the TASK" 15 50 4 \
-Date/time "Displays date and time" \
-Calendar "Displays a calendar" \
-Editor "Start a text editor" \
+Choose the TASK" 20 50 8 \
+A "Test U7-100" \
+B "Test U7-200" \
+C "Test U7-300" \
 Exit "Exit to the shell" 2>"${INPUT}"
 
 menuitem=$(<"${INPUT}")
@@ -61,10 +54,10 @@ menuitem=$(<"${INPUT}")
 
 # make decsion 
 case $menuitem in
-	Date/time) show_date;;
-	Calendar) show_calendar;;
-	Editor) $vi_editor;;
-	Exit) echo "Bye"; break;;
+	A) u7_100;;
+	B) u7_200;;
+	C) u7_300;;
+	Exit) echo "Bye"; clear; break;;
 esac
 
 done
