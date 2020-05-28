@@ -1,2 +1,2 @@
-cd /run/initramfs/memory/data/HW_test_script/
-xterm -e /run/initramfs/memory/data/HW_test_script/start.sh
+cd /data/hw_test/
+qterminal --execute /data/hw_test/run.sh
