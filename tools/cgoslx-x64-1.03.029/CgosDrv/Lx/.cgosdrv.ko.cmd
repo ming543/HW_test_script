@@ -1,0 +1,1 @@
+cmd_/data/hw_test/tools/cgoslx-x64-1.03.029/CgosDrv/Lx/cgosdrv.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o /data/hw_test/tools/cgoslx-x64-1.03.029/CgosDrv/Lx/cgosdrv.ko /data/hw_test/tools/cgoslx-x64-1.03.029/CgosDrv/Lx/cgosdrv.o /data/hw_test/tools/cgoslx-x64-1.03.029/CgosDrv/Lx/cgosdrv.mod.o;  true
