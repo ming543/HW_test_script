@@ -1,0 +1,35 @@
+#!/bin/bash
+# REVISON:R4
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./function
+
+#Show test script name
+echo $0
+
+#Get SN for Log
+sn_get
+
+#Get MAC for log
+#lan_mac_check eno1 80:7b:85
+lan_mac_nocheck
+
+#check BIOS time before BI ex.2020
+hwclock_check 2020
+
+#input spec of $1 BI to script ex.disk/nodisk $2 is BI time
+bi_cli_auto noserial 1
+
+#input spec of cpu temp low high limit to script ex.20 70
+cpu_temp_check +30 +95
+
+#copy bi log to final log
+bi_log_copy
+
+#Show ALL TEST PASS to log
+pass_green
+
