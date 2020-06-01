@@ -44,9 +44,9 @@ dialog --clear  --help-button --backtitle "Linux Shell Script Tutorial" \
 letter of the choice as a hot key, or the \n\
 number keys 1-9 to choose an option.\n\
 Choose the TASK" 20 50 8 \
-A "Test U7-100" \
-B "Test U7-200" \
-C "Test U7-300" \
+1_ "Test U7-100" \
+2_ "Test U7-200" \
+3_ "Test U7-300" \
 Exit "Exit to the shell" 2>"${INPUT}"
 
 menuitem=$(<"${INPUT}")
@@ -54,9 +54,9 @@ menuitem=$(<"${INPUT}")
 
 # make decsion 
 case $menuitem in
-	A) u7_100;;
-	B) u7_200;;
-	C) u7_300;;
+	1_) u7_100;;
+	2_) u7_200;;
+	2_) u7_300;;
 	Exit) echo "Bye"; clear; break;;
 esac
 
