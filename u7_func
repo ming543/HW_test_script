@@ -1,23 +1,22 @@
 #!/bin/bash
-# REVISON:R4
-# Script for system function test by EFCO Sam
+# REVISON:R1
+# Script for U7 system function test by EFCO Sam
 
 #For Debug
 #set -xv
 
-#LOC="/home/pi"
-LOC="/run/initramfs/memory/data"
-SCR_LOC="$LOC/HW_test_script"
-TMP_LOC="$LOC/HW_test_script/tmp"
-LIB_LOC="$LOC/HW_test_script/lib"
-LOG_LOC="$LOC/logfile"
-MODEL_LOG="$LOC/HW_test_script/tmp/model.tmp"
-
+LOC="/data"
+SCR_LOC="$LOC/hw_test"
+TMP_LOC="$LOC/hw_test/tmp"
+LIB_LOC="$LOC/hw_test/lib"
+LOG_LOC="$LOC/u7_log"
+MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
+BURN_LOC="$LOC/tools/burnintest"
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 bi_cli_auto(){
 	BI_LOG=/tmp/BiTLog2.log
-	BURN_LOC=/run/initramfs/memory/data/HW_test_script/tools/BI
+
 	rm -f $BI_LOG
 	rm -f $BURN_LOC/cmdline_config.txt
 	case $1 in
@@ -320,16 +319,14 @@ serial_check(){
 sn_get(){
 	#---Get SN---
 	SN_TMP=$TMP_LOC/sn.tmp
-	rm -f $SN_TMP
-	#MODEL=$(<$TMP_LOC/model.tmp)
+#	rm -f $SN_TMP
  	MODEL=$0
-	#clear
 	read -p "Please input SN: " SN 
 	SN_LOG=$SN-$MODEL-$(date '+%Y%m%d%H%M%S')
 	#echo $SN-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_TMP #log with date
 	##echo $SN-$MODEL-$(date '+%H%M%S')  > $SN_TMP #log without date
 	#SN_LOG=$(<$SN_TMP)
-	#echo Model: $0 >> $LOG_LOC/$SN_LOG.log
+	echo Model: $0 >> $LOG_LOC/$SN_LOG.log
 	#cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
 	echo Serial Number: $SN >> $LOG_LOC/$SN_LOG.log	
 }

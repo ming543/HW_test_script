@@ -24,11 +24,11 @@ function display_output(){
 	local t=${3-Output} 	# box title 
 	dialog --backtitle "Linux Shell Script Tutorial" --title "${t}" --clear --msgbox "$(<$OUTPUT)" ${h} ${w}
 }
-#
-#
-function u7_100(){
+
+
+function u7-100(){
 	clear
-	sh /data/hw_test/u7_100 
+	sh /data/hw_test/u7-100 
 	exit 0
 }
 #
@@ -54,10 +54,11 @@ menuitem=$(<"${INPUT}")
 
 # make decsion 
 case $menuitem in
-	1_) u7_100;;
-	2_) u7_200;;
-	2_) u7_300;;
+	1_) u7-100;;
+	2_) u7-200;;
+	2_) u7-300;;
 	Exit) echo "Bye"; clear; break;;
+	#Exit) lxterminal; clear; break;;
 esac
 
 done
