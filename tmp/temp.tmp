@@ -1,7 +1,4 @@
-acpitz-virtual-0
-temp1:        +68.0°C  (crit = +114.0°C)
-
 coretemp-isa-0000
-Core 0:       +59.0°C  (high = +95.0°C, crit = +105.0°C)
-Core 2:       +62.0°C  (high = +95.0°C, crit = +105.0°C)
+Core 0:       +35.0°C  (high = +105.0°C, crit = +105.0°C)
+Core 1:       +37.0°C  (high = +105.0°C, crit = +105.0°C)
 

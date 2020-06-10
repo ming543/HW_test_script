@@ -1,0 +1,13 @@
+#EXECUTE "rm" "/tmp/bi.log"
+#SETSERIAL "12345"
+SETLOG "/tmp/bi.log"
+#RUN CONFIG
+#SLEEP 5000
+#LOAD "/data/hw_test/tools/burnintest/bi-1s.cfg"
+#LOAD "/home/production/hw_test/tools/burnintest/64bit/u7-100-232.cfg"
+LOAD "/tmp/u7-100-232.cfg"
+SETDURATION 0.2
+SLEEP 1000
+RUN CONFIG
+EXIT
+ 

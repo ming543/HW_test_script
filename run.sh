@@ -28,7 +28,8 @@ function display_output(){
 
 function u7-100(){
 	clear
-	sh /data/hw_test/u7-100 
+	cd /home/production/hw_test/
+	sh u7-100 
 	exit 0
 }
 #
@@ -40,10 +41,8 @@ do
 ### display main menu ###
 dialog --clear  --help-button --backtitle "Linux Shell Script Tutorial" \
 --title "[ M A I N - M E N U ]" \
---menu "You can use the UP/DOWN arrow keys, the first \n\
-letter of the choice as a hot key, or the \n\
-number keys 1-9 to choose an option.\n\
-Choose the TASK" 20 50 8 \
+--menu "使用上下或數字1-9鍵選取測試項目 \n\
+Build by Sam Lee" 20 50 8 \
 1_ "Test U7-100" \
 2_ "Test U7-200" \
 3_ "Test U7-300" \
@@ -54,9 +53,11 @@ menuitem=$(<"${INPUT}")
 
 # make decsion 
 case $menuitem in
+	0)exit 0	;;
+	1)exit 1	;;	
 	1_) u7-100;;
 	2_) u7-200;;
-	2_) u7-300;;
+	3_) u7-300;;
 	Exit) echo "Bye"; clear; break;;
 	#Exit) lxterminal; clear; break;;
 esac

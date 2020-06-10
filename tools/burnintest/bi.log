@@ -133,3 +133,5 @@ LOG NOTE: 2020-06-08 11:31:47, Script , EXIT
 LOG NOTE: 2020-06-08 11:33:39, Status, BurnInTest v3.4 1002
 LOG NOTE: 2020-06-08 11:33:39, Starting script.
 LOG NOTE: 2020-06-08 11:33:40, Script , LOAD "/home/production/hw_test/tools/burnintest/bi-1s.cfg" 
+LOG NOTE: 2020-06-09 15:18:08, Status, BurnInTest v3.4 1002
+LOG NOTE: 2020-06-10 15:31:00, Status, BurnInTest v3.4 1002
