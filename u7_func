@@ -13,6 +13,7 @@ LOG_LOC="$LOC/u7_log"
 MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
 BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
 BI_LOG=/tmp/bi.log
+USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 bi_cli_auto(){
@@ -40,15 +41,19 @@ bi_cli_auto(){
 	BI_TIME_CHK=$(grep "Test Duration" "$BI_LOG" | cut -c 18 )
 	if [ $BI_TIME_CHK = $RUN_T ]; then
 		echo "****** BI time $RUN_T hour passed!, spec $2 mins! ******" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	else
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** BI time $RUN_T hour failed!, spec $2 mins!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "BI time $RUN_T hour failed!, spec $2 mins!"
 	fi
 	
 	BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
 	if [ $BICHK = "PASSED" ]; then
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "Passmark BI result failed!"
 	fi
@@ -57,10 +62,13 @@ bi_cli_auto(){
 bi_log_check(){
  	BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
         if [ $BICHK = "PASSED" ]; then
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
                 echo "****** Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
         else
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
                 echo "****** Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Passmark BI result failed!"
+                bi_log_copy
+		fail_red_dialog "Passmark BI result failed!"
         fi
 }
 
@@ -77,6 +85,11 @@ bi_log_copy(){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	cat $BI_LOG >> $LOG_LOC/$SN_LOG.log
+}
+
+burnintest_script(){
+	sudo rm /tmp/bi.log
+	sudo $BURN_LOC/bit_gui_x64 -S $BURN_LOC/script.bits
 }
 
 cpu_temp_check(){
@@ -266,10 +279,7 @@ pass_green_dialog(){
 		exit 255;;
         esac
 }
-rs232_burnintest(){
-	sudo rm /tmp/bi.log
-	sudo $BURN_LOC/bit_gui_x64 -S $BURN_LOC/script.bits
-}
+
 
 rs232_loop_test(){
 	COM_LOG=$TMP_LOC/com.tmp
@@ -337,17 +347,31 @@ sn_get(){
 	echo Serial Number: $SN >> $LOG_LOC/$SN_LOG.log	
 }
 
+sn_get_dialog(){
+	SN_TMP=$TMP_LOC/sn.tmp
+#	rm -f $SN_TMP
+ 	MODEL=$0
+	dialog --title "$MODEL Test" \
+	--inputbox "Please Scan the SN of Label:\n請使用刷槍輸入序號:" \
+	10 40 2> $SN_TMP
+	SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+	echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+	#cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
+	echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
+	echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log	
+
+}
 usb_dev_check (){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** USB device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
-	USB_dev=$(lsusb |grep $1 |awk '{print $4}')
-	lsusb |grep $1 |tee -a $LOG_LOC/$SN_LOG.log
+#	USB_dev=$(lsusb |grep "$1" |awk '{print $4}')
+	lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	
-	if [ $USB_dev = $1 ]; then
+	if [ $? = 0 ]; then
 		echo "****** Check USB dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check USB dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		fail_red_dialog "****** Check USB dev $1 failed !  ******"
+		fail_red_dialog "Check USB dev $1 failed !"
 	fi
 }
 
@@ -361,10 +385,22 @@ usb_id_check (){
 		echo "****** Check USB ID $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check USB ID $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		fail_red_dialog "****** Check USB ID $1 failed !  ******" 
+		fail_red_dialog "Check USB ID $1 failed !" 
 	fi
 }
 
+usb30_speed_check (){
+	sudo hdparm -t $1 > $USB30_LOC
+	USB30_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
+	if [ $USB30_SPEED -ge $2 ]; then
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** USB30 speed $USB30_SPEED passed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+                echo "****** USB30 speed $USB30_SPEED failed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "$1 USB30 speed $USB30_SPEED failed!, spec $2!" 
+	fi
+}
 
 
 

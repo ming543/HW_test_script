@@ -8,40 +8,34 @@
 #---Start Function---
 . ./u7_func
 
+#Show test script name
+echo $0
+
 #Get SN for Log
 sn_get_dialog
 
 #Get MAC for log
-lan_mac_check enp1s0 80:7b:85
-lan_mac_check enp4s0 00:13:95
+#lan_mac_check enp1s0 80:7b:85
+#lan_mac_check enp4s0 00:13:95
 #lan_mac_nocheck
 
 #check BIOS time before BI ex.2020
 hwclock_check 2020
 
-#check USB device
-usb_dev_check "Bus 002 Device 008"
-usb_dev_check "Bus 002 Device 007"
-usb_dev_check "Bus 002 Device 006"
-
-usb_id_check "8564:1000"
-usb30_speed_check /dev/sdb 90
-
 #RS232 loopback test
-#LAN test
-burnintest_script
-
+#rs232_burnintest
+#sleep 10
 #bi check
-bi_log_check
+#bi_log_check
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 #bi_cli_auto noserial 1
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +30 +40
+#cpu_temp_check +30 +40
 
 #copy bi log to final log
-bi_log_copy
+#bi_log_copy
 
 #Show ALL TEST PASS to log
 pass_green_dialog
