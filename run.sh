@@ -38,42 +38,42 @@ case $(cat $INPUT) in
 	1)
 		clear
 		cd /home/production/hw_test/
-		sh U7-PFT 
+		sudo sh U7-PFT 
 		exit 0
 		;;
 	2) 
 		echo "2"
 		clear
 		cd /home/production/hw_test/
-		sh U7-100 
+		sudo sh U7-100 
 		exit 2
 		;;
 	3) 
 		echo "3"
 		clear
 		cd /home/production/hw_test/
-		sh U7-200 
+		sudo sh U7-200 
 		exit 3
 		;;
 	4) 
 		echo "4"
 		clear
 		cd /home/production/hw_test/
-		sh U7-300 
+		sudo sh U7-300 
 		exit 4
 		;;
 	5) 
 		echo "5"
 		clear
 		cd /home/production/hw_test/
-		sh Q718-T1 
+		sudo sh Q718-T1 
 		exit 5
 		;;
 	6) 
 		echo "6"
 		clear
 		cd /home/production/hw_test/
-		sh Q718-T2 
+		sudo sh Q718-T2 
 		exit 6
 		;;
 	c)	
@@ -82,16 +82,16 @@ case $(cat $INPUT) in
 		sudo timedatectl set-ntp yes
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sleep 5
-		sh /home/production/hw_test/run.sh
+		sudo sh /home/production/hw_test/run.sh
 		exit
 		;;
 	u)	
 		clear
 		echo "u"
 		cd /home/production/hw_test/
-		sh git_reset.sh
+		sudo sh git_reset.sh
 		sleep 5
-		sh /home/production/hw_test/run.sh
+		sudo sh /home/production/hw_test/run.sh
 		exit 0		
 		;;	
 
