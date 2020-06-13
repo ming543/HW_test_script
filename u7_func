@@ -881,7 +881,7 @@ usb_dev_count (){
 	if [ $count = $2 ] || [ $count = $3 ] ; then
 		echo "- Check USB device count $1 X $count passed! spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
 
-		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+
 	else
 		echo "****** Check USB device count $1 X $count failed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
