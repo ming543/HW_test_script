@@ -401,7 +401,7 @@ fail_red_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
-		   usb_log_sync
+		   #usb_log_sync
 		   clear
 		   sh /home/production/hw_test/t.sh
 		   exit
@@ -411,7 +411,7 @@ fail_red_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
-		   usb_log_sync
+		   #usb_log_sync
 		   sync
 		   poweroff
 		exit 1 ;;
@@ -420,7 +420,7 @@ fail_red_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
-		   usb_log_sync
+		   #usb_log_sync
 		   echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                    sudo sh $SCR_LOC/t.sh
 		exit 255 ;;
@@ -673,7 +673,7 @@ pass_green_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
-		   usb_log_sync
+		   #usb_log_sync
 		   onedrive_log_sync
 		   sync
 		   poweroff
@@ -682,7 +682,7 @@ pass_green_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
-		   usb_log_sync
+		   #usb_log_sync
 		   onedrive_log_sync
 		   echo "Back to shell" 
 		exit 1;;
@@ -690,7 +690,7 @@ pass_green_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
-		   usb_log_sync
+		   #usb_log_sync
 		exit 255;;
         esac
 }
@@ -723,14 +723,14 @@ warning_yellow_dialog(){
                 1) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
-		   usb_log_sync
+		   #usb_log_sync
 		   onedrive_log_sync
 		   echo "Back to shell" 
 		exit 1;;
                 255) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
-		   usb_log_sync
+		   #usb_log_sync
 		exit 255;;
         esac
 }
