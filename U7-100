@@ -15,13 +15,13 @@ lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
 #lan_mac_nocheck
 
-#Update BIOS default setting to OEM
-bios_oem_update
+#check BIOS time before ex.2020
+hwclock_check 2020
 
 #Update time from NTP server
 time_ntp_set
 
-#check BIOS time before ex.2020
+#check BIOS time from internet
 hwclock_check_live
 
 #check USB device
@@ -37,8 +37,7 @@ dio_loopback_test
 #Audio MIC sum test
 mic_test 40
 
-#RS232 loopback test
-#LAN test
+#RS232 and LAN loopback test by PASSMARK
 burnintest_script
 
 #bi check

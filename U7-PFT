@@ -1,0 +1,29 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Get SN for Log
+sn_get_dialog
+
+#Get MAC for log
+lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp4s0 00:13:95
+#lan_mac_nocheck
+
+#Update BIOS default setting to OEM
+bios_oem_update
+
+#check BIOS time before ex.2020
+hwclock_write 2020-06-14
+hwclock_check 2020
+
+
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+
