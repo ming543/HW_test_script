@@ -14,7 +14,7 @@
 #Get SN for Log
 sn_get_dialog
 
-mic_test 50
+mic_test 60
 
 #dio_loopback_test
 

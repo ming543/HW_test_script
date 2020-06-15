@@ -22,6 +22,7 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 1 "Test U7-100" \
 2 "Test U7-200" \
 3 "Test U7-300" \
+4 "Q718-T2" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
 2>"${INPUT}"
@@ -35,7 +36,7 @@ case $(<"${INPUT}") in
 	1) 
 		clear
 		cd /home/production/hw_test/
-		sh u7-100 
+		sh U7-100 
 		exit 0
 		;;
 	2) 
@@ -46,6 +47,12 @@ case $(<"${INPUT}") in
 		echo "3"
 		echo "$REV"
 		exit 3
+		;;
+	4) 
+		clear
+		cd /home/production/hw_test/
+		sh Q718-T2 
+		exit 4
 		;;
 	c)	
 		echo "c"

@@ -10,13 +10,21 @@
 #Get SN for Log
 sn_get_dialog
 
+#Get BIOS OEM revision
+bios_oem_check QC31U912
+
+#Set BIOS time
+#hwclock_write 2020-06-14
+
+#check BIOS time ex.2020
+hwclock_check 2020
+
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
 #lan_mac_nocheck
 
-#check BIOS time before BI ex.2020
-hwclock_check 2020
+
 
 #check USB device
 usb_dev_check "Bus 002 Device 008"
@@ -24,7 +32,9 @@ usb_dev_check "Bus 002 Device 007"
 usb_dev_check "Bus 002 Device 006"
 
 usb_id_check "8564:1000"
-ssd_speed_check /dev/sdb 90 USB30
+
+ssd_speed_check /dev/sda 180
+ssd_speed_check /dev/sdc 90
 
 #DIO loopback test
 dio_loopback_test
@@ -43,7 +53,7 @@ bi_log_check
 #bi_cli_auto noserial 1
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +30 +40
+#cpu_temp_check +30 +40
 
 #copy bi log to final log
 bi_log_copy

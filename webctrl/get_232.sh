@@ -1,1 +1,1 @@
-curl -X GET http://192.168.0.12/__/config/port/RS/1 | jq
+curl -X GET http://$1/__/config/port/RS/1 | jq

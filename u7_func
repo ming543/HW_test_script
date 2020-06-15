@@ -17,6 +17,7 @@ MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
 DIO_LOC="$LOC/hw_test/tools/cgoslx-x64-1.03.029/CgosI2CgpioLoopback/Lx"
+CGUT_LOC="$LOC//hw_test/tools/cgutillx/cgutlcmd"
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 bi_cli_auto(){
@@ -95,6 +96,19 @@ burnintest_script(){
 	sudo $BURN_LOC/bit_gui_x64 -S $BURN_LOC/script.bits
 }
 
+bios_oem_check(){
+	OEM_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep OEM | awk '{print $4}')
+	if [ $OEM_REV = $1 ]; then
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check BIOS OEM $OEM_REV passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check BIOS OEM $OEM_REV failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check BIOS OEM $OEM_REV failed!, spec $1 !"
+	fi
+
+}
+
 cpu_temp_check(){
 	TEMP_LOG=$TMP_LOC/temp.tmp
 	rm -r $TEMP_LOG
@@ -150,13 +164,18 @@ fail_red_dialog(){
 		   echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   usb_log_sync
+		   onedrive_log_sync
 		   sh /home/production/hw_test/x.sh
+		   exit
 		exit 0 ;;
 	        
 		1) 
 		   echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   usb_log_sync
+		   onedrive_log_sync
 		   sync
 		   poweroff
 		exit 1 ;;
@@ -165,13 +184,21 @@ fail_red_dialog(){
 		   echo "" >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   usb_log_sync
+		   onedrive_log_sync
 		exit 255;;
 	esac
 }
 
+hwclock_write(){
+	sudo timedatectl set-ntp no
+	sudo timedatectl set-time "$1"
+	sudo hwclock -w	
+}
+
 hwclock_check(){
 	#BT=$(echo "efco1234" | sudo -S hwclock | cut -c 1-4)
-	BT=$(sudo -S hwclock | cut -c 1-4)
+	BT=$(sudo hwclock | cut -c 1-4)
 	if [ $BT = $1 ]; then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check BIOS time $BT passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
@@ -257,15 +284,28 @@ eb_lan_up(){
 }
 
 mic_test(){
-	arecord -d 3 -vv -f dat /dev/null 2> $MIC_LOG
-	MIC_CHECK=$( tail -1 $MIC_LOG | awk '{print $NF}' | cut -c 1-2)
-	if [ $MIC_CHECK -ge $1 ] ;then
+	arecord -d 5 -vvv -f dat /dev/null 2> $MIC_LOG
+	sum=0
+	i=0
+	while [ $i -lt 10 ]
+	do
+		i=$(($i+1))
+		MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 67)
+		sum=$(($sum+$MIC_CHECK))
+	#	echo $MIC_CHECK
+	#	sleep 1
+	done
+	#	clear	
+	#	echo $sum
+	#	sleep 5
+
+	if [ $sum -ge $1 ] ;then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** MIC check $MIC_CHECK % passed!, spec $1 %  ******" | tee -a $LOG_LOC/$SN_LOG.log	
+		echo "****** MIC check sum is $sum  passed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
 	else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** MIC check $MIC_CHECK % failed!, spec $1 %  ******" | tee -a $LOG_LOC/$SN_LOG.log	
-		fail_red_dialog "MIC check $MIC_CHECK % failed!, spec $1 %"	
+		echo "****** MIC check sum is $sum  failed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
+		fail_red_dialog "MIC check sum $sum failed!, spec $1"	
 	fi
 }
 
@@ -293,6 +333,8 @@ pass_green_dialog(){
 		   echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   usb_log_sync
+		   onedrive_log_sync
 		   sync
 		   poweroff
 		exit 0;;
@@ -300,16 +342,32 @@ pass_green_dialog(){
 		   echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   usb_log_sync
+		   onedrive_log_sync
 		   echo "Bach to shell" 
 		exit 1;;
                 255) 
 		   echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   usb_log_sync
+		   onedrive_log_sync
 		exit 255;;
         esac
 }
 
+pci_dev_check(){
+	echo " " | tee -a $LOG_LOC/$SN_LOG.log
+	echo "****** PCI device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+	
+	if [ $? = 0 ]; then
+		echo "****** Check PCI dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "****** Check PCI dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check PCI dev $1 failed !"
+	fi
+}
 
 rs232_loop_test(){
 	COM_LOG=$TMP_LOC/com.tmp
@@ -419,21 +477,29 @@ usb_id_check (){
 	fi
 }
 
-usb30_speed_check (){
+#1=device 2=speed 3=name
+ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
-	USB30_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
-	if [ $USB30_SPEED -ge $2 ]; then
+	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
+	if [ $SSD_SPEED -ge $2 ]; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	        echo "****** USB30 speed $USB30_SPEED passed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** $3 speed $SSD_SPEED passed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** USB30 speed $USB30_SPEED failed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "$1 USB30 speed $USB30_SPEED failed!, spec $2!" 
+                echo "****** $3 speed $SSD_SPEED failed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "$1 USB30 speed $SSD_SPEED failed!, spec $2!" 
 	fi
 }
 
 
+usb_log_sync(){
+	rsync -avh /home/production/u7_log/ /media/production/USB30/u7_log/
+}
 
+
+onedrive_log_sync(){
+	rclone copy /home/production/u7_log onedrive:General/u7_log -P
+}
 
 
 
