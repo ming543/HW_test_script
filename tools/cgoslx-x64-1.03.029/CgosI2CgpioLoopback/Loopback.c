@@ -80,10 +80,14 @@ int main(int argc, char* argv[]) {
 				printf("             ");
 			if (wChkOut)
 				printf("Output Error!");
-			printf(NEW_LINE);
+				printf(NEW_LINE);
+				return 1;
 		}
+	//	return 1;
 	}
 	CgosGPIODeinit();
+	printf("Loopback Test Done! ");
+	printf(NEW_LINE);
 	return 0;
 }
 

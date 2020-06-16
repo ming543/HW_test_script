@@ -9,10 +9,14 @@
 . ./u7_func
 
 #Show test script name
-echo $0
+#echo $0
 
 #Get SN for Log
 sn_get_dialog
+
+mic_test 50
+
+#dio_loopback_test
 
 #Get MAC for log
 #lan_mac_check enp1s0 80:7b:85
@@ -20,7 +24,7 @@ sn_get_dialog
 #lan_mac_nocheck
 
 #check BIOS time before BI ex.2020
-hwclock_check 2020
+#hwclock_check 2020
 
 #RS232 loopback test
 #rs232_burnintest

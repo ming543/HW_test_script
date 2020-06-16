@@ -27,6 +27,9 @@ usb_dev_check "Bus 002 Device 006"
 usb_id_check "8564:1000"
 usb30_speed_check /dev/sdb 90
 
+#DIO loopback test
+dio_loopback_test
+
 #RS232 loopback test
 #LAN test
 burnintest_script
