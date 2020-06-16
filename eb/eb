@@ -1,0 +1,40 @@
+#!/bin/bash
+# REVISON:R4
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./function
+
+#Show test script name
+echo $0
+
+#Get SN for Log
+sn_get
+
+#Check USB ID by device ex.8564:1000 #Transcend USB stick
+#Check USB dev by device ex.005:
+
+usb_dev_check 005:
+usb_dev_check 006:
+usb_dev_check 007:
+usb_id_check 8564:1000
+
+#Check serial dev by device ex.ttyAMA0:
+serial_check ttyAMA0
+
+#Check mac address of lan device and head ex.eno1 80:7b:85
+lan_mac_check wlan0 7c:a7:b0 14:6b:9c 24:72:60
+lan_mac_check eth0 b8:27:eb b8:27:eb 12:34:56
+
+#Check ping to router
+lan_ping_check wlan0 192.168.137.1
+
+#Check ping to router
+lan_ping_check eth0 192.168.0.1
+
+
+pass_green_poweroff
+
