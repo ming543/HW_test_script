@@ -24,15 +24,14 @@ lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
 #lan_mac_nocheck
 
-
-
 #check USB device
 usb_dev_count "Bus 002" 8
+usb_dev_count "Bus 003" 2
 
-usb_id_check "8564:1000"
+#usb_id_check "8564:1000"
 
-ssd_speed_check /dev/sda 180  
-ssd_speed_check /dev/sdc 100 90
+ssd_speed_check /dev/sda 500  
+ssd_speed_check /dev/sdc 200 
 
 #DIO loopback test
 dio_loopback_test
