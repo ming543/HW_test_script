@@ -1,8 +1,8 @@
 #!/bin/bash
 # utilitymenu.sh - A sample shell script to display menus on screen
 # Store menu options selected by the user
+#set -xv
 INPUT=/tmp/menu
-# Storage file for displaying cal and date command output
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 
@@ -25,24 +25,24 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 4 "Q718-T2" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
-2>"${INPUT}"
+2>$INPUT
+#2>"${INPUT}"
 
-#menuitem=$(<"${INPUT}")
+menuitem=$(cat $INPUT)
 #response=$?
-
 # make decsion 
-#case $menuitem in
-case $(<"${INPUT}") in
-	1) 
+
+case $(cat $INPUT) in
+	1)
 		clear
 		cd /home/production/hw_test/
 		sh U7-100 
 		exit 0
-		;;
+	;;
 	2) 
 		echo "2"
 		exit 2
-		;;
+	;;
 	3) 
 		echo "3"
 		echo "$REV"
@@ -55,10 +55,19 @@ case $(<"${INPUT}") in
 		exit 4
 		;;
 	c)	
+		clear
 		echo "c"
+		sleep 5
+		sudo timedatectl set-ntp yes
+		rclone copy /home/production/u7_log onedrive:General/u7_log -P
+		exit
 		;;
 	u)	
+		clear
 		echo "u"
+		cd /home/production/hw_test/
+		git pull
+		exit 0		
 		;;	
 
 esac

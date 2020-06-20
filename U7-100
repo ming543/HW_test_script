@@ -19,9 +19,7 @@ lan_mac_check enp4s0 00:13:95
 hwclock_check 2020
 
 #check USB device
-usb_dev_check "Bus 002 Device 008"
-usb_dev_check "Bus 002 Device 007"
-usb_dev_check "Bus 002 Device 006"
+usb_dev_count "Bus 002" 8
 
 usb_id_check "8564:1000"
 ssd_speed_check /dev/sdb 90 USB30

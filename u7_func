@@ -166,7 +166,8 @@ fail_red_dialog(){
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   usb_log_sync
 		   onedrive_log_sync
-		   sh /home/production/hw_test/x.sh
+		   clear
+		   sh /home/production/hw_test/run.sh
 		   exit
 		exit 0 ;;
 	        
@@ -442,24 +443,42 @@ sn_get_dialog(){
 	dialog --title "$MODEL Test" \
 	--inputbox "Please Scan the SN of Label:\n請使用刷槍輸入序號:" \
 	10 40 2> $SN_TMP
-	SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
-	echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
-	#cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
-	echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-	echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log	
-
+	if [ $? = 0 ]; then
+		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
+		echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log	
+	else 
+		exit 1
+	fi		
 }
+
 usb_dev_check (){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** USB device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
 #	USB_dev=$(lsusb |grep "$1" |awk '{print $4}')
-	lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
-	
+	lsusb | grep "$1" 
 	if [ $? = 0 ]; then
 		echo "****** Check USB dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check USB dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check USB dev $1 failed !"
+	fi
+}
+
+usb_dev_count (){
+	echo " " | tee -a $LOG_LOC/$SN_LOG.log
+	echo "****** USB device count!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	count=$(lsusb | grep "$1" |wc -l)
+	if [ $count = $2 ]; then
+		echo "****** Count USB dev $1 passed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "****** Count USB dev $1 failed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check USB dev $1 failed X $count ! spec $2 !"
 	fi
 }
 
@@ -477,20 +496,26 @@ usb_id_check (){
 	fi
 }
 
-#1=device 2=speed 3=name
+#1=device 2=speed 3=speed2
 ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
-	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
-	if [ $SSD_SPEED -ge $2 ]; then
+	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}')	
+	SSD_1=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
+	SSD_2=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-2)	
+	if [ $SSD_1 -ge $2 ] || [ $SSD_2 -ge $3 ]; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	        echo "****** $3 speed $SSD_SPEED passed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** $1 speed $SSD_SPEED passed!, spec $2 $3! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** $3 speed $SSD_SPEED failed!, spec $2! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "$1 USB30 speed $SSD_SPEED failed!, spec $2!" 
+                echo "****** $1 speed $SSD_SPEED failed!, spec $2 $3! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "$1 speed $SSD_SPEED failed!, spec $2 $3!" 
 	fi
 }
 
+time_ntp_set(){
+	sudo timedatectl set-ntp yes
+
+}
 
 usb_log_sync(){
 	rsync -avh /home/production/u7_log/ /media/production/USB30/u7_log/

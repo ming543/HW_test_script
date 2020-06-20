@@ -12,11 +12,11 @@
 
 git status
 #add all modifed file
-git add .
+sudo git add .
 
 #add command
-git commit -m "$1"
+sudo git commit -m "$1"
 
 #update to server
-git push
+sudo git push
 
