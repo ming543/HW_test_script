@@ -60,6 +60,7 @@ case $(cat $INPUT) in
 		sleep 5
 		sudo timedatectl set-ntp yes
 		rclone copy /home/production/u7_log onedrive:General/u7_log -P
+		sleep 10
 		exit
 		;;
 	u)	
@@ -67,6 +68,7 @@ case $(cat $INPUT) in
 		echo "u"
 		cd /home/production/hw_test/
 		git pull
+		sleep 10
 		exit 0		
 		;;	
 

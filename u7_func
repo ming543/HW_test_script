@@ -360,12 +360,13 @@ pass_green_dialog(){
 pci_dev_check(){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** PCI device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
-	lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
-	
+	lspci |grep "$1" 
 	if [ $? = 0 ]; then
 		echo "****** Check PCI dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check PCI dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check PCI dev $1 failed !"
 	fi
 }
