@@ -67,7 +67,7 @@ case $(cat $INPUT) in
 		clear
 		echo "u"
 		cd /home/production/hw_test/
-		git pull
+		sh git_reset.sh
 		sleep 10
 		exit 0		
 		;;	
