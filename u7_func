@@ -360,12 +360,13 @@ pass_green_dialog(){
 pci_dev_check(){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** PCI device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
-	lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
-	
+	lspci |grep "$1" 
 	if [ $? = 0 ]; then
 		echo "****** Check PCI dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check PCI dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check PCI dev $1 failed !"
 	fi
 }
@@ -473,11 +474,11 @@ usb_dev_count (){
 	echo "****** USB device count!  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	count=$(lsusb | grep "$1" |wc -l)
 	if [ $count = $2 ]; then
-		echo "****** Count USB dev $1 passed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** USB device count $1 passed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
-		echo "****** Count USB dev $1 failed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** USB device count $1 failed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check USB dev $1 failed X $count ! spec $2 !"
 	fi
 }
@@ -499,16 +500,14 @@ usb_id_check (){
 #1=device 2=speed 3=speed2
 ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
-	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $11}')	
-	SSD_1=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-3)	
-	SSD_2=$(cat $USB30_LOC | grep sec | awk '{print $11}' | cut -c 1-2)	
-	if [ $SSD_1 -ge $2 ] || [ $SSD_2 -ge $3 ]; then
+	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')	
+	if [ $SSD_SPEED -ge $2 ] ; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	        echo "****** $1 speed $SSD_SPEED passed!, spec $2 $3! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** $1 speed $SSD_SPEED failed!, spec $2 $3! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "$1 speed $SSD_SPEED failed!, spec $2 $3!" 
+                echo "****** $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "$1 speed $SSD_SPEED failed!, spec $2 !" 
 	fi
 }
 
