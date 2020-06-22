@@ -19,9 +19,9 @@ rm $INPUT
 ### display main menu ###
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
-1 "Test U7-100" \
-2 "Test U7-200" \
-3 "Test U7-300" \
+1 "U7-100" \
+2 "U7-200" \
+3 "U7-300" \
 4 "Q718-T2" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
