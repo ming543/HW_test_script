@@ -68,7 +68,8 @@ case $(cat $INPUT) in
 		echo "u"
 		cd /home/production/hw_test/
 		sh git_reset.sh
-		sleep 10
+		sleep 5
+		sh /home/production/hw_test/run.sh
 		exit 0		
 		;;	
 
