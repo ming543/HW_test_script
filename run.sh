@@ -38,17 +38,23 @@ case $(cat $INPUT) in
 		cd /home/production/hw_test/
 		sh U7-100 
 		exit 0
-	;;
+		;;
 	2) 
 		echo "2"
+		clear
+		cd /home/production/hw_test/
+		sh U7-200 
 		exit 2
-	;;
+		;;
 	3) 
 		echo "3"
-		echo "$REV"
+		clear
+		cd /home/production/hw_test/
+		sh U7-300 
 		exit 3
 		;;
 	4) 
+		echo "4"
 		clear
 		cd /home/production/hw_test/
 		sh Q718-T2 
@@ -57,10 +63,10 @@ case $(cat $INPUT) in
 	c)	
 		clear
 		echo "c"
-		sleep 5
 		sudo timedatectl set-ntp yes
 		rclone copy /home/production/u7_log onedrive:General/u7_log -P
-		sleep 10
+		sleep 5
+		sh /home/production/hw_test/run.sh
 		exit
 		;;
 	u)	
