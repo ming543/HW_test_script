@@ -25,9 +25,10 @@ time_ntp_set
 hwclock_check_live
 
 #check USB device
-usb_dev_count "Bus 002" 8
+usb_dev_count "Bus 002" 7
+usb_dev_count "Bus 003" 2
 
-usb_id_check "8564:1000"
+#usb_id_check "8564:1000"
 ssd_speed_check /dev/sdb 90 USB30
 
 #DIO loopback test
