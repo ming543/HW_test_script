@@ -96,6 +96,33 @@ burnintest_script(){
 	sudo $BURN_LOC/bit_gui_x64 -S $BURN_LOC/script.bits
 }
 
+bios_oem_update(){
+	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
+	echo " " | tee -a $LOG_LOC/$SN_LOG.log
+	echo "****** Check BIOS Version is $BIOS_REV ******" | tee -a $LOG_LOC/$SN_LOG.log
+	case $BIOS_REV in
+		QC31R128)
+			OEM=QC31U128
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
+			bios_oem_check $OEM
+			;;
+		QC31R912)
+			OEM=QC31U912
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
+			bios_oem_check $OEM
+			;;
+		QC32R912)
+			OEM=QC32U912
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
+			bios_oem_check $OEM
+			;;
+	esac
+			
+}
+
 bios_oem_check(){
 	OEM_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep OEM | awk '{print $4}')
 	if [ $OEM_REV = $1 ]; then
@@ -198,15 +225,31 @@ hwclock_write(){
 }
 
 hwclock_check(){
-	#BT=$(echo "efco1234" | sudo -S hwclock | cut -c 1-4)
-	BT=$(sudo hwclock | cut -c 1-4)
-	if [ $BT = $1 ]; then
+	BT=$(sudo hwclock)
+	BTC=$(sudo hwclock | cut -c 1-4)
+	if [ $BTC = $1 ]; then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check BIOS time $BT passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check RTC $BT passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check BIOS time $BT failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		fail_red_dialog "Check BIOS time $BT failed!, spec $1 !"
+		echo "****** Check RTC $BT failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check RTC $BT failed!, spec $1 !"
+	fi
+}
+
+hwclock_check_live(){
+	BT=$(sudo hwclock)
+	BTC=$(sudo hwclock | cut -c 1-4)
+	LIVE_YEAR=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $6}')
+	LIVE_MONTH=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $5}')
+	LIVE_DAY=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $4}')
+	if [ $BTC = $LIVE_YEAR ]; then
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check RTC $BT passed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check RTC $BT failed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check RTC $BT failed!, spec $LIVE_YEAR !"
 	fi
 }
 
@@ -512,8 +555,20 @@ ssd_speed_check (){
 }
 
 time_ntp_set(){
-	sudo timedatectl set-ntp yes
+	ping ntp.ubuntu.com -c 1
+	if [ $? = 0 ]; then
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check ping ntp passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 
+	else
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check ping ntp failed !"
+	fi
+	timedatectl set-ntp yes
+	timedatectl
+	sleep 5
+	sudo hwclock -w
 }
 
 usb_log_sync(){
