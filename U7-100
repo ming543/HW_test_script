@@ -28,8 +28,8 @@ hwclock_check_live
 usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
 
-#usb_id_check "8564:1000"
-ssd_speed_check /dev/sdb 90 USB30
+#usb30 speed check 
+ssd_speed_check sdb1 90 
 
 #DIO loopback test
 dio_loopback_test

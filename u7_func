@@ -539,17 +539,18 @@ usb_id_check (){
 	fi
 }
 
-#1=device 2=speed 3=speed2
+#1=device 2=speed 
 ssd_speed_check (){
-	sudo hdparm -t $1 > $USB30_LOC
-	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')	
+	sudo hdparm -t /dev/$1 > $USB30_LOC
+	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
+	SSD_DEV=$(lsblk | grep $1 | awk '{print $7}')	
 	if [ $SSD_SPEED -ge $2 ] ; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	        echo "****** Check $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** Check $SSD_DEV speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** Check $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $1 speed $SSD_SPEED failed!, spec $2 !" 
+                echo "****** Check $SSD_DEV speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $SSD_DEV speed $SSD_SPEED failed!, spec $2 !" 
 	fi
 }
 
