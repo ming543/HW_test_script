@@ -55,11 +55,11 @@ bi_cli_auto(){
 	BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
 	if [ $BICHK = "PASSED" ]; then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		fail_red_dialog "Passmark BI result failed!"
+		echo "****** Check Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check Passmark BI result failed!"
 	fi
 }
 
@@ -67,12 +67,12 @@ bi_log_check(){
  	BICHK=$(grep "TEST RUN PASSED" "$BI_LOG" | cut -c 10-15 )
         if [ $BICHK = "PASSED" ]; then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "****** Check Passmark BI result passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
         else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "****** Check Passmark BI result failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
                 bi_log_copy
-		fail_red_dialog "Passmark BI result failed!"
+		fail_red_dialog "Check Passmark BI result failed!"
         fi
 }
 
@@ -82,9 +82,9 @@ bi_log_copy(){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
-	echo "************************************" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
-	echo "****** The BI LOG start here! ******" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
-	echo "************************************" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
+	echo "******************************************" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
+	echo "****** The Passmark LOG start here! ******" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
+	echo "*******************************************" | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log >/dev/null
@@ -146,25 +146,23 @@ cpu_temp_check(){
 
 	if [ $CPU_TEMP_LOG -ge $1 ] && [ $CPU_TEMP_LOG -le $2 ];then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log	
+		echo "****** Check CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log	
 	else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
+		echo "****** Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
 	fi
 }
 
 dio_loopback_test(){
-	echo " " | tee -a $LOG_LOC/$SN_LOG.log
-        echo "****** DIO Loopback Test!  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	$DIO_LOC/cgosi2cgpioloopback > $DIO_LOG
 	if [ $? = 0 ];then
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "******  $(cat $DIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check DIO $(cat $DIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
         else
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** $(cat $DIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "DIO Loopback $(cat $DIO_LOG) failed!"
+		echo "****** Check DIO $(cat $DIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check DIO $(cat $DIO_LOG) failed!"
         fi
 }
 
@@ -345,11 +343,11 @@ mic_test(){
 
 	if [ $sum -ge $1 ] ;then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** MIC check sum is $sum  passed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
+		echo "****** Check MIC sum is $sum  passed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
 	else
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** MIC check sum is $sum  failed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
-		fail_red_dialog "MIC check sum $sum failed!, spec $1"	
+		echo "****** Check MIC sum is $sum  failed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log	
+		fail_red_dialog "Check MIC sum $sum failed!, spec $1"	
 	fi
 }
 
@@ -513,16 +511,17 @@ usb_dev_check (){
 }
 
 usb_dev_count (){
-	echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	echo "****** USB device count!  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	count=$(lsusb | grep "$1" |wc -l)
 	if [ $count = $2 ]; then
-		echo "****** USB device count $1 passed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check USB device count $1 X $count passed! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
+
 		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
-		echo "****** USB device count $1 failed X $count ! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check USB device count $1 X $count failed! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check USB dev $1 failed X $count ! spec $2 !"
+		fail_red_dialog "Check USB dev count $1 X $count failed! spec $2 !"
 	fi
 }
 
@@ -546,11 +545,11 @@ ssd_speed_check (){
 	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')	
 	if [ $SSD_SPEED -ge $2 ] ; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	        echo "****** $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** Check $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-                echo "****** $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "$1 speed $SSD_SPEED failed!, spec $2 !" 
+                echo "****** Check $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 speed $SSD_SPEED failed!, spec $2 !" 
 	fi
 }
 

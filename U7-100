@@ -35,7 +35,7 @@ ssd_speed_check /dev/sdb 90 USB30
 dio_loopback_test
 
 #Audio MIC sum test
-mic_test 40
+mic_test 30
 
 #RS232 and LAN loopback test by PASSMARK
 burnintest_script

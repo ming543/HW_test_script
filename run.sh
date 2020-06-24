@@ -19,8 +19,8 @@ rm $INPUT
 ### display main menu ###
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
-1 "U7-100" \
-2 "U7-200" \
+1 "U7-PFT" \
+2 "U7-100" \
 3 "U7-300" \
 4 "Q718-T2" \
 c "Copy Log to Onedrive" \
@@ -36,14 +36,14 @@ case $(cat $INPUT) in
 	1)
 		clear
 		cd /home/production/hw_test/
-		sh U7-100 
+		sh U7-PFT 
 		exit 0
 		;;
 	2) 
 		echo "2"
 		clear
 		cd /home/production/hw_test/
-		sh U7-200 
+		sh U7-100 
 		exit 2
 		;;
 	3) 

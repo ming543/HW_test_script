@@ -10,11 +10,6 @@
 #Get SN for Log
 sn_get_dialog
 
-#Get MAC for log
-lan_mac_check enp1s0 80:7b:85
-lan_mac_check enp4s0 00:13:95
-#lan_mac_nocheck
-
 #Update BIOS default setting to OEM
 bios_oem_update
 
