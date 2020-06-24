@@ -13,7 +13,7 @@ sn_get_dialog
 #bios_oem_update
 #bios_oem_check
 #time_ntp_set
-
+mic_test 40
 #check BIOS time before BI ex.2020
 #hwclock_check 2020
 

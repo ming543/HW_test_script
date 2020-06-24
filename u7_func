@@ -326,6 +326,9 @@ eb_lan_up(){
 }
 
 mic_test(){
+	dialog --title "MIC Test" --msgbox "Please check MIC connection \n請確認麥克風是否連接" 10 40
+	sleep 2
+	clear
 	arecord -d 5 -vvv -f dat /dev/null 2> $MIC_LOG
 	sum=0
 	i=0
