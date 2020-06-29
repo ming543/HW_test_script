@@ -6,18 +6,24 @@
 #set -xv
 
 LOC="/home/production"
+BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
+CGUT_LOC="$LOC/hw_test/tools/cgutillx/cgutlcmd"
+DIO_LOC="$LOC/hw_test/tools/cgoslx-x64-1.03.029/CgosI2CgpioLoopback/Lx"
+EEUPDATE_LOC="$LOC/hw_test/tools/intel/Linux_x64/OEM_Mfg"
 SCR_LOC="$LOC/hw_test"
 TMP_LOC="$LOC/hw_test/tmp"
 LIB_LOC="$LOC/hw_test/lib"
 LOG_LOC="$LOC/u7_log"
-MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
-BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
-BI_LOG="/tmp/bi.log"
-MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
+
+
+MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
-DIO_LOC="$LOC/hw_test/tools/cgoslx-x64-1.03.029/CgosI2CgpioLoopback/Lx"
-CGUT_LOC="$LOC//hw_test/tools/cgutillx/cgutlcmd"
+BI_LOG="/tmp/bi.log"
+MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
+MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
+NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
+ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 bi_cli_auto(){
@@ -325,6 +331,67 @@ eb_lan_up(){
 	fi
 }
 
+mac_get_dialog(){
+        rm -f $MAC_LOG
+        dialog --title "LAN MAC Scan" --colors \
+        --inputbox "\Zb\Z3Please Scan the MAC of Label:\n請使用刷槍輸入MAC序號:" \
+        10 40 2> $MAC_LOG
+	echo "" >> $MAC_LOG
+	MAC_READ=$(cat $MAC_LOG)
+        if [ $? = 0 ]; then
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Scan MAC $MAC_READ for program! ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Scan MAC $MAC_READ fail! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Scan MAC $MAC_READ fail!" 
+                exit 1
+        fi
+}
+
+mac_scan_check(){
+	MAC_HEAD_CHECK=$(cat $MAC_LOG | cut -c 1-6)
+	MAC_LENGTH=$(cat $MAC_LOG | wc -c)
+	if [ $MAC_LENGTH = 13 ] && [ $MAC_HEAD_CHECK = "807b85" ] || [ $MAC_HEAD_CHECK = "807B85" ]; then
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check MAC length and head pass! ******" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check MAC length $MAC_LENGTH and head $MAC_HEAD_CHECK fail! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check MAC length $MAC_LENGTH and head $MAC_HEAD_CHECK fail!" 
+	fi
+}
+
+mac_nvm_write(){
+	sudo $EEUPDATE_LOC/eeupdate64e $1 /D $EEUPDATE_LOC/NONIOI.BIN > $NVM_LOG
+        if [ $? = 0 ]; then
+		NVM_CHECK=$(cat $NVM_LOG | tail -n 1)
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** $1 $NVM_CHECK ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+		NVM_CHECK=$(cat $NVM_LOG | tail -n 1)
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** $1 $NVM_CHECK fail! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog " $1 $NVM_CHECK fail!" 
+                exit 1
+        fi
+}
+mac_addr_write(){
+	sudo $EEUPDATE_LOC/eeupdate64e $1 /A $MAC_LOG > $ADDR_LOG
+        if [ $? = 0 ]; then
+		ADDR_CHECK=$(cat $ADDR_LOG | tail -n 2)
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** $1 $ADDR_CHECK ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+		ADDR_CHECK=$(cat $ADDR_LOG | tail -n 2)
+		echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** $1 $ADDR_CHECK fail! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog " $1 $ADDR_CHECK fail!" 
+                exit 1
+        fi
+
+}
+
 mic_test(){
 	dialog --title "MIC Test" --msgbox "Please check MIC connection \n請確認麥克風是否連接" 10 40
 	sleep 2
@@ -580,7 +647,7 @@ usb_log_sync(){
 
 
 onedrive_log_sync(){
-	rclone copy /home/production/u7_log onedrive:General/u7_log -P
+	sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 }
 
 

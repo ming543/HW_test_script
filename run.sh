@@ -21,8 +21,10 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-PFT" \
 2 "U7-100" \
-3 "U7-300" \
-4 "Q718-T2" \
+3 "U7-200" \
+4 "U7-300" \
+5 "Q718-T1" \
+6 "Q718-T2" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
 2>$INPUT
@@ -50,21 +52,35 @@ case $(cat $INPUT) in
 		echo "3"
 		clear
 		cd /home/production/hw_test/
-		sh U7-300 
+		sh U7-200 
 		exit 3
 		;;
 	4) 
 		echo "4"
 		clear
 		cd /home/production/hw_test/
-		sh Q718-T2 
+		sh U7-300 
 		exit 4
+		;;
+	5) 
+		echo "5"
+		clear
+		cd /home/production/hw_test/
+		sh Q718-T1 
+		exit 5
+		;;
+	6) 
+		echo "6"
+		clear
+		cd /home/production/hw_test/
+		sh Q718-T2 
+		exit 6
 		;;
 	c)	
 		clear
 		echo "c"
 		sudo timedatectl set-ntp yes
-		rclone copy /home/production/u7_log onedrive:General/u7_log -P
+		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sleep 5
 		sh /home/production/hw_test/run.sh
 		exit

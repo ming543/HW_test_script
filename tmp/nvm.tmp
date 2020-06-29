@@ -1,0 +1,16 @@
+
+Using: Intel (R) PRO Network Connections SDK v2.26.1
+EEUPDATE v5.26.01.00 
+Copyright (C) 1995 - 2015 Intel Corporation
+Intel (R) Confidential and not for general distribution.
+
+Driverless Mode
+
+
+NIC Bus Dev Fun Vendor-Device  Branding string
+=== === === === ============= =================================================
+  1   1  00  00   8086-1533    Intel(R) I210 Gigabit Network Connection
+  2   4  00  00   8086-1533    Intel(R) I210 Gigabit Network Connection
+
+Writing SHARED FLASH.  PLEASE DO NOT INTERRUPT THIS PROCESS.
+ 1:  Shared Flash image updated successfully.
