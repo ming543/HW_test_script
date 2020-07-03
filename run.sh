@@ -20,11 +20,13 @@ rm $INPUT
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-PFT" \
-2 "U7-100" \
+2 "U7-100-T2" \
 3 "U7-200" \
 4 "U7-300" \
 5 "Q718-T1" \
 6 "Q718-T2" \
+7 "Q715-T1" \
+8 "Q715-T2" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
 2>$INPUT
@@ -45,7 +47,7 @@ case $(cat $INPUT) in
 		echo "2"
 		clear
 		cd /home/production/hw_test/
-		sudo sh U7-100 
+		sudo sh U7-100-T2 
 		exit 2
 		;;
 	3) 
@@ -75,6 +77,20 @@ case $(cat $INPUT) in
 		cd /home/production/hw_test/
 		sudo sh Q718-T2 
 		exit 6
+		;;
+	7) 
+		echo "7"
+		clear
+		cd /home/production/hw_test/
+		sudo sh Q715-T1 
+		exit 7
+		;;
+	8) 
+		echo "8"
+		clear
+		cd /home/production/hw_test/
+		sudo sh Q715-T2 
+		exit 8
 		;;
 	c)	
 		clear

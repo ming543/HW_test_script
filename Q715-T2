@@ -22,23 +22,14 @@ hwclock_check 2020
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
-#lan1_ping_test
-lan_down enp4s0
-lan_up enp1s0
-lan_ping_check 192.168.0.1
-#lan2_ping_test
-lan_down enp1s0
-lan_up enp4s0
-lan_ping_check 192.168.0.1
-
-#check pci device
-#pci_dev_check 
+#lan_mac_nocheck
 
 #check USB device
-usb_dev_count "Bus 002" 7
+usb_dev_count "Bus 002" 8
 usb_dev_count "Bus 003" 2
 
-#USB30 and mSATA speed test
+#usb_id_check "8564:1000"
+
 ssd_speed_check /dev/sda 500  
 ssd_speed_check /dev/sdc 200 
 
@@ -46,15 +37,14 @@ ssd_speed_check /dev/sdc 200
 dio_loopback_test
 
 #Audio MIC sum test
-mic_test 30
+mic_test 40
 
 #RS232 loopback test
-serial_loop_test /dev/ttyS0
 #LAN test
-#burnintest_script
+burnintest_script
 
 #bi check
-#bi_log_check
+bi_log_check
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 #bi_cli_auto noserial 1
@@ -63,7 +53,7 @@ serial_loop_test /dev/ttyS0
 #cpu_temp_check +30 +40
 
 #copy bi log to final log
-#bi_log_copy
+bi_log_copy
 
 #Show ALL TEST PASS to log
 pass_green_dialog

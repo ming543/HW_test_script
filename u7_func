@@ -317,43 +317,43 @@ lan_mac_nocheck(){
 	done
 }
 
-eb_lan_down(){
-	sudo ifdown $1
+lan_down(){
+	sudo ifconfig $1 down
 	if [ $? = 0 ];then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ifdown pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check $1 lan_down pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ifdown fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $1 ifdown fail !"
+		echo "****** Check $1 lan_down fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 lan_down fail !"
 	fi
 	
 }
 
 lan_ping_check(){
-	sudo ifup $1
-	sleep 2
-	ping -c1 $2
+	sleep 1
+	ping -c 1 $1
 	if [ $? = 0 ];then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ping $2 pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check $1 ping pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ping $2 fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $1 ping $2 fail !"
+		echo "****** Check $1 ping fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 ping fail !"
 	fi
 }
 
 
-eb_lan_up(){
-	sudo ifup $1
+lan_up(){
+	sudo ifconfig $1 up
 	if [ $? = 0 ];then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ifup pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check $1 lan_up pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sleep 3
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check $1 ifup fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $1 ifup fail !" 
+		echo "****** Check $1 lan_up fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 lan_up fail !" 
 	fi
 }
 
