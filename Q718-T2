@@ -32,7 +32,8 @@ lan_up enp4s0
 lan_ping_check 192.168.0.1
 
 #check pci device
-#pci_dev_check 
+pci_dev_check 02:00
+pci_dev_check 03:00
 
 #check USB device
 usb_dev_count "Bus 002" 7
