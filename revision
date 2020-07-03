@@ -1,3 +1,6 @@
+1.1.0 install openssh-server for remote login test
 1.0.0 First release for U7-100 test
-1.2.3 1<OS update 2<function update 2<small bug update
+
+#The revision neaming rule
+#A.B.C A<OS update B<function update C<small bug update
  

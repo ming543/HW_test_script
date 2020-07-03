@@ -68,3 +68,6 @@ LOG NOTE: 2020-06-24 10:31:54, Script , SETLOG "/tmp/bi.log"
 LOG NOTE: 2020-06-24 14:32:58, Status, BurnInTest v3.4 1002
 LOG NOTE: 2020-06-24 14:32:58, Starting script.
 LOG NOTE: 2020-06-24 14:32:59, Script , SETLOG "/tmp/bi.log" 
+LOG NOTE: 2020-06-30 10:49:05, Status, BurnInTest v3.4 1002
+LOG NOTE: 2020-06-30 10:49:05, Starting script.
+LOG NOTE: 2020-06-30 10:49:06, Script , SETLOG "/tmp/bi.log" 
