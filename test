@@ -18,9 +18,10 @@ bios_rev_check
 #lan_up enp4s0
 #lan_ping_check 192.168.0.1
 
-serial_loop_test /dev/ttyS0
+
+#serial_loop_test /dev/ttyS0
 #serial_loop_test /dev/ttyS2
-#serial_loop_test /dev/ttyS1
+serial_loop_test /dev/ttyS1
 #mac_addr_write /NIC=1
 #bios_oem_update
 #bios_oem_check
