@@ -10,14 +10,15 @@
 #Get SN for Log
 sn_get_dialog
 bios_rev_check
-lan_down enp4s0
-lan_up enp1s0
-lan_ping_check 192.168.0.1
-lan_down enp1s0
-lan_up enp4s0
-lan_ping_check 192.168.0.1
 
-#serial_loop_test /dev/ttyS0
+#lan_down enp4s0
+#lan_up enp1s0
+#lan_ping_check 192.168.0.1
+#lan_down enp1s0
+#lan_up enp4s0
+#lan_ping_check 192.168.0.1
+
+serial_loop_test /dev/ttyS0
 #serial_loop_test /dev/ttyS2
 #serial_loop_test /dev/ttyS1
 #mac_addr_write /NIC=1

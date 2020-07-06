@@ -551,7 +551,7 @@ rs232_loop_test_old(){
 }
 
 serial_loop_test(){
-	sudo $SERIAL_LOC/linux-serial-test -p $1 -b 115200 -o 1 -i 3
+	sudo $SERIAL_LOC/linux-serial-test -p $1 -b 115200 -c -o 1 -i 3
 	if [ $? = 0 ]; then
 	        echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check RS232 $1 loopback passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log

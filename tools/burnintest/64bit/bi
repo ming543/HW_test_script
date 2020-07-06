@@ -52,3 +52,7 @@ DETAILED EVENT LOG
 LOG NOTE: 2020-06-11 11:33:34, Status, BurnInTest v3.4 1002
 LOG NOTE: 2020-06-11 11:33:34, Starting script.
 LOG NOTE: 2020-06-11 11:33:35, Script , SETLOG "/tmp/bi.log" 
+******************
+DETAILED EVENT LOG
+******************
+LOG NOTE: 2020-07-06 16:43:17, Status, BurnInTest v3.4 1002
