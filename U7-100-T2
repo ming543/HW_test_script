@@ -14,7 +14,7 @@ sn_get_dialog
 #bios_oem_check QC31U912
 
 #check BIOS time before ex.2020
-hwclock_check 2020
+#hwclock_check 2020
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
