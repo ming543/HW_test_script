@@ -7,17 +7,20 @@
 #---Start Function---
 . ./u7_func
 
+lan_up enp1s0
+lan_up enp4s0
+lan_ping_check 192.168.0.1
+#Update time from NTP server
+time_ntp_set
+
 #Get SN for Log
 sn_get_dialog
 
 #Update BIOS default setting to OEM
 bios_oem_update
 
-#check BIOS time before ex.2020
-hwclock_write 2020-06-14
-hwclock_check 2020
-
-
+#check BIOS time from internet
+hwclock_check_live
 
 #Show ALL TEST PASS to log
 pass_green_dialog
