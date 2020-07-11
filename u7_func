@@ -609,6 +609,22 @@ sn_get_dialog(){
 	fi		
 }
 
+sn_get_nodate_dialog(){
+	SN_TMP=$TMP_LOC/sn.tmp
+ 	MODEL=$0
+	dialog --title "$MODEL Test" \
+	--inputbox "Please Scan the SN of Label:\n請使用刷槍輸入序號:" \
+	10 40 2> $SN_TMP
+	if [ $? = 0 ]; then
+		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
+		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
+		echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log	
+	else 
+		exit 1
+	fi		
+}
+
 usb_dev_check (){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** USB device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
