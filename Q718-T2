@@ -8,7 +8,7 @@
 . ./u7_func
 
 #Get SN for Log
-sn_get_dialog
+sn_get_nodate_dialog
 
 #Get BIOS OEM revision
 bios_oem_check QC31U912
