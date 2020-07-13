@@ -1,0 +1,21 @@
+,,,
+CGOSTEST TEST SYSTEM INFORMATION,,,
+CGOSTEST Version,rev. 1.2.1,,
+CGOS API Version,0x01030015,,
+CGOS Driver Version,0x01020015,,
+System BIOS Version,QM32R912,,
+BC Firmware Version,CGBCP424,,
+Board Name,QM32,,
+Board Sub Name,QA30,,
+Product Revision,A.0 (0x0041),,
+Part Number,615111,,
+EAN Code,04250186112288,,
+Serial Number,000003112757,,
+,,,
+CgosLibInitialize,SUCCESS,,00000000h
+CgosBoardOpen,SUCCESS,,00000000h
+CgosLibGetLastError,SUCCESS,,00000000h
+CgosLibSetLastErrorAddress,SUCCESS,,00000000h
+CgosIOCount,SUCCESS,,FFFFFFFFh
+CgosBoardClose,SUCCESS,,00000000h
+CgosLibUninitialize,SUCCESS,,00000000h

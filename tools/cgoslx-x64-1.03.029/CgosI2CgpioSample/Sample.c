@@ -36,12 +36,14 @@ int main(int argc, char* argv[]) {
 			printf(" %2u ", i);
 		printf(" Hex"NEW_LINE);
 		printf("  Config: ");
+//
 //		if (CgosConfigGPIO(&w)) {
 //			for (i = 0; i < 16; i++)
 //				printf("%s", w & 1 << i ? " OUT" : " IN ");
 //			printf(" %.4X"NEW_LINE, w);
 //		} else
 //			printf(" --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ----"NEW_LINE);
+//
 		for (i = 0; i < 16; i++) {
 			if (CgosConfigGPIOPin(i, &bData))
 				printf("%s", bData ? " OUT" : " IN ");
