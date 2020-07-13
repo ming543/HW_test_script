@@ -36,7 +36,7 @@ pci_dev_check 02:00
 pci_dev_check 03:00
 
 #check USB device
-usb_dev_count "Bus 002" 7
+usb_dev_count "Bus 002" 8
 usb_dev_count "Bus 003" 2
 
 #USB30 and mSATA speed test
