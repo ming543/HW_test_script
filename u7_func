@@ -9,6 +9,7 @@ LOC="/home/production"
 BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
 CGUT_LOC="$LOC/hw_test/tools/cgutillx/cgutlcmd"
 DIO_LOC="$LOC/hw_test/tools/cgoslx-x64-1.03.029/CgosI2CgpioLoopback/Lx"
+IDIO_LOC="$LOC/hw_test/tools/cgoslx-x64-1.03.029/CgosI2CgpioSample/Lx"
 EEUPDATE_LOC="$LOC/hw_test/tools/intel/Linux_x64/OEM_Mfg"
 SERIAL_LOC="$LOC/hw_test/tools"
 SCR_LOC="$LOC/hw_test"
@@ -20,6 +21,7 @@ USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
 MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
+IDIO_LOG="$LOC/hw_test/tmp/idio.tmp"
 BI_LOG="/tmp/bi.log"
 MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
 MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
@@ -195,6 +197,19 @@ dio_loopback_test(){
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check DIO $(cat $DIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check DIO $(cat $DIO_LOG) failed!"
+        fi
+}
+
+idio_loopback_test(){
+	$IDIO_LOC/cgosi2cgpiosample > $IDIO_LOG
+	GPI_CHECK=$(cat $IDIO_LOG |grep GPI |awk '{print $18}')
+	if [ $GPI_CHECK = 0000 ];then
+                echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check IDIO Loopback Done ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check IDIO $(cat $IDIO_LOG)  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check IDIO $(cat $IDIO_LOG) failed!"
         fi
 }
 
