@@ -671,7 +671,7 @@ usb_id_check (){
 
 #1=device 2=speed 
 ssd_speed_check (){
-	sudo hdparm -t /dev/$1 > $USB30_LOC
+	sudo hdparm -t $1 > $USB30_LOC
 	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
 	SSD_DEV=$(lsblk | grep $1 | awk '{print $7}')	
 	if [ $SSD_SPEED -ge $2 ] ; then
