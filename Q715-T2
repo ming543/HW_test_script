@@ -22,7 +22,15 @@ hwclock_check 2020
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
-#lan_mac_nocheck
+
+#lan1_ping_test
+lan_down enp4s0
+lan_up enp1s0
+lan_ping_check 192.168.0.1
+#lan2_ping_test
+lan_down enp1s0
+lan_up enp4s0
+lan_ping_check 192.168.0.1
 
 #check USB device
 usb_dev_count "Bus 002" 8
@@ -40,11 +48,11 @@ dio_loopback_test
 mic_test 40
 
 #RS232 loopback test
-#LAN test
-burnintest_script
+serial_loop_test /dev/ttyS0
+serial_loop_test /dev/ttyS1
+serial_loop_test /dev/ttyS2
+serial_loop_test /dev/ttyS3
 
-#bi check
-bi_log_check
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 #bi_cli_auto noserial 1
@@ -52,8 +60,6 @@ bi_log_check
 #input spec of cpu temp low high limit to script ex.20 70
 #cpu_temp_check +30 +40
 
-#copy bi log to final log
-bi_log_copy
 
 #Show ALL TEST PASS to log
 pass_green_dialog
