@@ -425,6 +425,7 @@ mac_addr_write(){
 		ADDR_CHECK=$(cat $ADDR_LOG | tail -n 2)
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** $1 $ADDR_CHECK ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sleep 5
         else
 		ADDR_CHECK=$(cat $ADDR_LOG | tail -n 2)
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
