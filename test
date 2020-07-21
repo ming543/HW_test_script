@@ -8,8 +8,8 @@
 . ./u7_func
 
 #Get SN for Log
-sn_get_dialog
-bios_rev_check
+#sn_get_dialog
+#bios_rev_check
 
 #lan_down enp4s0
 #lan_up enp1s0
@@ -22,8 +22,11 @@ bios_rev_check
 
 #serial_loop_test /dev/ttyS0
 #serial_loop_test /dev/ttyS2
-serial_loop_test /dev/ttyS1
-#mac_addr_write /NIC=1
+#serial_loop_test /dev/ttyS1
+#mac_get_dialog
+#mac_scan_check
+#mac_nvm_write /NIC=1
+##mac_addr_write /NIC=1
 #bios_oem_update
 #bios_oem_check
 #time_ntp_set
@@ -46,7 +49,7 @@ serial_loop_test /dev/ttyS1
 #input spec of cpu temp low high limit to script ex.20 70
 
 #copy bi log to final log
-
+usb_log_sync
 #Show ALL TEST PASS to log
 pass_green_dialog
 

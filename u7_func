@@ -258,7 +258,7 @@ fail_red_dialog(){
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   usb_log_sync
-		   onedrive_log_sync
+		   #onedrive_log_sync
 		exit 255;;
 	esac
 }
@@ -419,7 +419,8 @@ mac_nvm_write(){
         fi
 }
 mac_addr_write(){
-	sudo $EEUPDATE_LOC/eeupdate64e $1 /A $MAC_LOG > $ADDR_LOG
+	#sudo $EEUPDATE_LOC/eeupdate64e $1 /A $MAC_LOG > $ADDR_LOG
+	sudo $EEUPDATE_LOC/eeupdate64e $1 /D $EEUPDATE_LOC/NONIOI.BIN /A $MAC_LOG > $ADDR_LOG
         if [ $? = 0 ]; then
 		ADDR_CHECK=$(cat $ADDR_LOG | tail -n 2)
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
@@ -505,7 +506,7 @@ pass_green_dialog(){
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   usb_log_sync
-		   onedrive_log_sync
+		   #onedrive_log_sync
 		exit 255;;
         esac
 }
@@ -718,7 +719,7 @@ time_ntp_set(){
 }
 
 usb_log_sync(){
-	rsync -avh /home/production/u7_log/ /media/production/USB30/u7_log/
+	rsync -autvh --ignore-errors /home/production/u7_log/ /media/production/USB30/u7_log/
 }
 
 

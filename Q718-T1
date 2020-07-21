@@ -18,7 +18,7 @@ hwclock_check 2020
 #lan_mac_progrem
 mac_get_dialog
 mac_scan_check
-mac_nvm_write /NIC=1
+#mac_nvm_write /NIC=1
 mac_addr_write /NIC=1
 
 #Show ALL TEST PASS to log

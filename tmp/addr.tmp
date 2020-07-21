@@ -12,6 +12,8 @@ NIC Bus Dev Fun Vendor-Device  Branding string
   1   1  00  00   8086-1533    Intel(R) I210 Gigabit Network Connection
   2   4  00  00   8086-1533    Intel(R) I210 Gigabit Network Connection
 
+Writing SHARED FLASH.  PLEASE DO NOT INTERRUPT THIS PROCESS.
+ 1:  Shared Flash image updated successfully.
  1:  Reading Input File...
  1:  Updating Mac Address to 807B855004C3...Done.
  1:  Updating Checksum and CRCs...Done.
