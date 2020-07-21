@@ -1,0 +1,62 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Get SN for Log
+sn_get_nodate_dialog
+
+#Get BIOS OEM revision
+bios_oem_check QC31U912
+
+#Set BIOS time
+#hwclock_write 2020-06-14
+
+#check BIOS time ex.2020
+hwclock_check 2020
+
+#Get MAC for log
+lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp4s0 00:13:95
+#lan1_ping_test
+lan_down enp4s0
+lan_up enp1s0
+lan_ping_check 192.168.0.1
+#lan2_ping_test
+lan_down enp1s0
+lan_up enp4s0
+lan_ping_check 192.168.0.1
+
+#check pci device
+pci_dev_check 02:00
+pci_dev_check 03:00
+
+#check USB device
+usb_dev_count "Bus 002" 9
+usb_dev_count "Bus 003" 2
+
+#USB30 and mSATA speed test
+ssd_speed_check /dev/sda 500  
+ssd_speed_check /dev/sdc 200 
+
+#DIO loopback test
+#dio_loopback_test
+
+#Audio MIC sum test
+#mic_test 30
+
+#RS232 loopback test
+serial_loop_test /dev/ttyS0
+#LAN test
+#burnintest_script
+
+#input spec of cpu temp low high limit to script ex.20 70
+#cpu_temp_check +30 +40
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

@@ -337,7 +337,7 @@ lan_down(){
 	if [ $? = 0 ];then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check $1 lan_down pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-		sleep 3
+		sleep 1
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check $1 lan_down fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
