@@ -41,8 +41,8 @@ usb_dev_count "Bus 003" 2
 ssd_speed_check /dev/sda 500  
 ssd_speed_check /dev/sdc 200 
 
-#DIO loopback test
-dio_loopback_test
+#IDIO loopback test
+idio_loopback_test
 
 #Audio MIC sum test
 mic_test 40

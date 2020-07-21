@@ -201,7 +201,7 @@ dio_loopback_test(){
 }
 
 idio_loopback_test(){
-	$IDIO_LOC/cgosi2cgpiosample > $IDIO_LOG
+	$IDIO_LOC/q715_loop > $IDIO_LOG
 	GPI_CHECK=$(cat $IDIO_LOG |grep GPI |awk '{print $18}')
 	if [ $GPI_CHECK = 0000 ];then
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log

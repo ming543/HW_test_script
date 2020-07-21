@@ -1,0 +1,13 @@
+sleep 2
+send "at+ciccid\n\r"
+#sleep 5
+#expect {
+#	"ICCID" break
+#}
+send "at"
+send \r
+send \n
+sleep 2
+! killall -9 minicom
+exit
+
