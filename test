@@ -8,9 +8,9 @@
 . ./u7_func
 
 #Get SN for Log
-#sn_get_dialog
+sn_get_dialog
 #bios_rev_check
-
+at_test /dev/ttyUSB2 at\r\n ICCID
 #lan_down enp4s0
 #lan_up enp1s0
 #lan_ping_check 192.168.0.1

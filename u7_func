@@ -19,6 +19,7 @@ LOG_LOC="$LOC/u7_log"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
 
+AT_LOG="$LOC/hw_test/tmp/at.tmp"
 MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
 IDIO_LOG="$LOC/hw_test/tmp/idio.tmp"
@@ -27,6 +28,28 @@ MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
 MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
 NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
 ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
+
+#1=device(/dev/ttyUSB2) 2=at command(at+ciccid\r\n) 3=cat (ICCID)
+at_test(){
+	rm $AT_LOG
+	sudo cat $1 > $AT_LOG &
+	ATID=$! #save PID to kill cat
+	echo $ATID
+	sleep 5
+	sudo sh -c "echo $2 > $1"
+	sleep 5 # wait for response
+	cat $AT_LOG | grep $3
+	if [ $? = 0 ];then
+                echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check AT $(cat $AT_LOG | grep $3) passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sudo kill $ATID 
+        else
+                echo " " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check AT $(cat $AT_LOG | grep $3) failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sudo kill $ATID 
+		fail_red_dialog "Check AT $(cat $AT_LOG | grep $3) failed!"
+        fi
+}
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 bi_cli_auto(){
