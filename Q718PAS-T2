@@ -41,7 +41,7 @@ usb_dev_count "Bus 003" 2
 
 #USB30 and mSATA speed test
 ssd_speed_check /dev/sda 500  
-ssd_speed_check /dev/sdc 200 
+#ssd_speed_check /dev/sdc 200 
 
 #DIO loopback test
 #dio_loopback_test

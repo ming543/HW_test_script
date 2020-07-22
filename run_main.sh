@@ -58,7 +58,7 @@ case $(cat $INPUT) in
 		sudo timedatectl set-ntp yes
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sleep 5
-		sudo sh /home/production/hw_test/run.sh
+		sudo sh /home/production/hw_test/x.sh
 		exit
 		;;
 	u)	
@@ -67,7 +67,7 @@ case $(cat $INPUT) in
 		cd /home/production/hw_test/
 		sudo sh git_reset.sh
 		sleep 5
-		sudo sh /home/production/hw_test/run.sh
+		sudo sh /home/production/hw_test/x.sh
 		exit 0		
 		;;	
 
