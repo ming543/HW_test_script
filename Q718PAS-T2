@@ -17,27 +17,27 @@ sn_get_nodate_dialog
 #hwclock_write 2020-06-14
 
 #check BIOS time ex.2020
-hwclock_check 2020
+#hwclock_check 2020
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
 #lan1_ping_test
-lan_down enp4s0
-lan_up enp1s0
-lan_ping_check 192.168.0.1
+#lan_down enp4s0
+#lan_up enp1s0
+######lan_ping_check 192.168.4.1
 #lan2_ping_test
-lan_down enp1s0
-lan_up enp4s0
-lan_ping_check 192.168.0.1
+#lan_down enp1s0
+#lan_up enp4s0
+lan_ping_check 192.168.1.1
 
 #check pci device
 pci_dev_check 02:00
 pci_dev_check 03:00
 
 #check USB device
-usb_dev_count "Bus 002" 9
-usb_dev_count "Bus 003" 2
+usb_dev_count "Bus 002" 9 10
+usb_dev_count "Bus 003" 2 1
 
 #USB30 and mSATA speed test
 ssd_speed_check /dev/sda 500  

@@ -683,16 +683,16 @@ usb_dev_check (){
 
 usb_dev_count (){
 	count=$(lsusb | grep "$1" |wc -l)
-	if [ $count = $2 ]; then
+	if [ $count = $2 ] || [ $count = $3 ] ; then
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check USB device count $1 X $count passed! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check USB device count $1 X $count passed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
 
 		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check USB device count $1 X $count failed! spec $2 ! ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		echo "****** Check USB device count $1 X $count failed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check USB dev count $1 X $count failed! spec $2 !"
+		fail_red_dialog "Check USB dev count $1 X $count failed! spec $2 $3!"
 	fi
 }
 
