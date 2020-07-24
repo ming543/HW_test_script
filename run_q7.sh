@@ -19,12 +19,9 @@ rm $INPUT
 ### display main menu ###
 dialog --clear --title "[ Q7XX serial PCBA - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
-1 "Q718PAS-T1" \
-2 "Q718PAS-T2" \
-3 "Q718-T1" \
-4 "Q718-T2" \
-5 "Q715-T1" \
-6 "Q715-T2" \
+1 "Q718PAS-T2" \
+2 "Q718-T2" \
+3 "Q715-T2" \
 b "Back to Main Menu" \
 2>$INPUT
 #2>"${INPUT}"
@@ -37,21 +34,21 @@ case $(cat $INPUT) in
 	1)
 		clear
 		cd /home/production/hw_test/
-		sudo sh Q718PAS-T1 
-		exit 0
+		sudo sh Q718PAS-T2 
+		exit 1
 		;;
 	2) 
 		echo "2"
 		clear
 		cd /home/production/hw_test/
-		sudo sh Q718PAS-T2 
+		sudo sh Q718-T2 
 		exit 2
 		;;
 	3) 
 		echo "3"
 		clear
 		cd /home/production/hw_test/
-		sudo sh Q718-T1 
+		sudo sh Q715-T2 
 		exit 3
 		;;
 	4) 

@@ -42,10 +42,10 @@ usb_dev_count "Bus 003" 2
 ssd_speed_check sdb1 90 
 
 #DIO loopback test
-dio_loopback_test
+#dio_loopback_test
 
 #Audio MIC sum test
-mic_test 30
+#mic_test 30
 
 #RS232 loopback test
 serial_loop_test /dev/ttyS0

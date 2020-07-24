@@ -20,7 +20,7 @@ rm $INPUT
 dialog --clear --title "[ U7-XXX serial - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-PFT" \
-2 "U7-100-T2" \
+2 "U7-100PAS-T2" \
 3 "U7-200" \
 4 "U7-300" \
 b "Back to Main Menu" \
@@ -42,7 +42,7 @@ case $(cat $INPUT) in
 		echo "2"
 		clear
 		cd /home/production/hw_test/
-		sudo sh U7-100-T2 
+		sudo sh U7-100PAS-T2 
 		exit 2
 		;;
 	3) 
