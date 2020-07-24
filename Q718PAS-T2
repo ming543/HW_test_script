@@ -25,7 +25,7 @@ lan_mac_check enp4s0 00:13:95
 #lan1_ping_test
 #lan_down enp4s0
 #lan_up enp1s0
-######lan_ping_check 192.168.4.1
+lan_ping_check 192.168.4.1
 #lan2_ping_test
 #lan_down enp1s0
 #lan_up enp4s0
