@@ -18,7 +18,7 @@ rm $INPUT
 #do
 ### display main menu ###
 dialog --clear --title "[ M A I N - M E N U ]" \
---menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
+--menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-XXX TEST" \
 2 "Q7XX PCBA TEST" \
 c "Copy Log to Onedrive" \
@@ -33,16 +33,19 @@ menuitem=$(cat $INPUT)
 case $(cat $INPUT) in
 	1)
 		clear
-		#echo "sh /home/production/hw_test/run_u7.sh" > /home/production/hw_test/x.sh
-		echo "lxterminal -e /home/production/hw_test/run_u7.sh" > /home/production/hw_test/x.sh
-		sudo sh /home/production/hw_test/x.sh
+		#echo "lxterminal -e /home/production/hw_test/run_u7.sh" > /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		echo "sudo sh /home/production/hw_test/run_u7.sh" > /home/production/hw_test/t.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit 0
 		;;
 	2) 
 		echo "2"
 		clear
-		echo "lxterminal -e /home/production/hw_test/run_q7.sh" > /home/production/hw_test/x.sh
-		sudo sh /home/production/hw_test/x.sh
+		#echo "lxterminal -e /home/production/hw_test/run_q7.sh" > /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		echo "sudo sh /home/production/hw_test/run_q7.sh" > /home/production/hw_test/t.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit 2
 		;;
 	3) 
@@ -58,7 +61,8 @@ case $(cat $INPUT) in
 		sudo timedatectl set-ntp yes
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sleep 5
-		sudo sh /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit
 		;;
 	u)	
@@ -67,7 +71,8 @@ case $(cat $INPUT) in
 		cd /home/production/hw_test/
 		sudo sh git_reset.sh
 		sleep 5
-		sudo sh /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
 

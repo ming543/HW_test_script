@@ -18,7 +18,7 @@ rm $INPUT
 #do
 ### display main menu ###
 dialog --clear --title "[ Q7XX serial PCBA - M E N U ]" \
---menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
+--menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "Q718PAS-T1" \
 2 "Q718PAS-T2" \
 3 "Q718-T1" \
@@ -78,9 +78,10 @@ case $(cat $INPUT) in
 	b)	
 		clear
 		echo "b"
-		#echo "sh /home/production/hw_test/run_main.sh" > /home/production/hw_test/x.sh
-		echo "lxterminal -e /home/production/hw_test/run_main.sh" > /home/production/hw_test/x.sh
-		sudo sh /home/production/hw_test/x.sh
+		#echo "lxterminal -e /home/production/hw_test/run_main.sh" > /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		echo "sudo sh /home/production/hw_test/run_main.sh" > /home/production/hw_test/t.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
 

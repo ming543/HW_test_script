@@ -18,7 +18,7 @@ rm $INPUT
 #do
 ### display main menu ###
 dialog --clear --title "[ U7-XXX serial - M E N U ]" \
---menu "使用上下或數字1-9鍵選取測試項目\nBuild by EFCO SamLee REV:$REV" 20 50 8 \
+--menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-PFT" \
 2 "U7-100-T2" \
 3 "U7-200" \
@@ -90,8 +90,10 @@ case $(cat $INPUT) in
 	b)	
 		clear
 		echo "b"
-		echo "sh /home/production/hw_test/run_main.sh" > /home/production/hw_test/x.sh
-		sudo sh /home/production/hw_test/x.sh
+		#echo "sudo sh /home/production/hw_test/run_main.sh" > /home/production/hw_test/x.sh
+		#sudo sh /home/production/hw_test/x.sh
+		echo "sudo sh /home/production/hw_test/run_main.sh" > /home/production/hw_test/t.sh
+		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
 
