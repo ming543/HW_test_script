@@ -250,7 +250,7 @@ fail_red_dialog(){
 	 FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
 	 -------------------------------------------------\
 	 \Zn $1 \n\
-	Test again / Power off - 重新測試/關機（是/否）
+	 Test again / Power off (Yes/No)
 	" 20 55
 	#0=yes 1=no 255=Esc
 	response=$?
@@ -399,7 +399,7 @@ lan_up(){
 mac_get_dialog(){
         rm -f $MAC_LOG
         dialog --title "LAN MAC Scan" --colors \
-        --inputbox "\Zb\Z3Please Scan the MAC of Label:\n請使用刷槍輸入MAC序號:" \
+        --inputbox "\Zb\Z3Please Scan the MAC of Label:" \
         10 40 2> $MAC_LOG
 	echo "" >> $MAC_LOG
 	MAC_READ=$(cat $MAC_LOG)
@@ -460,7 +460,7 @@ mac_addr_write(){
 }
 
 mic_test(){
-	dialog --title "MIC Test" --msgbox "Please check MIC connection \n請確認麥克風是否連接" 10 40
+	dialog --title "MIC Test" --msgbox "Please check MIC connection" 10 40
 	sleep 2
 	clear
 	arecord -d 5 -vvv -f dat /dev/null 2> $MIC_LOG
@@ -502,7 +502,7 @@ pass_green_dialog(){
 	 PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
 	 PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
 	 -------------------------------------------------\
-	 \ZnPower off the system - 系統關機（是/否）
+	 \ZnPower off the system (Yes/No) 
         " 20 55
 
         #0=yes 1=no 255=Esc
@@ -638,7 +638,7 @@ sn_get_dialog(){
 #	rm -f $SN_TMP
  	MODEL=$0
 	dialog --title "$MODEL Test" \
-	--inputbox "Please Scan the SN of Label:\n請使用刷槍輸入序號:" \
+	--inputbox "Please Scan the SN of Label:" \
 	10 40 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
@@ -654,7 +654,7 @@ sn_get_nodate_dialog(){
 	SN_TMP=$TMP_LOC/sn.tmp
  	MODEL=$0
 	dialog --title "$MODEL Test" \
-	--inputbox "Please Scan the SN of Label:\n請使用刷槍輸入序號:" \
+	--inputbox "Please Scan the SN of Label:" \
 	10 40 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')

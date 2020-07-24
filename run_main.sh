@@ -69,7 +69,8 @@ case $(cat $INPUT) in
 		clear
 		echo "u"
 		cd /home/production/hw_test/
-		sudo sh git_reset.sh
+		#sudo sh git_reset.sh
+		git pull
 		sleep 5
 		#sudo sh /home/production/hw_test/x.sh
 		sudo sh /home/production/hw_test/t.sh

@@ -1,1 +1,1 @@
-sudo sh /home/production/hw_test/run_main.sh
+sudo sh /home/production/hw_test/run_q7.sh
