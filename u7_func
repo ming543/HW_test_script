@@ -30,23 +30,21 @@ NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
 ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
 
 #1=device(/dev/ttyUSB2) 2=at command(at+ciccid\r\n) 3=cat (ICCID)
-at_test(){
+at_check(){
 	rm $AT_LOG
-	sudo cat $1 > $AT_LOG &
-	ATID=$! #save PID to kill cat
-	echo $ATID
-	sleep 5
-	sudo sh -c "echo $2 > $1"
-	sleep 5 # wait for response
+	sudo cat $1 | tee -a $AT_LOG &
+	sleep 2
+	sudo sh -c "echo '$2' > $1"
+	sleep 2 # wait for response
 	cat $AT_LOG | grep $3
 	if [ $? = 0 ];then
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log
-		echo "****** Check AT $(cat $AT_LOG | grep $3) passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
-		sudo kill $ATID 
+		echo "****** Check AT $3 passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		sudo killall -9 cat 
         else
                 echo " " | tee -a $LOG_LOC/$SN_LOG.log
 		echo "****** Check AT $(cat $AT_LOG | grep $3) failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
-		sudo kill $ATID 
+		sudo killall -9 cat 
 		fail_red_dialog "Check AT $(cat $AT_LOG | grep $3) failed!"
         fi
 }
