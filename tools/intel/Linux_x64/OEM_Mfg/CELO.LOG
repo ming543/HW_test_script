@@ -171,3 +171,14 @@ Intel(R) I210 Gigabit Network Connection, Network Addr=807B85500338
 Card 1: Bus=1 Dev=0 Function=0
 Fri Jul  3 15:08:47 2020
 CELO exit status = 0
+
+-------------------------- Begin Diagnostic Testing ---------------------------
+
+End of Line Diagnostic Utility  v1.26.01.00
+Intel(R) I210 Gigabit Network Connection, Network Addr=807B855010D8
+Card 1: Bus=1 Dev=0 Function=0
+Wed Jul 29 09:41:01 2020
+Pass 1 on Card 1 at 09:41 Register test PASSED 
+Pass 1 on Card 1 at 09:41 EEPROM test PASSED 
+Pass 1 on Card 1 at 09:41 FIFO test PASSED 
+CELO exit status = 37
