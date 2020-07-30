@@ -1,0 +1,12 @@
+#!/usr/bin/expect -f
+#DMCT_LOC=/home/production/hw_test/tools/EKit_L/release/X64
+set timeout 20
+#spawn ssh 127.0.0.1
+#expect "1" {send "\r"}
+spawn sudo ./DMCT
+sleep 5
+expect "System" {send "1\r"}
+sleep 5
+expect "Select" [send "1\r"}
+expect eof
+
