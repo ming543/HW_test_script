@@ -6,12 +6,13 @@
 
 #---Start Function---
 . ./u7_func
+onedrive_to_local
 
 #Get SN for Log
-sn_get_dialog
+#sn_get_dialog
 #bios_rev_check
 #at_check /dev/ttyUSB2 'at\r\n' OK
-at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
+#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 #lan_down enp4s0
 #lan_up enp1s0
 #lan_ping_check 192.168.0.1
@@ -50,7 +51,7 @@ at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 #input spec of cpu temp low high limit to script ex.20 70
 
 #copy bi log to final log
-usb_log_sync
+#usb_log_sync
 #Show ALL TEST PASS to log
-pass_green_dialog
+#pass_green_dialog
 
