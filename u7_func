@@ -511,6 +511,7 @@ warning_yellow_dialog(){
                 0) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
 		#exit 0;;
+		;;
                 1) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
