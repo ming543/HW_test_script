@@ -5,7 +5,7 @@
 #set -xv
 
 #---Start Function---
-. ./u7_func
+. ./ss_func
 
 #Update time from NTP server
 time_ntp_set
@@ -14,7 +14,7 @@ time_ntp_set
 sn_get_dialog
 
 #Update BIOS default setting to OEM
-bios_oem_update
+#bios_oem_update
 
 #check BIOS time from internet
 hwclock_check_live

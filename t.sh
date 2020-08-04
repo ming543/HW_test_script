@@ -1,1 +1,1 @@
-sudo sh /home/production/hw_test/run_u7.sh
+cd /home/production/hw_test; sudo sh run_main.sh

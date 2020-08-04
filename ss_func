@@ -1,0 +1,353 @@
+#!/bin/bash
+# Script for EagleEyes system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+LOC="/home/production"
+BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
+EEUPDATE_LOC="$LOC/hw_test/tools/intel/Linux_x64/OEM_Mfg"
+SERIAL_LOC="$LOC/hw_test/tools"
+SCR_LOC="$LOC/hw_test"
+TMP_LOC="$LOC/hw_test/tmp"
+LIB_LOC="$LOC/hw_test/lib"
+LOG_LOC="$LOC/EagleEyes_LOG"
+USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
+
+
+AT_LOG="$LOC/hw_test/tmp/at.tmp"
+MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
+DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
+IDIO_LOG="$LOC/hw_test/tmp/idio.tmp"
+BI_LOG="/tmp/bi.log"
+MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
+MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
+NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
+ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
+
+
+cpu_temp_check(){
+        TEMP_LOG=$TMP_LOC/temp.tmp
+        rm -r $TEMP_LOG
+        sensors -A | tee -a $TEMP_LOG
+        CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
+        #SYS_TEMP_LOG=$(sensors -A |grep "temp1" |awk '{print $2}' |cut -c 1-3)
+        #echo "****** Syetem temp $SYS_TEMP_LOG C !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+
+        if [ $CPU_TEMP_LOG -ge $1 ] && [ $CPU_TEMP_LOG -le $2 ];then
+                echo "****** Check CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
+        fi
+}
+
+
+fail_red_dialog(){
+        dialog --title  TESTING_RESULT  --colors --yesno\
+        "\Zb\Z1FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL_FAIL\
+         -------------------------------------------------\
+         \Zn $1 \n\
+        Esc= Back to MAIN-MENU\n Yes= Test again\n No= Power off 
+        " 20 55
+        #0=yes 1=no 255=Esc
+        response=$?
+        case $response in
+                0)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+                   usb_log_sync
+                   onedrive_log_sync
+                   clear
+                   sh /home/production/hw_test/t.sh
+                   exit
+                exit 0 ;;
+
+                1)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+                   usb_log_sync
+                   onedrive_log_sync
+                   sync
+                   poweroff
+                exit 1 ;;
+
+                255)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+                   usb_log_sync
+                   echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
+                   sudo sh $SCR_LOC/t.sh
+                exit 255 ;;
+        esac
+}
+
+hwclock_write(){
+        sudo timedatectl set-ntp no
+        sudo timedatectl set-time "$1"
+        sudo hwclock -w
+}
+
+
+hwclock_check(){
+        BT=$(sudo hwclock)
+        BTC=$(sudo hwclock | cut -c 1-4)
+        if [ $BTC = $1 ]; then
+                echo "****** Check RTC $BT passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check RTC $BT failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check RTC $BT failed!, spec $1 !"
+        fi
+}
+
+hwclock_check_live(){
+        BT=$(sudo hwclock)
+        BTC=$(sudo hwclock | cut -c 1-4)
+        LIVE_YEAR=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $6}')
+        LIVE_MONTH=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $5}')
+        LIVE_DAY=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $4}')
+        if [ $BTC = $LIVE_YEAR ]; then
+                echo "****** Check RTC $BT passed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check RTC $BT failed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check RTC $BT failed!, spec $LIVE_YEAR !"
+        fi
+}
+
+#1=device 2=mac_head 3=another mac_head
+lan_mac_check(){
+        #echo "****** LAN MAC check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        cat "/sys/class/net/$1/address"
+        if [ $? = 0 ];then
+                #echo "****** Check $1 device !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                LAN=$1
+        else
+                #echo "****** Check enp2s0 device !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                LAN=enp2s0
+        fi
+        MAC=$(cat "/sys/class/net/$LAN/address")
+        MAC_HEAD=$(cat "/sys/class/net/$LAN/address" | cut -c 1-8)
+        if [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
+                echo "****** Check $LAN MAC $MAC passed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $LAN MAC $MAC failed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $LAN MAC $MAC failed!, spec $2 $3!"
+        fi
+}
+
+lan_ping_check(){
+        sleep 1
+        ping -c 1 $1
+        if [ $? = 0 ];then
+                echo "****** Check $1 ping pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $1 ping fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $1 ping fail !"
+        fi
+}
+
+pass_green_dialog(){
+        dialog --title TESTING_RESULT --colors --yesno\
+        "\Zb\Z2PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
+         -------------------------------------------------\
+         \ZnPower off the system (Yes/No)
+        " 20 55
+
+        #0=yes 1=no 255=Esc
+        response=$?
+        case $response in
+                0)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+                   usb_log_sync
+                   onedrive_log_sync
+                   sync
+                   poweroff
+                exit 0;;
+                1)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+                   usb_log_sync
+                   onedrive_log_sync
+                   echo "Back to shell"
+                exit 1;;
+                255)
+                   #echo "" >> $LOG_LOC/$SN_LOG.log
+                   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+                   usb_log_sync
+                exit 255;;
+        esac
+}
+
+
+warning_yellow_dialog(){
+        dialog --title TESTING_RESULT --colors --yesno\
+        "\Zb\Z3WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN_WARN\
+         -------------------------------------------------\
+         \ZnContinue test(Yes/No)
+        " 20 55
+
+        #0=yes 1=no 255=Esc
+        response=$?
+        case $response in
+                0)
+                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                #exit 0;;
+                ;;
+                1)
+                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
+                   usb_log_sync
+                   onedrive_log_sync
+                   echo "Back to shell"
+                exit 1;;
+                255)
+                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
+                   usb_log_sync
+                exit 255;;
+        esac
+}
+
+
+pci_dev_check(){
+        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+        echo "****** PCI device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        lspci |grep "$1"
+        if [ $? = 0 ]; then
+                echo "****** Check PCI dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check PCI dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check PCI dev $1 failed !"
+        fi
+}
+
+
+serial_loop_test(){
+        sudo $SERIAL_LOC/serial-test -p $1 -b 115200 -o 1 -i 3
+        if [ $? = 0 ]; then
+                echo "****** Check RS232 $1 loopback passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check RS232 $1 loopback failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check RS232 loopback $1 failed !"
+        fi
+}
+
+
+sn_get_dialog(){
+        SN_TMP=$TMP_LOC/sn.tmp
+#       rm -f $SN_TMP
+        MODEL=$0
+        dialog --title "$MODEL Test" \
+        --inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
+        10 40 2> $SN_TMP
+        if [ $? = 0 ]; then
+                SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+                echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+                echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log
+                echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+        else
+                echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
+                sudo sh $SCR_LOC/t.sh
+                exit 1
+        fi
+}
+
+sn_get_nodate_dialog(){
+        SN_TMP=$TMP_LOC/sn.tmp
+        MODEL=$0
+        dialog --title "$MODEL Test" \
+        --inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
+        10 40 2> $SN_TMP
+        if [ $? = 0 ]; then
+                SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
+                echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+                echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log
+                echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log
+        else
+                echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
+                sudo sh $SCR_LOC/t.sh
+                exit 1
+        fi
+}
+
+
+usb_dev_count (){
+        count=$(lsusb | grep "$1" |wc -l)
+        if [ $count = $2 ] || [ $count = $3 ] ; then
+                echo "****** Check USB device count $1 X $count passed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
+
+                #lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check USB device count $1 X $count failed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
+                lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check USB dev count $1 X $count failed! spec $2 $3!"
+        fi
+}
+
+
+time_ntp_set(){
+        ping ntp.ubuntu.com -c 1
+        if [ $? = 0 ]; then
+                echo "****** Check ping ntp passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+
+        else
+                echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check ping ntp failed !"
+        fi
+        timedatectl set-ntp yes
+        timedatectl
+        sleep 1
+        sudo hwclock -w
+}
+
+
+usb_log_sync(){
+        sudo rsync -avh $LOG_LOC /media/production/USB30/ss_log/
+}
+
+
+onedrive_log_sync(){
+        sudo rclone copy $LOG_LOC onedrive:General/EagleEyes_LOG -P
+}
+
+onedrive_to_local(){
+        #sudo rclone copy onedrive:General/u7_log /home/production/u7_log -P
+        sudo rclone sync onedrive:General/u7_log $LOG_LOC -P
+}
+
