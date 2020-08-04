@@ -21,12 +21,12 @@ dialog --clear --title "[ U7-XXX serial - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "U7-PFT" \
 2 "U7-100PAS-T2" \
-3 "U7-200" \
-4 "U7-300" \
 b "Back to Main Menu" \
 2>$INPUT
 #2>"${INPUT}"
 
+#3 "U7-200" \
+#4 "U7-300" \
 menuitem=$(cat $INPUT)
 #response=$?
 # make decsion 

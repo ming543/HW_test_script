@@ -20,12 +20,12 @@ rm $INPUT
 dialog --clear --title "[ Q7XX serial PCBA - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
 1 "Q718PAS-T2" \
-2 "Q718-T2" \
-3 "Q715-T2" \
 b "Back to Main Menu" \
 2>$INPUT
 #2>"${INPUT}"
 
+#2 "Q718-T2" \
+#3 "Q715-T2" \
 menuitem=$(cat $INPUT)
 #response=$?
 # make decsion 
