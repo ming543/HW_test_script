@@ -38,13 +38,13 @@ aic_info_check(){
 }
 
 aic_fw_check(){
-	AIC_FW=$(cat $AIC_LOG |grep "AIC-" |awk '{print $1}')
-	cat $AIC_LOG |grep "AIC-" |awk '{print $1}'
-        if [ $? = 0 ] ;then
-		echo "- Check AIC FW revision is $AIC_FW " | tee -a $LOG_LOC/$SN_LOG.log
+	AIC_FW=$(cat $AIC_LOG |grep "AIC-" |awk '{print $1}' | cut -c 1-8 )
+	#cat $AIC_LOG |grep "AIC-" |awk '{print $1}'
+        if [ $AIC_FW = $1 ] ;then
+		echo "- Check AIC FW revision is $AIC_FW ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-		echo "- Check AIC FW revision is $AIC_FW fail " | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog " Check AIC FW $AIC_FW fail "
+		echo "- Check AIC FW revision is $AIC_FW fail ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog " Check AIC FW $AIC_FW fail ! spec is $1 !"
         fi
 
 }
@@ -111,10 +111,10 @@ aic_usb_check(){
 }
 
 aic_fan_cfg_check(){
-	AIC_FAN=$(cat $AIC_LOG |grep "Fan $1 Auto")
-	cat $AIC_LOG |grep "Fan $1 Auto" & 
+	AIC_FAN=$(cat $AIC_LOG |grep "Fan $1 Auto" |cut -c 1-31)
+	cat $AIC_LOG |grep "Fan $1 Auto"  
         if [ $? = 0 ] ;then
-                echo "- Check AIC cfg $AIC_FAN " | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check AIC cfg $AIC_FAN !" | tee -a $LOG_LOC/$SN_LOG.log
         else
                 echo "- Check AIC FAN cfg $AIC_FAN fail !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check AIC FAN cfg $AIC_FAN fail !"

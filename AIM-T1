@@ -13,8 +13,24 @@ time_ntp_set
 #Get SN for Log
 sn_get_dialog
 
-#Update BIOS default setting to OEM
-#bios_oem_update
+aic_info_check
+aic_fw_check "AIC-1.00"
+aic_logo_check
+aic_rtc_check
+aic_poe_check 1
+aic_poe_check 2
+aic_poe_check 3
+aic_poe_check 4
+aic_com_check 1 RS232
+aic_com_check 2 RS232
+aic_atx_check ATX
+aic_usb_check 1
+aic_usb_check 2
+aic_usb_check 3
+aic_usb_check 4
+aic_fan_cfg_check 1
+aic_fan_rpm_check 1
+aic_gpio_check FF00
 
 #check BIOS time from internet
 hwclock_check_live

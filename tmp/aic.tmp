@@ -102,9 +102,9 @@ Select sub-function.
 (Exit) the program
 4
 Hardware Monitoring:
-  HWMon  1 RTC           Voltage: 3.023 (V)
+  HWMon  1 RTC           Voltage: 3.020 (V)
   HWMon  2 3.3S          Voltage: 3.325 (V)
-  HWMon  3 3.3A          Voltage: 3.322 (V)
+  HWMon  3 3.3A          Voltage: 3.332 (V)
   HWMon  4 5A            Voltage: 5.031 (V)
   HWMon  5 5S            Voltage: 5.025 (V)
 (Q)uit the procedure
