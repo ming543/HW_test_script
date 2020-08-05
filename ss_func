@@ -52,10 +52,10 @@ aic_fw_check(){
 aic_logo_check(){
 	AIC_LOGO=$(cat $AIC_LOG |grep "Logo" |awk '{print $4}')
         if [ $AIC_LOGO = None ] ;then
-                echo "- Check DDM Logo diaplay None !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check AIC DDM Logo diaplay None !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check DDM Logo display None fail !" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check DDM Logo display None fail !"
+                echo "- Check AIC DDM Logo display None fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC DDM Logo display None fail !"
         fi
 }
 
@@ -63,30 +63,30 @@ aic_rtc_check(){
 	AIC_RTC=$(cat $AIC_LOG |grep "RTC" |awk '{print $5}')
 	AIC_RTC_3=$(cat $AIC_LOG |grep "RTC" |awk '{print $5}' |cut -c 1)
         if [ $AIC_RTC_3 -ge 3 ] ;then
-                echo "- Check RTC Volt is $AIC_RTC !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check AIC RTC Volt is $AIC_RTC !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check RTC Volt is $AIC_RTC fail! spec is over 3V !" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check RTC Volt is $AIC_RTC fail! spec is over 3V !"
+                echo "- Check AIC RTC Volt is $AIC_RTC fail! spec is over 3V !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC RTC Volt is $AIC_RTC fail! spec is over 3V !"
         fi
 }
 
 aic_poe_check(){
 	AIC_POE=$(cat $AIC_LOG |grep "PoE  $1" |awk '{print $6}')
         if [ $AIC_POE != 0 ] ;then
-                echo "- Check PoE $1 Volt is $AIC_POE !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check AIC PoE $1 Volt is $AIC_POE !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check PoE $1 Volt is $AIC_POE fail !" | tee -a $LOG_LOC/$SN_LOG.log
-                #fail_red_dialog "Check PoE Volt is $AIC_POE fail !"
+                echo "------ Check AIC PoE $1 Volt is $AIC_POE fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                #fail_red_dialog "Check AIC PoE Volt is $AIC_POE fail !"
         fi
 }
 
 aic_com_check(){
 	AIC_COM=$(cat $AIC_LOG |grep "COM  $1" |awk '{print $4}')
         if [ $AIC_COM = $2 ] ;then
-                echo "- Check COM $1 is $AIC_COM ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check AIC COM $1 is $AIC_COM ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check COM $1 is $AIC_COM fail ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check COM $1 is $AIC_COM fail !"
+                echo "- Check AIC COM $1 is $AIC_COM fail ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC COM $1 is $AIC_COM fail !"
         fi
 }
 
@@ -126,7 +126,7 @@ aic_fan_rpm_check(){
         if [ $AIC_RPM != 0 ] ;then
                 echo "- Check AIC Fan $1 RPM is $AIC_RPM !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check AIC Fan $1 RPM is $AIC_RPM fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "------ Check AIC Fan $1 RPM is $AIC_RPM fail !" | tee -a $LOG_LOC/$SN_LOG.log
                 #fail_red_dialog "Check AIC Fan $1 RPM is $AIC_RPM fail !"
         fi
 }
