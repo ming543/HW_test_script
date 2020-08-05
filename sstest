@@ -1,0 +1,76 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./ss_func
+aic_info_check
+aic_fw_check
+aic_logo_check
+aic_rtc_check
+aic_poe_check 1
+aic_poe_check 2
+aic_poe_check 3
+aic_poe_check 4
+aic_com_check 1 RS232
+aic_com_check 2 RS232
+aic_atx_check ATX
+aic_usb_check 1 
+aic_usb_check 2 
+aic_usb_check 3 
+aic_usb_check 4 
+aic_fan_cfg_check 1
+aic_fan_rpm_check 1 
+aic_gpio_check FF00
+
+#onedrive_to_local
+
+#Get SN for Log
+#sn_get_dialog
+#bios_rev_check
+#at_check /dev/ttyUSB2 'at\r\n' OK
+#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
+#lan_down enp4s0
+#lan_up enp1s0
+#lan_ping_check 192.168.0.1
+#lan_down enp1s0
+#lan_up enp4s0
+#lan_ping_check 192.168.0.1
+
+#idio_loopback_test
+
+#serial_loop_test /dev/ttyS0
+#serial_loop_test /dev/ttyS2
+#serial_loop_test /dev/ttyS1
+#mac_get_dialog
+#mac_scan_check
+#mac_nvm_write /NIC=1
+##mac_addr_write /NIC=1
+#bios_oem_update
+#bios_oem_check
+#time_ntp_set
+#mic_test 40
+#check BIOS time before BI ex.2020
+#hwclock_check 2020
+
+#check USB device
+
+#RS232 loopback test
+#LAN test
+
+#bi check
+#burnintest_script
+#bi_log_check
+
+#input spec of $1 BI to script ex.disk/nodisk $2 is BI time
+#bi_cli_auto noserial 1
+
+#input spec of cpu temp low high limit to script ex.20 70
+
+#copy bi log to final log
+#usb_log_sync
+#Show ALL TEST PASS to log
+#pass_green_dialog
+

@@ -5,6 +5,7 @@
 #set -xv
 
 LOC="/home/production"
+AIC_LOC="$LOC/hw_test/tools/EKit_L/release/X64"
 BURN_LOC="$LOC/hw_test/tools/burnintest/64bit"
 EEUPDATE_LOC="$LOC/hw_test/tools/intel/Linux_x64/OEM_Mfg"
 SERIAL_LOC="$LOC/hw_test/tools"
@@ -14,7 +15,7 @@ LIB_LOC="$LOC/hw_test/lib"
 LOG_LOC="$LOC/EagleEyes_LOG"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
-
+AIC_LOG="$TMP_LOC/aic.tmp"
 AT_LOG="$LOC/hw_test/tmp/at.tmp"
 MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
 DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
@@ -25,6 +26,121 @@ MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
 NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
 ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
 
+aic_info_check(){
+	rm $AIC_LOG
+	cd $AIC_LOC; ./aic_info.exp  | tee -a $AIC_LOG
+	if [ $? = 0 ];then
+                echo "- Get aic info pass !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Get aic info fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Get aic info fail !"
+        fi
+}
+
+aic_fw_check(){
+	AIC_FW=$(cat $AIC_LOG |grep "AIC-" |awk '{print $1}')
+	cat $AIC_LOG |grep "AIC-" |awk '{print $1}'
+        if [ $? = 0 ] ;then
+		echo "- Check AIC FW revision is $AIC_FW " | tee -a $LOG_LOC/$SN_LOG.log
+        else
+		echo "- Check AIC FW revision is $AIC_FW fail " | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog " Check AIC FW $AIC_FW fail "
+        fi
+
+}
+
+aic_logo_check(){
+	AIC_LOGO=$(cat $AIC_LOG |grep "Logo" |awk '{print $4}')
+        if [ $AIC_LOGO = None ] ;then
+                echo "- Check DDM Logo diaplay None !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check DDM Logo display None fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check DDM Logo display None fail !"
+        fi
+}
+
+aic_rtc_check(){
+	AIC_RTC=$(cat $AIC_LOG |grep "RTC" |awk '{print $5}')
+	AIC_RTC_3=$(cat $AIC_LOG |grep "RTC" |awk '{print $5}' |cut -c 1)
+        if [ $AIC_RTC_3 -ge 3 ] ;then
+                echo "- Check RTC Volt is $AIC_RTC !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check RTC Volt is $AIC_RTC fail! spec is over 3V !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check RTC Volt is $AIC_RTC fail! spec is over 3V !"
+        fi
+}
+
+aic_poe_check(){
+	AIC_POE=$(cat $AIC_LOG |grep "PoE  $1" |awk '{print $6}')
+        if [ $AIC_POE != 0 ] ;then
+                echo "- Check PoE $1 Volt is $AIC_POE !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check PoE $1 Volt is $AIC_POE fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                #fail_red_dialog "Check PoE Volt is $AIC_POE fail !"
+        fi
+}
+
+aic_com_check(){
+	AIC_COM=$(cat $AIC_LOG |grep "COM  $1" |awk '{print $4}')
+        if [ $AIC_COM = $2 ] ;then
+                echo "- Check COM $1 is $AIC_COM ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check COM $1 is $AIC_COM fail ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check COM $1 is $AIC_COM fail !"
+        fi
+}
+
+aic_atx_check(){
+	AIC_ATX=$(cat $AIC_LOG |grep "  Mode:" |awk '{print $2}')
+        if [ $AIC_ATX = $1 ] ;then
+                echo "- Check AIC power mode is $AIC_ATX ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check AIC power mode is $AIC_ATX fail ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC power mode is $AIC_ATX fail ! spec is $1 !"
+        fi
+}
+
+aic_usb_check(){
+	AIC_USB=$(cat $AIC_LOG |grep "USB  $1" |awk '{print $4}')
+        if [ $AIC_USB = ON ] ;then
+                echo "- Check AIC USB $1 mode is $AIC_USB !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check AIC USB $1 mode is $AIC_USB fail ! spec is ON !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC USB mode is $AIC_USB fail ! spec is ON !"
+        fi
+}
+
+aic_fan_cfg_check(){
+	AIC_FAN=$(cat $AIC_LOG |grep "Fan $1 Auto")
+	cat $AIC_LOG |grep "Fan $1 Auto" & 
+        if [ $? = 0 ] ;then
+                echo "- Check AIC cfg $AIC_FAN " | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check AIC FAN cfg $AIC_FAN fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC FAN cfg $AIC_FAN fail !"
+        fi
+}
+
+aic_fan_rpm_check(){
+	AIC_RPM=$(cat $AIC_LOG |grep "Fan $1 RPM" |awk '{print $4}')
+        if [ $AIC_RPM != 0 ] ;then
+                echo "- Check AIC Fan $1 RPM is $AIC_RPM !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check AIC Fan $1 RPM is $AIC_RPM fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                #fail_red_dialog "Check AIC Fan $1 RPM is $AIC_RPM fail !"
+        fi
+}
+
+
+aic_gpio_check(){
+	AIC_GPIO=$(cat $AIC_LOG |grep "GPIO1" |awk '{print $2}')
+        if [ $AIC_GPIO = $1 ] ;then
+                echo "- Check AIC GPIO is $AIC_GPIO ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check AIC GPIO is $AIC_GPIO fail ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC GPIO is $AIC_GPIO fail ! spec is $1 !"
+        fi
+}
 
 cpu_temp_check(){
         TEMP_LOG=$TMP_LOC/temp.tmp
@@ -35,9 +151,9 @@ cpu_temp_check(){
         #echo "****** Syetem temp $SYS_TEMP_LOG C !  ******" | tee -a $LOG_LOC/$SN_LOG.log
 
         if [ $CPU_TEMP_LOG -ge $1 ] && [ $CPU_TEMP_LOG -le $2 ];then
-                echo "****** Check CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
         fi
 }
@@ -105,9 +221,9 @@ hwclock_check(){
         BT=$(sudo hwclock)
         BTC=$(sudo hwclock | cut -c 1-4)
         if [ $BTC = $1 ]; then
-                echo "****** Check RTC $BT passed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RTC $BT passed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check RTC $BT failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RTC $BT failed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check RTC $BT failed!, spec $1 !"
         fi
 }
@@ -119,9 +235,9 @@ hwclock_check_live(){
         LIVE_MONTH=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $5}')
         LIVE_DAY=$(curl -v www.stdtime.gov.tw 2>&1 | grep Date | awk '{print $4}')
         if [ $BTC = $LIVE_YEAR ]; then
-                echo "****** Check RTC $BT passed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RTC $BT passed!, spec $LIVE_YEAR !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check RTC $BT failed!, spec $LIVE_YEAR !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RTC $BT failed!, spec $LIVE_YEAR !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check RTC $BT failed!, spec $LIVE_YEAR !"
         fi
 }
@@ -140,9 +256,9 @@ lan_mac_check(){
         MAC=$(cat "/sys/class/net/$LAN/address")
         MAC_HEAD=$(cat "/sys/class/net/$LAN/address" | cut -c 1-8)
         if [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
-                echo "****** Check $LAN MAC $MAC passed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check $LAN MAC $MAC passed!, spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check $LAN MAC $MAC failed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check $LAN MAC $MAC failed!, spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check $LAN MAC $MAC failed!, spec $2 $3!"
         fi
 }
@@ -151,9 +267,9 @@ lan_ping_check(){
         sleep 1
         ping -c 1 $1
         if [ $? = 0 ];then
-                echo "****** Check $1 ping pass !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check $1 ping pass !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check $1 ping fail !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check $1 ping fail !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check $1 ping fail !"
         fi
 }
@@ -224,18 +340,18 @@ warning_yellow_dialog(){
         response=$?
         case $response in
                 0)
-                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                   echo "- TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
                 #exit 0;;
                 ;;
                 1)
-                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                   echo "- TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
                    mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
                    usb_log_sync
                    onedrive_log_sync
                    echo "Back to shell"
                 exit 1;;
                 255)
-                   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
+                   echo "- TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
                    mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
                    usb_log_sync
                 exit 255;;
@@ -244,14 +360,13 @@ warning_yellow_dialog(){
 
 
 pci_dev_check(){
-        echo " " | tee -a $LOG_LOC/$SN_LOG.log
-        echo "****** PCI device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        echo "- PCI device check !" | tee -a $LOG_LOC/$SN_LOG.log
         lspci |grep "$1"
         if [ $? = 0 ]; then
-                echo "****** Check PCI dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check PCI dev $1 passed !" | tee -a $LOG_LOC/$SN_LOG.log
                 lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check PCI dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check PCI dev $1 failed !" | tee -a $LOG_LOC/$SN_LOG.log
                 lspci |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check PCI dev $1 failed !"
         fi
@@ -261,9 +376,9 @@ pci_dev_check(){
 serial_loop_test(){
         sudo $SERIAL_LOC/serial-test -p $1 -b 115200 -o 1 -i 3
         if [ $? = 0 ]; then
-                echo "****** Check RS232 $1 loopback passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RS232 $1 loopback passed !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check RS232 $1 loopback failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check RS232 $1 loopback failed !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check RS232 loopback $1 failed !"
         fi
 }
@@ -310,13 +425,13 @@ sn_get_nodate_dialog(){
 usb_dev_count (){
         count=$(lsusb | grep "$1" |wc -l)
         if [ $count = $2 ] || [ $count = $3 ] ; then
-                echo "****** Check USB device count $1 X $count passed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check USB device count $1 X $count passed! spec $2 $3 !" | tee -a $LOG_LOC/$SN_LOG.log
 
                 #lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check USB device count $1 X $count failed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check USB device count $1 X $count failed! spec $2 $3 !" | tee -a $LOG_LOC/$SN_LOG.log
                 lsusb |grep "$1" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check USB dev count $1 X $count failed! spec $2 $3!"
+                fail_red_dialog "- Check USB dev count $1 X $count failed! spec $2 $3 !"
         fi
 }
 
@@ -324,11 +439,11 @@ usb_dev_count (){
 time_ntp_set(){
         ping ntp.ubuntu.com -c 1
         if [ $? = 0 ]; then
-                echo "****** Check ping ntp passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check ping ntp passed !" | tee -a $LOG_LOC/$SN_LOG.log
 
         else
-                echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check ping ntp failed !"
+                echo "- Check ping ntp failed !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "- Check ping ntp failed !"
         fi
         timedatectl set-ntp yes
         timedatectl

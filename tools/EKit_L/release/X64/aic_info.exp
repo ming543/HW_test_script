@@ -42,10 +42,10 @@ if {$force_conservative} {
 # -Don
 
 
-set timeout -1
+set timeout 1
 spawn $env(SHELL)
 match_max 100000
-expect -exact "production@production-desktop:~/hw_test/tools/EKit_L/release/X64\$ "
+expect "EKit_L"
 send -- "sudo ./D	"
 expect -exact "MCT"
 send -- "\r"
@@ -75,11 +75,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "1\r"
-expect -exact "1\r
+sleep .1
+expect "1\r
 Firmware version:\r
-  AIC-1.00\r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -117,20 +115,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "3\r"
-expect -exact "3\r
+sleep .1
+expect "3\r
 DDM Config:\r
-  Page  1 Logo          None     Sequence: 0 \r
-  Page  2 User String   Display  Sequence: 1 \r
-  Page  3 Temperature   Display  Sequence: 2 \r
-  Page  4 POE           Display  Sequence: 3 \r
-  Page  5 System Power  Display  Sequence: 4 \r
-  Page  6 SIM Card      Display  Sequence: 5 \r
-  Page  7 Product Name  Display  Sequence: 6 \r
-  Page  8 AIC Version   Display  Sequence: 7 \r
-  Page  9 FAN           Display  Sequence: 8 \r
-  Page 10 Voltage       Display  Sequence: 9 \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -170,15 +157,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "4\r"
-expect -exact "4\r
+sleep .1
+expect "4\r
 Hardware Monitoring:\r
-  HWMon  1 RTC           Voltage: 3.020 (V)\r
-  HWMon  2 3.3S          Voltage: 3.329 (V)\r
-  HWMon  3 3.3A          Voltage: 3.329 (V)\r
-  HWMon  4 5A            Voltage: 5.031 (V)\r
-  HWMon  5 5S            Voltage: 5.031 (V)\r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -190,6 +171,8 @@ Select sub-function.\r
 (Q)uit the procedure\r
 (Exit) the program\r
 "
+
+
 send -- "q\r"
 expect -exact "q\r
 Select function.\r
@@ -217,14 +200,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "3\r"
-expect -exact "3\r
+sleep .1
+expect "3\r
 PoE Status:\r
-  PoE  1 Present: Disconnected  Walt: 0       (mW)\r
-  PoE  2 Present: Disconnected  Walt: 0       (mW)\r
-  PoE  3 Present: Disconnected  Walt: 0       (mW)\r
-  PoE  4 Present: Disconnected  Walt: 0       (mW)\r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -262,13 +240,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "3\r"
-expect -exact "3\r
+sleep .1
+expect "3\r
 miniPCIe Status:\r
-  miniPCIe 1 Present: Disconnected \r
-  miniPCIe 2 Present: Disconnected \r
-  miniPCIe 3 Present: Disconnected \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -305,12 +279,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "1\r"
-expect -exact "1\r
+sleep .1
+expect "1\r
 COM Config:\r
-  COM  1 Mode: RS232        \r
-  COM  2 Mode: RS232        \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -349,11 +320,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "3\r"
-expect -exact "3\r
+sleep .1
+expect "3\r
 Runtime WDT Config:\r
-  State: Disable \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -392,11 +361,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "1\r"
-expect -exact "1\r
+sleep .1
+expect "1\r
 Power Config:\r
-      Mode: ATX S5   \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -434,14 +401,9 @@ Select sub-function.\r
 send -- "q"
 expect -exact " "
 send -- "1\r"
-expect -exact "1\r
+sleep .1
+expect "1\r
 USB Config:\r
-  USB  1 Power: ON  \r
-  USB  2 Power: ON  \r
-  USB  3 Power: ON  \r
-  USB  4 Power: ON  \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -478,12 +440,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "1\r"
-expect -exact "1\r
+sleep .1
+expect "1\r
 Fan Config:\r
-Fan_Cfgs 1 0 40\r
-  Fan 1 Auto: OFF  PWM:  40 (%)\r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -495,11 +454,9 @@ Select sub-function.\r
 (Exit) the program\r
 "
 send -- "3\r"
-expect -exact "3\r
+sleep .1
+expect "3\r
 Fan Status:\r
-  Fan 1 RPM: 0      (rev/min)\r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
@@ -537,29 +494,10 @@ Select sub-function.\r
 (Q)uit the procedure\r
 (Exit) the program\r
 "
-send -- "6\r"
-expect -exact "6\r
-   IO  HEX           BINARY   16   15   14   13   12   11   10    9    8    7    6    5    4    3    2    1 \r
-GPIO1 FF00 1111111100000000   Out  Out  Out  Out  Out  Out  Out  Out   In   In   In   In   In   In   In   In \r
-(Q)uit the procedure\r
-(Exit) the program\r
-"
-send -- "q\r"
-expect -exact "q\r
-Select sub-function.\r
-  ( 6) GPIO Pins Config Info.\r
-  ( 7) GPIO Pins Config Setup.\r
-  ( 8) GPIO Pins Status.\r
-  ( 9) GPIO Pins Setup.\r
-(Q)uit the procedure\r
-(Exit) the program\r
-"
 send -- "8\r"
-expect -exact "8\r
+sleep .1
+expect "8\r
  GPIO  HEX           BINARY    16    15    14    13    12    11    10     9     8     7     6     5     4     3     2     1 \r
-GPIO1 FF00 1111111100000000   High  High  High  High  High  High  High  High   Low   Low   Low   Low   Low   Low   Low   Low \r
-(Q)uit the procedure\r
-(Exit) the program\r
 "
 send -- "q\r"
 expect -exact "q\r
