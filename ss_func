@@ -274,6 +274,26 @@ lan_ping_check(){
         fi
 }
 
+mic_loopback_test(){
+	rm $MIC_LOG
+        aplay $SERIAL_LOC/Wav_868kb.wav | arecord -d 3 -vvv -f dat /dev/null 2> $MIC_LOG
+        sum=0
+        i=0
+        while [ $i -lt 10 ]
+        do
+                i=$(($i+1))
+                MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 59)
+                sum=$(($sum+$MIC_CHECK))
+        done
+
+        if [ $sum -ge $1 ] ;then
+                echo "****** Check MIC sum is $sum  passed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check MIC sum is $sum  failed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check MIC sum $sum failed!, spec $1"
+        fi
+}
+
 pass_green_dialog(){
         dialog --title TESTING_RESULT --colors --yesno\
         "\Zb\Z2PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS_PASS\
@@ -445,8 +465,8 @@ time_ntp_set(){
                 echo "- Check ping ntp failed !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "- Check ping ntp failed !"
         fi
-        timedatectl set-ntp yes
-        timedatectl
+        timedatectl set-ntp yes &
+        timedatectl &
         sleep 1
         sudo hwclock -w
 }

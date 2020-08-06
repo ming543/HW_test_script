@@ -1,5 +1,5 @@
 spawn /bin/bash
-]0;production@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mproduction@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m$ sudo ./DMCT
+production@production-desktop:~/hw_test/tools/EKit_L/release/X64$ sudo ./DMCT
 DMCT 1.20T01 on AIL
 Select function.
   ( 1) System Info.
@@ -102,9 +102,9 @@ Select sub-function.
 (Exit) the program
 4
 Hardware Monitoring:
-  HWMon  1 RTC           Voltage: 3.020 (V)
+  HWMon  1 RTC           Voltage: 3.023 (V)
   HWMon  2 3.3S          Voltage: 3.325 (V)
-  HWMon  3 3.3A          Voltage: 3.332 (V)
+  HWMon  3 3.3A          Voltage: 3.322 (V)
   HWMon  4 5A            Voltage: 5.031 (V)
   HWMon  5 5S            Voltage: 5.025 (V)
 (Q)uit the procedure
@@ -442,4 +442,4 @@ Select function.
 (Q)uit the procedure
 (Exit) the program
 exit
-]0;production@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mproduction@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m$ exit
+production@production-desktop:~/hw_test/tools/EKit_L/release/X64$ exit

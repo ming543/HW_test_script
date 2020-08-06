@@ -6,8 +6,13 @@
 
 #---Start Function---
 . ./ss_func
-aic_info_check
-aic_fw_check
+#Get SN for Log
+sn_get_dialog
+
+mic_loopback_test 80
+
+aic_info_check 
+aic_fw_check "AIC-1.00"
 aic_logo_check
 aic_rtc_check
 aic_poe_check 1
@@ -27,8 +32,7 @@ aic_gpio_check FF00
 
 #onedrive_to_local
 
-#Get SN for Log
-#sn_get_dialog
+
 #bios_rev_check
 #at_check /dev/ttyUSB2 'at\r\n' OK
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
