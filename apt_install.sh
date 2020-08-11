@@ -3,4 +3,7 @@
 sudo apt-get install -y openssh-server
 sudo apt-get install -y expect
 sudo apt-get install -y dosemu
+sudo apt-get install -y dialog
+sudo apt-get install -y rclone
+sudo apt-get install -y curl
 
