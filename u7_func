@@ -193,6 +193,7 @@ cpu_temp_check(){
 	fi
 }
 
+
 dio_loopback_test(){
 	$DIO_LOC/cgosi2cgpioloopback > $DIO_LOG
 	if [ $? = 0 ];then
