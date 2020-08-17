@@ -9,12 +9,19 @@
 #Get SN for Log
 sn_get_dialog
 
-mic_loopback_test 80
+#mic_loopback_test 80
 
-aic_info_check 
-aic_fw_check "AIC-1.00"
-aic_logo_check
-aic_rtc_check
+aic_info_get 
+aic_fw_check 
+
+#aic_logo_check
+aic_hwmon_check RTC 3 2
+aic_hwmon_check 3.3S 3 
+aic_hwmon_check 3.3A 3
+aic_hwmon_check 5A 5
+aic_hwmon_check 5S 5
+
+
 aic_poe_check 1
 aic_poe_check 2
 aic_poe_check 3

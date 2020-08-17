@@ -1,0 +1,58 @@
+#!/bin/bash
+# utilitymenu.sh - A sample shell script to display menus on screen
+# Store menu options selected by the user
+#set -xv
+
+
+REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
+TEST_LOC=/home/production/hw_test
+PN_TMP=$TMP_LOC/pn.tmp
+MODEL=$0
+
+# if temp files found, delete em
+rm $PN_TMP
+
+echo "cd $TEST_LOC; sudo sh V3C-T2" > $TEST_LOC/t.sh
+
+
+dialog --title "$MODEL Test" \
+--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
+10 40 2> $PN_TMP
+PN=$(cat $PN_TMP | cut -c 1-6) 
+
+I=000633
+II=
+III=
+
+case $PN in
+	$I)
+		clear
+		cd $TEST_LOC; sudo sh $I
+		exit 0
+		;;
+	$II)
+		clear
+		cd $TEST_LOC; sudo sh $II
+		exit 0
+		;;
+	$III)
+		clear
+		cd $TEST_LOC; sudo sh $III
+		exit 0
+		;;
+
+
+
+	*)	
+		clear
+		echo "\e[1;5;33;47m The PN not find for test! \e[0m"
+		sleep 5
+		echo "cd $TEST_LOC; sudo sh run_main.sh" > $TEST_LOC/t.sh
+                sudo sh $TEST_LOC/t.sh
+                exit 1
+		;;	
+
+esac
+
+
+
