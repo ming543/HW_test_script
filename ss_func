@@ -128,11 +128,11 @@ aic_fan_cfg_check(){
 
 aic_fan_rpm_check(){
 	AIC_RPM=$(cat $AIC_LOG |grep "Fan $1 RPM" |awk '{print $4}')
-        if [ $AIC_RPM != 0 ] ;then
-                echo "- Check AIC Fan $1 RPM is $AIC_RPM !" | tee -a $LOG_LOC/$SN_LOG.log
+        if [ $AIC_RPM -ge $2 ] ;then
+                echo "- Check AIC Fan $1 RPM is $AIC_RPM ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "------ Check AIC Fan $1 RPM is $AIC_RPM fail !" | tee -a $LOG_LOC/$SN_LOG.log
-                #fail_red_dialog "Check AIC Fan $1 RPM is $AIC_RPM fail !"
+                echo "- Check AIC Fan $1 RPM is $AIC_RPM fail ! spec is $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC Fan $1 RPM is $AIC_RPM fail ! spec is $2 !"
         fi
 }
 

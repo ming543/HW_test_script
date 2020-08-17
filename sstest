@@ -34,7 +34,10 @@ aic_usb_check 2
 aic_usb_check 3 
 aic_usb_check 4 
 aic_fan_cfg_check 1
-aic_fan_rpm_check 1 
+#$1=FAN1 $2=rpm
+aic_fan_rpm_check 1 1000
+aic_fan_rpm_check 2 1000
+
 aic_gpio_check FF00
 
 #onedrive_to_local
