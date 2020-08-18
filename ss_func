@@ -22,6 +22,7 @@ DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
 IDIO_LOG="$LOC/hw_test/tmp/idio.tmp"
 BI_LOG="/tmp/bi.log"
 MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
+MEM_LOG="$LOC/hw_test/tmp/mem.tmp"
 MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
 NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
 ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
@@ -64,10 +65,10 @@ aic_logo_check(){
 }
 
 aic_hwmon_check(){
-	AIC_VOLT=$(cat $AIC_LOG |grep $1 |awk '{print $5}' )
-	AIC_V1=$(cat $AIC_LOG |grep $1 |awk '{print $5}' |cut -c 1)
-	#AIC_V3=$(cat $AIC_LOG |grep $1 |awk '{print $5}' |cut -c 3)
-        if [ $AIC_V1 -eq $2 ] || [ $AIC_V1 -eq $3 ] ;then
+	AIC_VOLT=$(cat $AIC_LOG |grep -m1 $1 |awk '{print $5}' )
+	AIC_V1=$(cat $AIC_LOG |grep -m1 $1 |awk '{print $5}' |cut -c 1)
+	AIC_V2=$(cat $AIC_LOG |grep -m1 $1 |awk '{print $5}' |cut -c 1-2)
+        if [ $AIC_V1 -eq $2 ] || [ $AIC_V2 -eq $3 ] ;then
                 echo "- Check AIC $1 Volt is $AIC_VOLT !" | tee -a $LOG_LOC/$SN_LOG.log
         else
                 echo "- Check AIC $1 Volt is $AIC_VOLT fail! spec is $2 - $3 !" | tee -a $LOG_LOC/$SN_LOG.log
@@ -293,12 +294,25 @@ mic_loopback_test(){
         done
 
         if [ $sum -ge $1 ] ;then
-                echo "****** Check MIC sum is $sum  passed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check MIC sum is $sum  passed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "****** Check MIC sum is $sum  failed!, spec $1  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check MIC sum is $sum  failed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check MIC sum $sum failed!, spec $1"
         fi
 }
+
+memory_check(){
+	rm -r $MEM_LOG
+	free -m | tee -a $MEM_LOG
+	TCHK=$(cat $MEM_LOG | grep "Mem" | cut -c 16-19)
+	if [ $TCHK -eq $1 ] || [ $TCHK -eq $2 ] ;then
+		echo "- Check Memory is $TCHK  passed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "- Check Memory is $TCHK  failed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check Memory $sum failed!, spec $1 $2"
+        fi
+}
+
 
 pass_green_dialog(){
         dialog --title TESTING_RESULT --colors --yesno\
