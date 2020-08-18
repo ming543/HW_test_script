@@ -11,7 +11,7 @@
 #time_ntp_set
 
 #Get SN for Log
-sn_get_dialog
+sn_get_nodate_dialog
 
 #Get AIC info for Log
 aic_info_get

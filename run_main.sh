@@ -58,7 +58,7 @@ case $(cat $INPUT) in
 	v) 
 		echo "v"
 		clear
-		echo "cd $TEST_LOC; sudo sh V3C-T2" > $TEST_LOC/t.sh
+		echo "cd $TEST_LOC; sudo sh run_v3c" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 3
 		;;

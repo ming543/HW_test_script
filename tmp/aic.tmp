@@ -101,12 +101,12 @@ Select sub-function.
 4
 Hardware Monitoring:
   HWMon  1 RTC           Voltage: 2.791 (V)
-  HWMon  2 3.3S          Voltage: 3.283 (V)
+  HWMon  2 3.3S          Voltage: 3.265 (V)
   HWMon  3 3.3A          Voltage: 3.307 (V)
   HWMon  4 5A            Voltage: 5.008 (V)
-  HWMon  5 5S            Voltage: 5.008 (V)
-  HWMon  6 12S           Voltage: 12.182 (V)
-  HWMon  7 12SB          Voltage: 12.085 (V)
+  HWMon  5 5S            Voltage: 5.002 (V)
+  HWMon  6 12S           Voltage: 12.162 (V)
+  HWMon  7 12SB          Voltage: 12.066 (V)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -380,8 +380,8 @@ Select sub-function.
 (Exit) the program
 3
 Fan Status:
-  Fan 1 RPM: 1245   (rev/min)
-  Fan 2 RPM: 1355   (rev/min)
+  Fan 1 RPM: 1247   (rev/min)
+  Fan 2 RPM: 1380   (rev/min)
 (Q)uit the procedure
 (Exit) the program
 q

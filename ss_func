@@ -400,7 +400,6 @@ warning_yellow_dialog(){
 
 
 pci_dev_check(){
-        echo "- PCI device check !" | tee -a $LOG_LOC/$SN_LOG.log
         lspci |grep "$1"
         if [ $? = 0 ]; then
                 echo "- Check PCI dev $1 passed !" | tee -a $LOG_LOC/$SN_LOG.log
