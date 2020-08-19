@@ -150,6 +150,12 @@ bios_oem_update(){
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
 			;;
+		QC31R134)
+			OEM=QC31U134
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
+			bios_oem_check $OEM
+			;;
 		QC31R912)
 			OEM=QC31U912
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
