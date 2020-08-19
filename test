@@ -6,7 +6,11 @@
 
 #---Start Function---
 . ./u7_func
-onedrive_to_local
+. ./bi_func
+
+countdown $((2*60*60))
+#stopwatch 10
+#onedrive_to_local
 
 #Get SN for Log
 #sn_get_dialog

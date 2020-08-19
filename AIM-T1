@@ -14,9 +14,9 @@ time_ntp_set
 sn_get_dialog
 
 #Get AIC info for Log
-aic_info_check
+aic_info_get
 aic_fw_check "AIC-1.00"
-aic_logo_check
+aic_logo_check None
 aic_rtc_check
 aic_poe_check 1
 aic_poe_check 2

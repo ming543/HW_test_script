@@ -1,0 +1,89 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./ss_func
+
+#Update time from NTP server
+#time_ntp_set
+
+#Get SN for Log
+sn_get_nodate_dialog
+
+#Get AIC info for Log
+aic_info_get
+aic_fw_check 
+#aic_logo_check None
+#aic_hwmon_check RTC 3
+aic_hwmon_check RTC 2 
+aic_hwmon_check 3.3S 3
+aic_hwmon_check 3.3A 3
+aic_hwmon_check 5A 5 4
+aic_hwmon_check 5S 5 4
+aic_hwmon_check 12S 12 12
+aic_hwmon_check 12SB 12 12
+
+#aic_poe_check 1
+aic_com_check 1 RS232
+aic_com_check 2 RS232
+aic_com_check 3 Loopback
+aic_com_check 4 Loopback
+aic_com_check 5 Loopback
+aic_com_check 6 Loopback
+
+#ATX info get
+aic_atx_check ATX
+
+#USB info get
+aic_usb_check 1
+aic_usb_check 2
+aic_usb_check 3
+aic_usb_check 4
+aic_usb_check 5
+aic_usb_check 6
+
+#Fan info get
+aic_fan_cfg_check 1
+aic_fan_cfg_check 2
+aic_fan_rpm_check 1 1000
+aic_fan_rpm_check 2 1000
+aic_gpio_check FF00
+
+#Get MAC for log
+lan_mac_check eno1 80:7b:85
+lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp2s0 80:7b:85
+lan_mac_check enp3s0 80:7b:85
+lan_mac_check enp4s0 80:7b:85
+lan_mac_check enp5s0 80:7b:85
+
+#ping test
+#lan_ping_check 192.168.1.1
+
+#PCI device check
+pci_dev_check 02:00
+
+#check USB device
+usb_dev_count "Bus 001" 5
+usb_dev_count "Bus 002" 2
+
+#RS232 loopback test
+serial_loop_test /dev/ttyS0
+
+#Audio loopbakc test
+#mic_loopback_test 80
+
+#Memory check
+memory_check 7868
+#input spec of cpu temp low high limit to script ex.20 70
+#cpu_temp_check +30 +40
+
+#check BIOS time from internet
+#hwclock_check_live
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

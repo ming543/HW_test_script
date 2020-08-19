@@ -11,10 +11,8 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-#bios_oem_check QC31U912
+bios_oem_check QC31U128
 
-#check BIOS time before ex.2020
-#hwclock_check 2020
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
@@ -38,8 +36,13 @@ hwclock_check_live
 usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
 
+<<<<<<< HEAD
 #ssd speed check 
 ssd_speed_check /dev/sdc1 200 
+=======
+#usb30 and mSATA speed check 
+ssd_speed_check /dev/sda 500 
+>>>>>>> d660d879fbe3fda65a970da1ad78fa678ce16801
 
 #DIO loopback test
 #dio_loopback_test
@@ -49,6 +52,7 @@ ssd_speed_check /dev/sdc1 200
 
 #RS232 loopback test
 serial_loop_test /dev/ttyS0
+
 
 #input spec of cpu temp low high limit to script ex.20 70
 cpu_temp_check +30 +45

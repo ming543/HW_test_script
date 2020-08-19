@@ -24,6 +24,7 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 1 "$N1" \
 2 "$N2" \
 3 "$N3" \
+v "V2C/V3C Test" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
 2>$INPUT
@@ -51,6 +52,13 @@ case $(cat $INPUT) in
 		echo "3"
 		clear
 		echo "cd $TEST_LOC; sudo sh $N3" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 3
+		;;
+	v) 
+		echo "v"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_v3c" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 3
 		;;

@@ -9,25 +9,28 @@
 #Get SN for Log
 sn_get_dialog
 
-mic_loopback_test 80
+#mic_loopback_test 80
 
-aic_info_check 
-aic_fw_check "AIC-1.00"
-aic_logo_check
-aic_rtc_check
+aic_info_get 
+aic_fw_check 
+
+#aic_logo_check
+aic_hwmon_check RTC 3 2
+aic_hwmon_check 3.3S 3 
+aic_hwmon_check 3.3A 3
+aic_hwmon_check 5A 5
+aic_hwmon_check 5S 5
+
+
 aic_poe_check 1
-aic_poe_check 2
-aic_poe_check 3
-aic_poe_check 4
 aic_com_check 1 RS232
-aic_com_check 2 RS232
 aic_atx_check ATX
 aic_usb_check 1 
-aic_usb_check 2 
-aic_usb_check 3 
-aic_usb_check 4 
 aic_fan_cfg_check 1
-aic_fan_rpm_check 1 
+#$1=FAN1 $2=rpm
+aic_fan_rpm_check 1 1000
+aic_fan_rpm_check 2 1000
+
 aic_gpio_check FF00
 
 #onedrive_to_local
@@ -52,6 +55,7 @@ aic_gpio_check FF00
 #mac_scan_check
 #mac_nvm_write /NIC=1
 ##mac_addr_write /NIC=1
+memory_check 7868
 #bios_oem_update
 #bios_oem_check
 #time_ntp_set

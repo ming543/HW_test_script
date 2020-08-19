@@ -1,11 +1,10 @@
 spawn /bin/bash
-production@production-desktop:~/hw_test/tools/EKit_L/release/X64$ sudo ./DMCT
-DMCT 1.20T01 on AIL
+]0;root@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mroot@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m# sudo ./DMCT
+DMCT 1.20T01 on AIH
 Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -23,7 +22,7 @@ Select sub-function.
 (Exit) the program
 1
 Firmware version:
-  AIC-1.00
+  AIC 0.09
 (Q)uit the procedure
 (Exit) the program
 q
@@ -37,7 +36,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -57,7 +55,7 @@ Select sub-function.
 (Exit) the program
 3
 DDM Config:
-  Page  1 Logo          None     Sequence: 0 
+  Page  1 Logo          Display  Sequence: 0 
   Page  2 User String   Display  Sequence: 1 
   Page  3 Temperature   Display  Sequence: 2 
   Page  4 POE           Display  Sequence: 3 
@@ -67,6 +65,7 @@ DDM Config:
   Page  8 AIC Version   Display  Sequence: 7 
   Page  9 FAN           Display  Sequence: 8 
   Page 10 Voltage       Display  Sequence: 9 
+  Page 11 Voltage2      Display  Sequence: 10
 (Q)uit the procedure
 (Exit) the program
 q
@@ -82,7 +81,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -102,11 +100,13 @@ Select sub-function.
 (Exit) the program
 4
 Hardware Monitoring:
-  HWMon  1 RTC           Voltage: 3.023 (V)
-  HWMon  2 3.3S          Voltage: 3.325 (V)
-  HWMon  3 3.3A          Voltage: 3.322 (V)
-  HWMon  4 5A            Voltage: 5.031 (V)
-  HWMon  5 5S            Voltage: 5.025 (V)
+  HWMon  1 RTC           Voltage: 2.791 (V)
+  HWMon  2 3.3S          Voltage: 3.265 (V)
+  HWMon  3 3.3A          Voltage: 3.307 (V)
+  HWMon  4 5A            Voltage: 5.008 (V)
+  HWMon  5 5S            Voltage: 5.002 (V)
+  HWMon  6 12S           Voltage: 12.162 (V)
+  HWMon  7 12SB          Voltage: 12.066 (V)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -122,7 +122,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -133,25 +132,25 @@ Select function.
 (Q)uit the procedure
 (Exit) the program
 4
-Select sub-function.
-  ( 1) PoE Config Info.
-  ( 2) PoE Config Setup.
-  ( 3) PoE Status.
+Select function.
+  ( 1) System Info.
+  ( 2) DDM Config Info.
+  ( 3) Health Monitoring.
+  ( 5) miniPCIe Config Info.
+  ( 6) COM Config Info.
+  ( 7) WDT Config Info & Monitoring.
+  ( 8) Power Config Info.
+  ( 9) USB Config Info.
+  (10) Fan Config Info & Monitoring.
+  (11) IO (DIO/IDIO) Status & Config Info.
 (Q)uit the procedure
 (Exit) the program
 3
-PoE Status:
-  PoE  1 Present: Disconnected  Walt: 0       (mW)
-  PoE  2 Present: Disconnected  Walt: 0       (mW)
-  PoE  3 Present: Disconnected  Walt: 0       (mW)
-  PoE  4 Present: Disconnected  Walt: 0       (mW)
-(Q)uit the procedure
-(Exit) the program
-q
 Select sub-function.
-  ( 1) PoE Config Info.
-  ( 2) PoE Config Setup.
-  ( 3) PoE Status.
+  ( 1) System Health.
+  ( 2) Last Power Status.
+  ( 3) Power On Count.
+  ( 4) Hardware Monitor.
 (Q)uit the procedure
 (Exit) the program
 q
@@ -159,7 +158,20 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
+  ( 5) miniPCIe Config Info.
+  ( 6) COM Config Info.
+  ( 7) WDT Config Info & Monitoring.
+  ( 8) Power Config Info.
+  ( 9) USB Config Info.
+  (10) Fan Config Info & Monitoring.
+  (11) IO (DIO/IDIO) Status & Config Info.
+(Q)uit the procedure
+(Exit) the program
+q
+Select function.
+  ( 1) System Info.
+  ( 2) DDM Config Info.
+  ( 3) Health Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -195,7 +207,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -215,6 +226,10 @@ Select sub-function.
 COM Config:
   COM  1 Mode: RS232        
   COM  2 Mode: RS232        
+  COM  3 Mode: Loopback     
+  COM  4 Mode: Loopback     
+  COM  5 Mode: Loopback     
+  COM  6 Mode: Loopback     
 (Q)uit the procedure
 (Exit) the program
 q
@@ -228,7 +243,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -266,7 +280,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -298,7 +311,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -320,6 +332,8 @@ USB Config:
   USB  2 Power: ON  
   USB  3 Power: ON  
   USB  4 Power: ON  
+  USB  5 Power: ON  
+  USB  6 Power: ON  
 (Q)uit the procedure
 (Exit) the program
 q
@@ -333,7 +347,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -352,8 +365,10 @@ Select sub-function.
 (Exit) the program
 1
 Fan Config:
-Fan_Cfgs 1 0 40
-  Fan 1 Auto: OFF  PWM:  40 (%)
+Fan_Cfgs 1 1 40
+Fan_Cfgs 2 1 40
+  Fan 1 Auto: ON   PWM:  40 (%)
+  Fan 2 Auto: ON   PWM:  40 (%)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -365,7 +380,8 @@ Select sub-function.
 (Exit) the program
 3
 Fan Status:
-  Fan 1 RPM: 0      (rev/min)
+  Fan 1 RPM: 1247   (rev/min)
+  Fan 2 RPM: 1380   (rev/min)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -380,7 +396,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -401,6 +416,7 @@ Select sub-function.
 8
  GPIO  HEX           BINARY    16    15    14    13    12    11    10     9     8     7     6     5     4     3     2     1 
 GPIO1 FF00 1111111100000000   High  High  High  High  High  High  High  High   Low   Low   Low   Low   Low   Low   Low   Low 
+GPIO2 FF00 1111111100000000   High  High  High  High  High  High  High  High   Low   Low   Low   Low   Low   Low   Low   Low 
 (Q)uit the procedure
 (Exit) the program
 q
@@ -416,7 +432,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -431,7 +446,6 @@ Select function.
   ( 1) System Info.
   ( 2) DDM Config Info.
   ( 3) Health Monitoring.
-  ( 4) POE Config Info & Monitoring.
   ( 5) miniPCIe Config Info.
   ( 6) COM Config Info.
   ( 7) WDT Config Info & Monitoring.
@@ -442,4 +456,4 @@ Select function.
 (Q)uit the procedure
 (Exit) the program
 exit
-production@production-desktop:~/hw_test/tools/EKit_L/release/X64$ exit
+]0;root@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mroot@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m# exit

@@ -1,0 +1,70 @@
+#!/bin/bash
+# utilitymenu.sh - A sample shell script to display menus on screen
+# Store menu options selected by the user
+#set -xv
+
+
+REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
+TEST_LOC=/home/production/hw_test
+PN_TMP=$TMP_LOC/pn.tmp
+MODEL=$0
+
+# if temp files found, delete em
+rm $PN_TMP
+
+echo "cd $TEST_LOC; sudo sh V3C-T2" > $TEST_LOC/t.sh
+
+
+dialog --title "$MODEL Test" \
+--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
+10 40 2> $PN_TMP
+PN=$(cat $PN_TMP | cut -c 1-6) 
+
+#::  1.V2C-i7-6600U  (20070-000556)                   2.V2C-i5-6300U  (20070-000557)
+#::  3.V2C-i3-6100U  (20070-000558)                   4.V2C-G3955U    (20070-000559)
+#::  5.V2CE-i7-6600U (20070-000629)                   6.V2CE-i5-6300U (20070-000638)
+#::  7.V2CE-i3-6100U (20070-000639)                   8.V2CE-G3955U   (20070-000640)
+#::  9.V2C-i7-7600U  (20070-000661)                  10.V2C-i5-7300U  (20070-000662)
+#:: 11.V2C-i3-7100U  (20070-000663)                  12.V2C-G3965U    (20070-000660)
+#:: 13.V2CE-i7-7600U (20070-000658)                  14.V2CE-i5-7300U (20070-000657)
+#:: 15.V2CE-i3-7100U (20070-000656)                  16.V2CE-G3965U   (20070-000659)
+#:: 17.V3CE6         (20070-000611) 2019/5/31 Add    18.V3C           (20070-000560) 2019/5/31 Add 
+#:: 19.V3CDP         (20070-000633) 2019/5/31 Add    20.V2CL6-6600    (20040-000005) 2019/10/18 Add
+#:: 21.V2CL6-6100    (20040-000007) 2019/10/18 Add   22.V2CL6-3955    (20040-000008) 2019/10/18 Add 
+#:: 23.V2CEL6-6600   (20040-000009) 2019/10/18 Add   24.V2CEL6-6100   (20040-000011) 2019/10/18 Add
+#:: 25.V2CEL6-3955   (20040-000012) 2019/10/18 Add   26.V2CL7-7200    (20040-000013) 2019/10/18 Add
+#:: 27.V3CEL7-7200   (20040-000014) 2019/10/18 Add   28.V2C7-7200     (20070-000691) 2019/11/5 Add
+#:: 29.V2CE7-7200    (20070-000692) 2019/11/5 Add
+
+case $PN in
+	000633)
+		clear
+		cd $TEST_LOC; sudo sh V3CD
+		exit 0
+		;;
+	$II)
+		clear
+		cd $TEST_LOC; sudo sh $II
+		exit 0
+		;;
+	$III)
+		clear
+		cd $TEST_LOC; sudo sh $III
+		exit 0
+		;;
+
+
+
+	*)	
+		clear
+		echo "\e[1;5;33;47m The PN not find for test! \e[0m"
+		sleep 5
+		echo "cd $TEST_LOC; sudo sh run_main.sh" > $TEST_LOC/t.sh
+                sudo sh $TEST_LOC/t.sh
+                exit 1
+		;;	
+
+esac
+
+
+
