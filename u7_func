@@ -722,6 +722,10 @@ ssd_speed_check (){
 	fi
 }
 
+time_zone_set() {
+	sudo cp /usr/share/zoneinfo/$1 /etc/localtime
+}
+
 time_ntp_set(){
 	ping ntp.ubuntu.com -c 1
 	if [ $? = 0 ]; then
