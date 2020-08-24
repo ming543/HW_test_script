@@ -11,7 +11,7 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-bios_oem_check QC31U128
+bios_oem_check QC31U134
 
 
 #Get MAC for log
@@ -36,13 +36,10 @@ hwclock_check_live
 usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
 
-<<<<<<< HEAD
 #ssd speed check 
 ssd_speed_check /dev/sdc1 200 
-=======
 #usb30 and mSATA speed check 
-ssd_speed_check /dev/sda 500 
->>>>>>> d660d879fbe3fda65a970da1ad78fa678ce16801
+ssd_speed_check /dev/sda 300 
 
 #DIO loopback test
 #dio_loopback_test
