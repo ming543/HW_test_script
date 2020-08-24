@@ -17,7 +17,7 @@ sn_get_dialog
 
 #Update BIOS default setting to OEM
 bios_oem_update
-bios_oen_check
+bios_oem_check QC31U134
 
 #check BIOS time from internet
 hwclock_check_live
