@@ -454,6 +454,38 @@ mic_test(){
 	fi
 }
 
+mic_loopback_test(){
+        rm $MIC_LOG
+        aplay $SERIAL_LOC/Wav_868kb.wav &
+        arecord -d 3 -vvv -f dat /dev/null 2> $MIC_LOG
+        sum=0
+        i=0
+        while [ $i -lt 10 ]
+        do
+                i=$(($i+1))
+                MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 59)
+                sum=$(($sum+$MIC_CHECK))
+        done
+
+        if [ $sum -ge $1 ] ;then
+                echo "- Check MIC sum is $sum  passed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check MIC sum is $sum  failed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check MIC sum $sum failed!, spec $1"
+        fi
+}
+
+memory_check(){
+        rm -r $MEM_LOG
+        free -m | tee -a $MEM_LOG
+        TCHK=$(cat $MEM_LOG | grep "Mem" | cut -c 16-19)
+        if [ $TCHK -eq $1 ] || [ $TCHK -eq $2 ] ;then
+                echo "- Check Memory is $TCHK  passed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check Memory is $TCHK  failed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check Memory $sum failed!, spec $1 $2"
+        fi
+}
 
 pass_green_dialog(){
         dialog --title TESTING_RESULT --colors --yesno\

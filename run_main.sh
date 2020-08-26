@@ -68,7 +68,10 @@ case $(cat $INPUT) in
 		sudo timedatectl set-ntp yes
 		sudo timedatectl 
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
-		sleep 5
+		sudo rclone copy /home/production/EagleEyes_LOG onedrive:General/EagleEyes_LOG -P
+		sudo rsync -avh /home/production/EagleEyes_LOG /media/production/USB30/EagleEyes_LOG
+		sudo rsync -avh /home/production/u7_log /media/production/USB30/u7_log
+		sleep 2
 		#sudo sh /home/production/hw_test/x.sh
 		sudo sh /home/production/hw_test/t.sh
 		exit 0
@@ -77,7 +80,7 @@ case $(cat $INPUT) in
 		clear
 		echo "u"
 		cd /home/production/hw_test/
-		#sudo sh git_reset.sh
+		sudo sh git_reset.sh
 		git pull
 		sleep 5
 		#sudo sh /home/production/hw_test/x.sh

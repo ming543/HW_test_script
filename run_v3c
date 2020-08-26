@@ -42,9 +42,9 @@ case $PN in
 		cd $TEST_LOC; sudo sh V3CD
 		exit 0
 		;;
-	$II)
+	000561)
 		clear
-		cd $TEST_LOC; sudo sh $II
+		cd $TEST_LOC; sudo sh V3CD6
 		exit 0
 		;;
 	$III)

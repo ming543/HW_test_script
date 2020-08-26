@@ -52,7 +52,7 @@ serial_loop_test /dev/ttyS0
 
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +30 +45
+cpu_temp_check +20 +45
 
 #Show ALL TEST PASS to log
 pass_green_dialog

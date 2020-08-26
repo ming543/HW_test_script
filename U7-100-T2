@@ -11,7 +11,7 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-#bios_oem_check QC31U912
+bios_oem_check QC31U134
 
 #check BIOS time before ex.2020
 #hwclock_check 2020
@@ -39,19 +39,20 @@ usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
 
 #usb30 speed check 
-ssd_speed_check sdb1 90 
+ssd_speed_check /dev/sdc1 200 
+ssd_speed_check /dev/sda 200 
 
 #DIO loopback test
 dio_loopback_test
 
 #Audio MIC sum test
-mic_test 30
+mic_loopback_test 
 
 #RS232 loopback test
 serial_loop_test /dev/ttyS0
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +30 +40
+cpu_temp_check +20 +45
 
 #Show ALL TEST PASS to log
 pass_green_dialog
