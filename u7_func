@@ -320,7 +320,7 @@ lan_mac_check(){
 	fi
 	MAC=$(cat "/sys/class/net/$LAN/address")
 	MAC_HEAD=$(cat "/sys/class/net/$LAN/address" | cut -c 1-8)
-	if [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
+	if [$MAC_HEAD != 00:00:00 ] && [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
 		echo "****** Check $LAN MAC $MAC passed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check $LAN MAC $MAC failed!, spec $2 $3!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
