@@ -253,15 +253,15 @@ lan_mac_check(){
         #echo "****** LAN MAC check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
         cat "/sys/class/net/$1/address"
         if [ $? = 0 ];then
-                #echo "****** Check $1 device !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check $1 device OK!" | tee -a $LOG_LOC/$SN_LOG.log
                 LAN=$1
         else
-                #echo "****** Check enp2s0 device !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-                LAN=enp2s0
+                echo "- Check $1 device failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "- Check $1 device failed!"
         fi
         MAC=$(cat "/sys/class/net/$LAN/address")
         MAC_HEAD=$(cat "/sys/class/net/$LAN/address" | cut -c 1-8)
-        if [$MAC_HEAD != 00:00:00 ] && [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
+        if [ $MAC_HEAD = $2 ] || [ $MAC_HEAD = $3 ]; then
                 echo "- Check $LAN MAC $MAC passed!, spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
         else
                 echo "- Check $LAN MAC $MAC failed!, spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
