@@ -31,11 +31,13 @@ lan_ping_check 192.168.4.1
 hwclock_check_live
 
 #check USB device
-usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
+usb_dev_count "Bus 002" 7
+
 
 #usb30 speed check 
-ssd_speed_check /dev/sdb 100 
+usb30_speed_check 
+
 ssd_speed_check /dev/sdc 200 
 
 

@@ -750,6 +750,19 @@ ssd_speed_check (){
 	fi
 }
 
+usb30_speed_check (){
+	USB30_DEV=$(lsblk -f | grep USB30 | cut -c 7-10)
+	sudo rm $USB30_LOC
+	sudo hdparm -t /dev/$USB30_DEV > $USB30_LOC
+	USB30_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
+	if [ $USB30_SPEED -ge 100 ] ; then
+	        echo "****** Check USB30 speed $USB30_SPEED passed! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+                echo "****** Check USB30 speed $USB30_SPEED failed!, spec 100 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check USB30 speed $USB30_SPEED failed!, spec 100 !" 
+	fi
+}
+
 time_zone_set() {
 	sudo cp /usr/share/zoneinfo/$1 /etc/localtime
 }

@@ -56,8 +56,10 @@
 
 #input spec of cpu temp low high limit to script ex.20 70
 
+usb30_speed_check
+
 #copy bi log to final log
-usb_log_sync
+#usb_log_sync
 #Show ALL TEST PASS to log
 #pass_green_dialog
 
