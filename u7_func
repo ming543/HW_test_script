@@ -145,7 +145,6 @@ bios_rev_check(){
 
 bios_oem_update(){
 	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
-	echo " " | tee -a $LOG_LOC/$SN_LOG.log
 	echo "****** Check BIOS Version is $BIOS_REV ******" | tee -a $LOG_LOC/$SN_LOG.log
 	case $BIOS_REV in
 		QC31R128)
@@ -155,7 +154,7 @@ bios_oem_update(){
 			bios_oem_check $OEM
 			;;
 		QC31R134)
-			OEM=QC31U134
+			OEM=QC31W134
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
@@ -249,7 +248,6 @@ fail_red_dialog(){
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   usb_log_sync
-		   onedrive_log_sync
 		   clear
 		   sh /home/production/hw_test/t.sh
 		   exit
@@ -260,7 +258,6 @@ fail_red_dialog(){
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   usb_log_sync
-		   onedrive_log_sync
 		   sync
 		   poweroff
 		exit 1 ;;
@@ -745,12 +742,11 @@ usb_id_check (){
 ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
 	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
-	SSD_DEV=$(lsblk | grep $1 | awk '{print $7}')	
 	if [ $SSD_SPEED -ge $2 ] ; then
-	        echo "****** Check $SSD_DEV speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "****** Check $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 	else
-                echo "****** Check $SSD_DEV speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $SSD_DEV speed $SSD_SPEED failed!, spec $2 !" 
+                echo "****** Check $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 speed $SSD_SPEED failed!, spec $2 !" 
 	fi
 }
 
@@ -762,7 +758,6 @@ time_ntp_set(){
 	ping ntp.ubuntu.com -c 1
 	if [ $? = 0 ]; then
 		echo "****** Check ping ntp passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
-
 	else
 		echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "Check ping ntp failed !"
@@ -774,7 +769,16 @@ time_ntp_set(){
 }
 
 usb_log_sync(){
-	sudo rsync -avh /home/production/u7_log/ /media/production/USB30/u7_log/
+	USB30_DEV=$(lsblk -f | grep USB30 | cut -c 7-10)
+	if [ $? = 0 ]; then
+		sudo umount /mnt
+		sudo mount /dev/$USB30_DEV /mnt
+		sudo rsync -avh /home/production/u7_log /mnt 
+		sudo umount /mnt
+	else
+		echo "Check USB30 $USB30_DEV failed !" | tee -a $LOG_LOC/$SN_LOG.log 
+		sleep 5
+	fi
 }
 
 

@@ -11,10 +11,8 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-bios_oem_check QC31U134
-
-#check BIOS time before ex.2020
-#hwclock_check 2020
+bios_oem_check QC31W134
+#bios_oem_check QC31U128
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
@@ -28,8 +26,6 @@ lan_ping_check 192.168.1.1
 #lan_up enp4s0
 lan_ping_check 192.168.4.1
 
-#Update time from NTP server
-#time_ntp_set
 
 #check BIOS time from internet
 hwclock_check_live
@@ -39,14 +35,15 @@ usb_dev_count "Bus 002" 7
 usb_dev_count "Bus 003" 2
 
 #usb30 speed check 
-ssd_speed_check /dev/sdc1 200 
-ssd_speed_check /dev/sda 200 
+ssd_speed_check /dev/sdb 100 
+ssd_speed_check /dev/sdc 200 
+
 
 #DIO loopback test
 dio_loopback_test
 
 #Audio MIC sum test
-mic_loopback_test 
+#mic_loopback_test 
 
 #RS232 loopback test
 serial_loop_test /dev/ttyS0
