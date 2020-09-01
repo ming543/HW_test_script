@@ -148,26 +148,50 @@ bios_oem_update(){
 	echo "****** Check BIOS Version is $BIOS_REV ******" | tee -a $LOG_LOC/$SN_LOG.log
 	case $BIOS_REV in
 		QC31R128)
-			OEM=QC31U128
+			OEM=QC31W128
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+				if [ $? = 0 ];then
+					echo "****** BIOS default $OEM update passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+        			else
+					echo "****** BIOS defualt $OEM update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+					fail_red_dialog "BIOS default $OEM update failed!"
+        			fi
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
 			;;
 		QC31R134)
 			OEM=QC31W134
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+				if [ $? = 0 ];then
+					echo "****** BIOS default $OEM update passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+        			else
+					echo "****** BIOS defualt $OEM update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+					fail_red_dialog "BIOS default $OEM update failed!"
+        			fi
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
 			;;
 		QC31R912)
 			OEM=QC31U912
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+				if [ $? = 0 ];then
+					echo "****** BIOS default $OEM update passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+        			else
+					echo "****** BIOS defualt $OEM update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+					fail_red_dialog "BIOS default $OEM update failed!"
+        			fi
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
 			;;
 		QC32R912)
 			OEM=QC32U912
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /ADD /IF:$CGUT_LOC/$OEM.MOD
+				if [ $? = 0 ];then
+					echo "****** BIOS default $OEM update passed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+        			else
+					echo "****** BIOS defualt $OEM update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+					fail_red_dialog "BIOS default $OEM update failed!"
+        			fi
 			sudo $CGUT_LOC/cgutlcmd MODULE /OT:BOARD /OEM:$OEM
 			bios_oem_check $OEM
 			;;
