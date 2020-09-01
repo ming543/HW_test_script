@@ -19,6 +19,10 @@ sn_get_dialog
 bios_oem_update
 #bios_oem_check QC31U134
 
+#Get MAC for log
+lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp4s0 00:13:95
+
 #check BIOS time from internet
 hwclock_check_live
 
