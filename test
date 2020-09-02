@@ -14,7 +14,7 @@
 #onedrive_to_local
 
 #Get SN for Log
-#sn_get_dialog
+sn_get_dialog
 #bios_rev_check
 #at_check /dev/ttyUSB2 'at\r\n' OK
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
@@ -50,13 +50,13 @@
 #bi check
 #burnintest_script
 #bi_log_check
-
+bi_stress
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 #bi_cli_auto noserial 1
 
 #input spec of cpu temp low high limit to script ex.20 70
 
-usb30_speed_check
+#usb30_speed_check
 
 #copy bi log to final log
 #usb_log_sync

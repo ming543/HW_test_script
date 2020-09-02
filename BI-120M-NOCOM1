@@ -18,7 +18,7 @@ lan_mac_check enp1s0 80:7b:85
 hwclock_check 2020
 
 #BI
-
+bi_stress +30 +95
 
 
 
@@ -27,7 +27,7 @@ hwclock_check 2020
 #serial_loop_test /dev/ttyS0
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +30 +95
+#cpu_temp_check +30 +95
 
 #Show ALL TEST PASS to log
 pass_green_dialog

@@ -46,7 +46,7 @@ dio_loopback_test
 
 #Audio MIC sum test
 #mic_loopback_test 
-mic_test
+mic_test 40
 
 #RS232 loopback test
 serial_loop_test /dev/ttyS0
