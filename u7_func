@@ -65,7 +65,7 @@ bi_stress(){
                 			echo "****** Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
                 			fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
         			fi
-
+			sleep 5
         	else
                		echo "- Check BI failed!" | tee -a $LOG_LOC/$SN_LOG.log
                	    	fail_red_dialog "Check BI failed!"
