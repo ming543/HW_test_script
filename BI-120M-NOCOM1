@@ -17,11 +17,8 @@ lan_mac_check enp1s0 80:7b:85
 #check BIOS time from internet
 hwclock_check 2020
 
-#BI
-bi_stress +30 +95
-
-
-
+#BI for $3 x 10m
+bi_stress +30 +95 12
 
 #RS232 loopback test
 #serial_loop_test /dev/ttyS0

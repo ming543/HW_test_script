@@ -8,8 +8,8 @@
 . ./u7_func
 
 #Update time from NTP server
-time_zone_set Europe/Berlin
-#time_zone_set Asia/Taipei
+#time_zone_set Europe/Berlin
+time_zone_set Asia/Taipei
 time_ntp_set
 
 #Get SN for Log

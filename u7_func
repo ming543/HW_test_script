@@ -50,20 +50,21 @@ at_check(){
 bi_stress(){
 	sum=0
         i=0
-        while [ $i -lt 6 ]
+        while [ $i -lt $3 ]
         do
                 i=$(($i+1))
-		sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G --timeout 10s --metrics-brief
+		clear
+		echo "BI run $i, Total $3"
+            	uptime 
+		sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G --timeout 10m --metrics-brief 
 		if [ $? = 0 ];then
-			TEMP_LOG=$TMP_LOC/temp.tmp
-       			rm -r $TEMP_LOG
-        		sensors -A | tee -a $TEMP_LOG
+			UPTIME_LOG=$(uptime)
         		CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
         			if [ $CPU_TEMP_LOG -ge $1 ] && [ $CPU_TEMP_LOG -le $2 ];then
-                			echo "****** Check CPU temp $CPU_TEMP_LOG C passed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                			echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C passed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
         			else
-                			echo "****** Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 to  $2 C  ******" | tee -a $LOG_LOC/$SN_LOG.log
-                			fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed!, spec $1 - $2 C"
+                			echo "Check CPU temp $CPU_TEMP_LOG C failed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
+                			fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed! spec $1 - $2 C"
         			fi
 			sleep 5
         	else
@@ -71,13 +72,12 @@ bi_stress(){
                	    	fail_red_dialog "Check BI failed!"
         	fi
 
-                sum=$(($sum+$MIC_CHECK))
+                #sum=$(($sum+$MIC_CHECK))
         done
-        #       clear   
-        #       echo $sum
-        #       sleep 5
-
-
+	if [ $i != $3 ];then
+               		echo "- Check BI $i run failed! spec $i" | tee -a $LOG_LOC/$SN_LOG.log
+               	    	fail_red_dialog "Check BI run $i failed! spec $i"
+	fi
 }
 
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
