@@ -11,6 +11,7 @@ N2=U7-PFT
 N3=U7-100PAS-T2
 N4=U7-100-T2
 B1=BI-120M-NOCOM1
+B2=BI-120M-COM1
 
 # if temp files found, delete em
 rm $OUTPUT
@@ -27,7 +28,8 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 2 "$N2" \
 3 "$N3" \
 4 "$N4" \
-b "$B1" \
+b1 "$B1" \
+b2 "$B2" \
 v "V2C/V3C Test" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
@@ -66,10 +68,17 @@ case $(cat $INPUT) in
 		sudo sh $TEST_LOC/t.sh
 		exit 4
 		;;
-	b) 
+	b1) 
 		echo "b"
 		clear
 		echo "cd $TEST_LOC; sudo sh $B1" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 1
+		;;
+	b2) 
+		echo "b"
+		clear
+		echo "cd $TEST_LOC; sudo sh $B2" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 1
 		;;
