@@ -73,7 +73,8 @@ bi_stress(){
                	    	fail_red_dialog "Check BI failed!"
         	fi
         done
-	
+        
+	UPTIME_LOG=$(uptime)
         echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C passed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
 	
 	if [ $count -ge $3 ];then
@@ -119,6 +120,7 @@ bi_stress_com(){
                 fi
         done
 
+        UPTIME_LOG=$(uptime)
         echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C passed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
 
         if [ $count -ge $3 ];then
@@ -586,6 +588,16 @@ memory_check(){
         else
                 echo "- Check Memory is $TCHK  failed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check Memory $sum failed!, spec $1 $2"
+        fi
+}
+
+os_clone(){
+	sudo /usr/sbin/ocs-sr -g auto -e1 auto -e2 -r -j2 -k1 -scr -icds -p command restoredisk $1 ask_user
+	if [ $? = 0 ]; then
+                echo "- OS clone $1 passed !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- OS clone $1 failed !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "OS clone  $1 failed !"
         fi
 }
 

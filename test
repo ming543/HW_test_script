@@ -14,7 +14,7 @@
 #onedrive_to_local
 
 #Get SN for Log
-sn_get_dialog
+#sn_get_dialog
 #bios_rev_check
 #at_check /dev/ttyUSB2 'at\r\n' OK
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
@@ -50,7 +50,7 @@ sn_get_dialog
 #bi check
 #burnintest_script
 #bi_log_check
-bi_stress
+bi_stress +20 +95 10
 #input spec of $1 BI to script ex.disk/nodisk $2 is BI time
 #bi_cli_auto noserial 1
 

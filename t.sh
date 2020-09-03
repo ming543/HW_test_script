@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh BI-120M-COM1
+cd /home/production/hw_test; sudo sh run_main.sh

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Get SN for Log
+sn_get_dialog
+
+#OS clone
+os_clone $0
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

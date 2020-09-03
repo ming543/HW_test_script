@@ -21,9 +21,9 @@ rm $INPUT
 
 
 
-### display main menu ###
+### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \
---menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 20 50 8 \
+--menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
 1 "$N1" \
 2 "$N2" \
 3 "$N3" \
@@ -31,6 +31,7 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 b1 "$B1" \
 b2 "$B2" \
 v "V2C/V3C Test" \
+o "OS CLONE" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
 2>$INPUT
@@ -86,6 +87,13 @@ case $(cat $INPUT) in
 		echo "v"
 		clear
 		echo "cd $TEST_LOC; sudo sh run_v3c" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 3
+		;;
+	o) 
+		echo "0"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_os" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 3
 		;;
