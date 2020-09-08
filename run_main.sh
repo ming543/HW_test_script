@@ -6,11 +6,13 @@ INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
-N1=Q718PAS-T2
-N2=U7-PFT
-N3=U7-100PAS-T2
-N4=U7-100-T2
-B1=BI-120M-NOCOM1
+
+N1=U7-PFT
+N2=U7-100PAS-T2
+N3=U7-100-T2
+P1=Q718PAS-T2
+P2=Q715-T2
+B1=BI-120M-U7-NOCOM1
 B2=BI-120M-COM1
 
 # if temp files found, delete em
@@ -24,16 +26,14 @@ rm $INPUT
 ### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
-1 "$N1" \
-2 "$N2" \
-3 "$N3" \
-4 "$N4" \
-b1 "$B1" \
-b2 "$B2" \
+7 "U7-SYSTEM Test" \
+q "Q71X-PCBA Test" \
 v "V2C/V3C Test" \
+b "Burn-In Test" \
 o "OS CLONE" \
 c "Copy Log to Onedrive" \
 u "Update Test Script" \
+p "Power off Tester" \
 2>$INPUT
 #2>"${INPUT}"
 
@@ -42,46 +42,19 @@ menuitem=$(cat $INPUT)
 # make decsion 
 
 case $(cat $INPUT) in
-	1)
+	7)
+		echo "7"
 		clear
-		echo "cd $TEST_LOC; sudo sh $N1" > $TEST_LOC/t.sh
+		echo "cd $TEST_LOC; sudo sh run_u7" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
-		exit 0
+		exit 7
 		;;
-	2) 
-		echo "2"
+	q)
+		echo "q"
 		clear
-		echo "cd $TEST_LOC; sudo sh $N2" > $TEST_LOC/t.sh
+		echo "cd $TEST_LOC; sudo sh run_q7" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
-		exit 2
-		;;
-	3) 
-		echo "3"
-		clear
-		echo "cd $TEST_LOC; sudo sh $N3" > $TEST_LOC/t.sh
-		sudo sh $TEST_LOC/t.sh
-		exit 3
-		;;
-	4) 
-		echo "4"
-		clear
-		echo "cd $TEST_LOC; sudo sh $N4" > $TEST_LOC/t.sh
-		sudo sh $TEST_LOC/t.sh
-		exit 4
-		;;
-	b1) 
-		echo "b"
-		clear
-		echo "cd $TEST_LOC; sudo sh $B1" > $TEST_LOC/t.sh
-		sudo sh $TEST_LOC/t.sh
-		exit 1
-		;;
-	b2) 
-		echo "b"
-		clear
-		echo "cd $TEST_LOC; sudo sh $B2" > $TEST_LOC/t.sh
-		sudo sh $TEST_LOC/t.sh
-		exit 1
+		exit q
 		;;
 	v) 
 		echo "v"
@@ -89,6 +62,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh run_v3c" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 3
+		;;
+	b) 
+		echo "b"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_bi" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 0 
 		;;
 	o) 
 		echo "0"
@@ -122,6 +102,11 @@ case $(cat $INPUT) in
 		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
+	p)
+		echo "p"
+		sudo poweroff
+		exit 0
+		;;
 
 esac
 

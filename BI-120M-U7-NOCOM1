@@ -18,7 +18,7 @@ lan_mac_check enp1s0 80:7b:85
 hwclock_check 2020
 
 #BI for $3 x 10m
-bi_stress +30 +95 130
+bi_stress +20 +75 130
 
 #RS232 loopback test
 #serial_loop_test /dev/ttyS0
