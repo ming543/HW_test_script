@@ -34,14 +34,13 @@ ADDR_LOG="/tmp/addr.tmp"
 
 audio_codec_test(){
         rm $AUDIO_LOG
-        aplay $SERIAL_LOC/default_dual.wav &
-        arecord -d 3 -vvv -f dat /dev/null 2> $AUDIO_LOG
+        aplay -vvv -d 5 $SERIAL_LOC/default_dual.wav 2> $AUDIO_LOG
         sum=0
         i=0
         while [ $i -lt 10 ]
         do
                 i=$(($i+1))
-                AUDIO_CHECK=$(tail $AUDIO_LOG | awk NR==$i | cut -c 59)
+                AUDIO_CHECK=$(tail $AUDIO_LOG | awk NR==$i | cut -c 58)
                 sum=$(($sum+$AUDIO_CHECK))
         done
 
@@ -853,11 +852,11 @@ sn_get_nodate_dialog(){
 
 usb_dev_check (){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
-	echo "****** USB device check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	echo "- USB device check!" | tee -a $LOG_LOC/$SN_LOG.log
 #	USB_dev=$(lsusb |grep "$1" |awk '{print $4}')
 	lsusb | grep "$1" 
 	if [ $? = 0 ]; then
-		echo "****** Check USB dev $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check USB dev $1 passed !" | tee -a $LOG_LOC/$SN_LOG.log
 		lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check USB dev $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
@@ -869,7 +868,7 @@ usb_dev_check (){
 usb_dev_count (){
 	count=$(lsusb | grep "$1" |wc -l)
 	if [ $count = $2 ] || [ $count = $3 ] ; then
-		echo "****** Check USB device count $1 X $count passed! spec $2 $3! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check USB device count $1 X $count passed! spec $2 $3!" | tee -a $LOG_LOC/$SN_LOG.log
 
 		#lsusb |grep "$1" |tee -a $LOG_LOC/$SN_LOG.log
 	else
@@ -880,12 +879,12 @@ usb_dev_count (){
 }
 
 usb_id_check (){
-	echo "****** USB ID check!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+	echo "- USB ID check! " | tee -a $LOG_LOC/$SN_LOG.log
 	USB_ID=$(lsusb |grep $1 |awk '{print $6}')
 	lsusb |grep $1 |tee -a $LOG_LOC/$SN_LOG.log
 	
 	if [ $USB_ID = $1 ]; then
-		echo "****** Check USB ID $1 passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check USB ID $1 passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check USB ID $1 failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "Check USB ID $1 failed !" 
@@ -897,7 +896,7 @@ ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
 	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
 	if [ $SSD_SPEED -ge $2 ] ; then
-	        echo "****** Check $1 speed $SSD_SPEED passed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "- Check $1 speed $SSD_SPEED passed!, spec $2 !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
                 echo "****** Check $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check $1 speed $SSD_SPEED failed!, spec $2 !" 
@@ -910,7 +909,7 @@ usb30_speed_check (){
 	sudo hdparm -t /dev/$USB30_DEV > $USB30_LOC
 	USB30_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
 	if [ $USB30_SPEED -ge 100 ] ; then
-	        echo "****** Check USB30 speed $USB30_SPEED passed! *****" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "- Check USB30 speed $USB30_SPEED passed!" | tee -a $LOG_LOC/$SN_LOG.log
 	else
                 echo "****** Check USB30 speed $USB30_SPEED failed!, spec 100 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
 		fail_red_dialog "Check USB30 speed $USB30_SPEED failed!, spec 100 !" 
@@ -924,7 +923,7 @@ time_zone_set() {
 time_ntp_set(){
 	ping ntp.ubuntu.com -c 1
 	if [ $? = 0 ]; then
-		echo "****** Check ping ntp passed !  ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check ping ntp passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "Check ping ntp failed !"

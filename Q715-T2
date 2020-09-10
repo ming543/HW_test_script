@@ -11,7 +11,7 @@
 sn_get_nodate_dialog
 
 #Get BIOS revision
-bios_rev_check QC31U912 QA50R000
+bios_rev_check QC31R912 QC32R912
 
 #Set BIOS time
 #hwclock_write 2020-06-14
@@ -26,21 +26,21 @@ lan_mac_check enp1s0 80:7b:85
 
 
 #lan1_ping_test
-#######lan_ping_check 192.168.1.1
+lan_ping_check 192.168.1.1
 #lan2_ping_test
-#######lan_ping_check 192.168.4.1
+lan_ping_check 192.168.4.1
 
 #check USB device
-usb_dev_count "Bus 001" 4
-usb_dev_count "Bus 002" 3
+usb_dev_count "Bus 003" 3
+usb_dev_count "Bus 002" 5
 
 #check pci device
 pci_dev_check 02:00
 pci_dev_check 03:00
 
 #mSATA speed test
-#ssd_speed_check /dev/sda 200  
-ssd_speed_check /dev/sdb 200  
+ssd_speed_check /dev/sda 200  
+#ssd_speed_check /dev/sdb 200  
 ssd_speed_check /dev/sdc 200 
 
 
@@ -58,7 +58,7 @@ serial_loop_test /dev/ttyS2
 serial_loop_test /dev/ttyS3
 serial_loop_test /dev/ttyS4
 serial_loop_test /dev/ttyS5
-serial_loop_test /dev/ttyS6
+#serial_loop_test /dev/ttyS6
 
 
 
