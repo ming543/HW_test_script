@@ -14,7 +14,7 @@ time_ntp_set
 
 
 #Get SN for Log
-sn_get_nodate_dialog
+sn_get_dialog
 
 #Set BIOS time
 #hwclock_write 2020-06-14
