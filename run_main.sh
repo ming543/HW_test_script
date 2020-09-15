@@ -98,23 +98,21 @@ case $(cat $INPUT) in
 		sudo sh git_reset.sh
 		git pull
 		sleep 5
-		cp /home/production/hw_test/1 /home/production/
+		#cp /home/production/hw_test/1 /home/production/
 		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
-<<<<<<< HEAD
 	*) 
 		echo "0"
 		clear
 		echo "cd $TEST_LOC; sudo sh run_main.sh" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 3
-=======
+		;;	
 	p)
 		echo "p"
 		sudo poweroff
 		exit 0
->>>>>>> 4183435a1d9037f8ee63192324217a547fba90b9
 		;;
 
 esac
