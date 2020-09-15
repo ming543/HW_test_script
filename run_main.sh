@@ -102,6 +102,11 @@ case $(cat $INPUT) in
 		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
+	p)
+		echo "p"
+		sudo poweroff
+		exit 0
+		;;
 	*) 
 		echo "0"
 		clear
@@ -109,12 +114,6 @@ case $(cat $INPUT) in
 		sudo sh $TEST_LOC/t.sh
 		exit 3
 		;;	
-	p)
-		echo "p"
-		sudo poweroff
-		exit 0
-		;;
-
 esac
 
 
