@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 2.3.1 update run_main.sh of * 20200915
+=======
+2.3.1 Modify run_main for 1 script 20200915
+>>>>>>> 4183435a1d9037f8ee63192324217a547fba90b9
 2.3.0 Add OS install
 2.2.0 Add BI test
 2.1.0 Add V2C/V3C test (auto by PN)

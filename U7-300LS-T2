@@ -11,14 +11,17 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-bios_oem_check QC31U134
+bios_oem_check QA5TRT01
+bios_rev_check QA50R925
+bios_sn_check 
+
 
 #check BIOS time before ex.2020
 #hwclock_check 2020
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
-lan_mac_check enp4s0 00:13:95
+lan_mac_check enp2s0 00:13:95
 #lan1_ping_test
 #lan_down enp4s0
 #lan_up enp1s0

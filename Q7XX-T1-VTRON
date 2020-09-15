@@ -1,0 +1,36 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Update time from NTP server
+#time_zone_set Europe/Berlin
+time_zone_set Asia/Taipei
+time_ntp_set
+
+
+#Get SN for Log
+sn_get_nodate_dialog
+
+#Set BIOS time
+#hwclock_write 2020-06-14
+#hwclock_check 2020
+#check BIOS time from internet
+hwclock_check_live
+
+#Update BIOS default setting to OEM
+#bios_oem_update
+#bios_oem_check QC31U134
+bios_rev_check QA50R000
+#Get MAC for log
+lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp2s0 00:13:95
+
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+
