@@ -98,7 +98,7 @@ case $(cat $INPUT) in
 		sudo sh git_reset.sh
 		git pull
 		sleep 5
-		#sudo sh /home/production/hw_test/x.sh
+		cp /home/production/hw_test/1 /home/production/
 		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
