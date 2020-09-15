@@ -122,6 +122,13 @@ case $(cat $INPUT) in
 		sudo sh /home/production/hw_test/t.sh
 		exit 0		
 		;;	
+	*) 
+		echo "0"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_main.sh" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 3
+		;;
 
 esac
 

@@ -560,7 +560,7 @@ mic_test(){
 
 mic_loopback_test(){
         rm $MIC_LOG
-        aplay $SERIAL_LOC/Wav_868kb.wav &
+        aplay $SERIAL_LOC/default_dual.wav &
         arecord -d 3 -vvv -f dat /dev/null 2> $MIC_LOG
         sum=0
         i=0
