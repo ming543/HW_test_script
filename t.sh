@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh run_main.sh
+cd /home/production/hw_test; sudo sh QA5TRT01-BIOS-UPDATE

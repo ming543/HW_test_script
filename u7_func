@@ -21,6 +21,7 @@ USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
 AUDIO_LOG="/tmp/at.tmp"
 AT_LOG="/tmp/at.tmp"
+BIOS_LOG="/tmp/bios.tmp"
 MIC_LOG="/tmp/mic.tmp"
 DIO_LOG="/tmp/dio.tmp"
 IDIO_LOG="/tmp/idio.tmp"
@@ -256,16 +257,22 @@ bios_rev_log(){
 }
 
 bios_rev_update(){
-	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
-	echo "- Check Original BIOS Version is $BIOS_REV " | tee -a $LOG_LOC/$SN_LOG.log
 	case $1 in
 		QA5TRT01)
-			sudo $CGUT_LOC/cgutlcmd BFLASH $1.BIN /E
+			rm $BIOS_LOG
+			sudo $CGUT_LOC/cgutlcmd BFLASH $CGUT_LOC/$1.BIN /E | tee -a $BIOS_LOG
+			cat $BIOS_LOG | grep "success"
 				if [ $? = 0 ];then
 					echo "- BIOS REV $1 update passed!" | tee -a $LOG_LOC/$SN_LOG.log
         			else
-					echo "****** BIOS REV $1 update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
-					fail_red_dialog "BIOS REV $1 update failed!"
+					cat $BIOS_LOG | grep "unlocked"
+						if [ $? = 0 ];then 
+							echo "****** BIOS unlock $1 checked! ******" | tee -a $LOG_LOC/$SN_LOG.log
+							reboot
+						else
+							echo "****** BIOS unlock $1 check failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+							fail_red_dialog "BIOS REV $1 update failed!"
+        					fi
         			fi
 		;;
 	esac
