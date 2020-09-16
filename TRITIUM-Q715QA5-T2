@@ -21,7 +21,7 @@ bios_rev_check QA50R925
 bios_sn_check
 
 #check BIOS time from internet
-hwclock_check_live
+#hwclock_check_live
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
@@ -33,12 +33,10 @@ lan_ping_check 192.168.1.1
 lan_ping_check 192.168.4.1
 
 #check USB device
-usb_dev_count "Bus 003" 5
-#usb_dev_count "Bus 002" 8
+#usb_dev_count "Bus 003" 5
+usb_dev_count "Bus 002" 5
+usb_dev_count "Bus 001" 4
 
-#check pci device
-pci_dev_check 02:00
-pci_dev_check 03:00
 
 at_check /dev/ttyUSB2 'at\r\n' OK
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
@@ -67,7 +65,7 @@ at_check /dev/ttyUSB2 'at\r\n' OK
 #serial_loop_test /dev/ttyS6
 
 #input spec of cpu temp low high limit to script ex.20 70
-cpu_temp_check +20 +40
+cpu_temp_check +20 +50
 
 #Show ALL TEST PASS to log
 pass_green_dialog

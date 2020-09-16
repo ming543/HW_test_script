@@ -1,4 +1,5 @@
 coretemp-isa-0000
-Core 0:       +37.0°C  (high = +105.0°C, crit = +105.0°C)
-Core 1:       +39.0°C  (high = +105.0°C, crit = +105.0°C)
+Package id 0:  +47.0°C  (high = +110.0°C, crit = +110.0°C)
+Core 0:        +46.0°C  (high = +110.0°C, crit = +110.0°C)
+Core 2:        +46.0°C  (high = +110.0°C, crit = +110.0°C)
 
