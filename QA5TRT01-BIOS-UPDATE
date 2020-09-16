@@ -1,0 +1,28 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Update time from NTP server
+#time_zone_set Europe/Berlin
+time_zone_set Asia/Taipei
+time_ntp_set
+
+
+#Get SN for Log
+sn_get_dialog
+
+#Set BIOS time
+
+#Update BIOS default setting to OEM
+bios_rev_update QA5TRT01
+#bios_oem_check QC31U134
+
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

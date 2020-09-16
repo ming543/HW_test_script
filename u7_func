@@ -255,6 +255,21 @@ bios_rev_log(){
 			
 }
 
+bios_rev_update(){
+	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
+	echo "- Check Original BIOS Version is $BIOS_REV " | tee -a $LOG_LOC/$SN_LOG.log
+	case $1 in
+		QA5TRT01)
+			sudo $CGUT_LOC/cgutlcmd BFLASH $1.BIN /E
+				if [ $? = 0 ];then
+					echo "- BIOS REV $1 update passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        			else
+					echo "****** BIOS REV $1 update failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+					fail_red_dialog "BIOS REV $1 update failed!"
+        			fi
+		;;
+	esac
+}
 bios_oem_update(){
 	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
 	echo "- Check BIOS Version is $BIOS_REV " | tee -a $LOG_LOC/$SN_LOG.log
