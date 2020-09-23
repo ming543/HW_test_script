@@ -1,0 +1,67 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+
+#Get SN for Log
+#sn_get_dialog
+sn_get_nodata_dialog
+
+#Get BIOS OEM revision
+bios_rev_check QA31R912 QA32R912
+
+#check BIOS time from internet
+hwclock_check 2020
+
+#Get MAC for log
+lan_mac_check enp1s0 80:7b:85
+#lan_mac_check enp2s0 00:13:95
+
+#lan1_ping_test
+lan_ping_check 192.168.1.1
+#lan2_ping_test
+lan_ping_check 192.168.4.1
+
+#check USB device
+#usb_dev_count "Bus 003" 5
+usb_dev_count "Bus 002" 3
+usb_dev_count "Bus 001" 6
+
+
+at_check /dev/ttyUSB2 'at\r\n' OK
+#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
+
+
+#mSATA 
+#ssd_speed_check /dev/sda 200  
+#ssd_speed_check /dev/sdb 200  
+#ssd_speed_check /dev/sdf 200 
+
+
+#dio loopback test
+#q715_loopback_test
+
+#Audio MIC sum test
+#mic_test 40
+#audio_codec_test 80
+
+#RS232 loopback test
+#serial_loop_test /dev/ttyS0
+#serial_loop_test /dev/ttyS1
+#serial_loop_test /dev/ttyS2
+#serial_loop_test /dev/ttyS3
+#serial_loop_test /dev/ttyS4
+#serial_loop_test /dev/ttyS5
+#serial_loop_test /dev/ttyS6
+
+#input spec of cpu temp low high limit to script ex.20 70
+#cpu_temp_check +20 +50
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

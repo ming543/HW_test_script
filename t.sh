@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh TRITIUM-Q715QA5-T2
+cd /home/production/hw_test; sudo sh run_main.sh

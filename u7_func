@@ -990,6 +990,11 @@ onedrive_to_local(){
 	sudo rclone sync onedrive:General/u7_log /home/production/u7_log -P
 }
 
+os_image_sync(){
+	#sudo rclone copy onedrive:General/u7_log /home/production/u7_log -P
+	sudo rclone sync onedrive:General/OS_IMAGE /home/partimag -P
+}
+
 
 
 
