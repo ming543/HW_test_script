@@ -991,8 +991,7 @@ onedrive_to_local(){
 }
 
 os_image_sync(){
-	#sudo rclone copy onedrive:General/u7_log /home/production/u7_log -P
-	sudo rclone sync onedrive:General/OS_IMAGE /home/partimag -P
+	sudo rsync -avzh --progress ming@192.168.1.2:OS_IMAGE/ /home/partimag/
 }
 
 
