@@ -10,6 +10,9 @@
 #Get SN for Log
 sn_get_dialog
 
+#sshfs mount
+os_image_mount
+
 #OS clone
 os_clone $0
 

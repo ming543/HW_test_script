@@ -7,21 +7,9 @@ OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
 
-N1=U7-PFT
-N2=U7-100PAS-T2
-N3=U7-100-T2
-P1=Q718PAS-T2
-P2=Q715-T2
-B1=BI-120M-U7-NOCOM1
-B2=BI-120M-COM1
-
 # if temp files found, delete em
 rm $OUTPUT
 rm $INPUT
-
-
-
-
 
 ### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \

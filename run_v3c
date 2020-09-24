@@ -6,14 +6,11 @@
 
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
-PN_TMP=$TMP_LOC/pn.tmp
+PN_TMP=/tmp/pn.tmp
 MODEL=$0
 
 # if temp files found, delete em
 rm $PN_TMP
-
-echo "cd $TEST_LOC; sudo sh V3C-T2" > $TEST_LOC/t.sh
-
 
 dialog --title "$MODEL Test" \
 --inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
@@ -47,13 +44,6 @@ case $PN in
 		cd $TEST_LOC; sudo sh V3CD6
 		exit 0
 		;;
-	$III)
-		clear
-		cd $TEST_LOC; sudo sh $III
-		exit 0
-		;;
-
-
 
 	*)	
 		clear

@@ -692,7 +692,7 @@ pass_green_dialog(){
         response=$?
         case $response in
                 0) 
-		   #echo "" >> $LOG_LOC/$SN_LOG.log
+echo 'efco1234' | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other		   #echo "" >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -991,10 +991,11 @@ onedrive_to_local(){
 }
 
 os_image_sync(){
-	sudo rsync -avzh --progress ming@192.168.1.2:OS_IMAGE/ /home/partimag/
+	sudo rsync -avzh --progress ming@192.168.1.2:OS_IMAGE/ $LOC/OS_IMAGE/
 }
 
 
-
-
+os_image_mount(){
+cat $LOC/pass | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
+}
 

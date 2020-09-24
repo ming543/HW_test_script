@@ -6,7 +6,7 @@ INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
-N1=OS-IMAGE-UPDATE
+N1=OS-WIN10-ENG-AIM
 N2=OS-WIN10-ENG-AIH
 N3=OS-WIN10-ENG-U7130
 N4=WIN10IOT-2016-LSTB-ENG-EPKEA-AIM
@@ -22,10 +22,7 @@ rm $INPUT
 
 
 ### display main menu ###<high><width><menu_hight>
-dialog --clear --title #Update time from NTP server
-#time_zone_set Europe/Berlin
-time_zone_set Asia/Taipei
-time_ntp_set"[ OS_CLONE - MENU ]" \
+dialog --clear --title "[ OS_CLONE - MENU ]" \
 --menu "Cancel=Back to MAIN-MENU \nUse 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
 1 "$N1" \
 2 "$N2" \
@@ -33,6 +30,7 @@ time_ntp_set"[ OS_CLONE - MENU ]" \
 4 "$N4" \
 5 "$N5" \
 6 "$N6" \
+u "OS_IMAGE_SYNC" \
 2>$INPUT
 #2>"${INPUT}"
 
@@ -42,9 +40,11 @@ menuitem=$(cat $INPUT)
 
 case $(cat $INPUT) in
 	1)
+		echo "1"
 		clear
-		sudo rsync -avzh --progress ming@192.168.1.2:OS_IMAGE/ /home/partimag/
-		exit 0
+		echo "cd $TEST_LOC; sudo sh $N1" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 1
 		;;
 	2) 
 		echo "2"
@@ -80,6 +80,11 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh $N6" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 6
+		;;
+	u)
+		clear
+		sudo rsync -avzh --progress priduction@192.168.1.2:OS_IMAGE/ /home/production/OS_IMAGE/
+		exit 0
 		;;
 	*)
 		clear
