@@ -8,4 +8,5 @@ sudo apt-get install -y dialog
 sudo apt-get install -y rclone
 sudo apt-get install -y curl
 sudo apt-get install -y clonezilla
+sudo apt-get install -y sshfs
 
