@@ -421,6 +421,7 @@ fail_red_dialog(){
 	case $response in
 		0)
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -431,6 +432,7 @@ fail_red_dialog(){
 	        
 		1) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -440,6 +442,7 @@ fail_red_dialog(){
 		
 		255) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -692,8 +695,10 @@ pass_green_dialog(){
         response=$?
         case $response in
                 0) 
-echo 'efco1234' | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
+
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
 		   onedrive_log_sync
@@ -702,6 +707,7 @@ echo 'efco1234' | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o
 		exit 0;;
                 1) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -710,6 +716,7 @@ echo 'efco1234' | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o
 		exit 1;;
                 255) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -991,11 +998,11 @@ onedrive_to_local(){
 }
 
 os_image_sync(){
-	sudo rsync -avzh --progress ming@192.168.1.2:OS_IMAGE/ $LOC/OS_IMAGE/
+	sudo rsync -avzh --progress os_server@192.168.1.2:OS_IMAGE/ $LOC/OS_IMAGE/
 }
 
 
 os_image_mount(){
-cat $LOC/pass | sudo sshfs production@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
+cat $LOC/pass | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
 }
 
