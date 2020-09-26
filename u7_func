@@ -17,6 +17,7 @@ TMP_LOC="$LOC/hw_test/tmp"
 LIB_LOC="$LOC/hw_test/lib"
 LOG_LOC="$LOC/u7_log"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
+PASS_LOC="$LOC/pass"
 
 
 AUDIO_LOG="/tmp/at.tmp"
@@ -998,11 +999,14 @@ onedrive_to_local(){
 }
 
 os_image_sync(){
-	sudo rsync -avzh --progress os_server@192.168.1.2:OS_IMAGE/ $LOC/OS_IMAGE/
+	sshpass -p $(cat $PASS_LOC) sudo rsync -avzh --progress os_server@192.168.192.218:OS_IMAGE/$1 /home/partimag/ 
 }
 
+os_image_clear(){
+	sudo rm -r /home/partimag/
+}
 
 os_image_mount(){
-cat $LOC/pass | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
+cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
 }
 

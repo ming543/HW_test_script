@@ -30,7 +30,8 @@ dialog --clear --title "[ OS_CLONE - MENU ]" \
 4 "$N4" \
 5 "$N5" \
 6 "$N6" \
-u "OS_IMAGE_SYNC" \
+c "DISK_SPACE_CHECK" \
+r "OS_IMAGE_CLEAR(FREE DISK SPACE)" \
 2>$INPUT
 #2>"${INPUT}"
 
@@ -81,10 +82,28 @@ case $(cat $INPUT) in
 		sudo sh $TEST_LOC/t.sh
 		exit 6
 		;;
-	u)
+	c)
 		clear
-		sudo rsync -avzh --progress priduction@192.168.1.2:OS_IMAGE/ /home/production/OS_IMAGE/
+		SPACE=$(df | grep /dev/sd)
+		IMAGE=$(ls /home/partimag/)
+		dialog --title "[DISK SPACE CHECK]" --msgbox "$SPACE $IMAGE" 10 50
+		sudo sh $TEST_LOC/t.sh
 		exit 0
+		;;
+	r)
+		clear
+		dialog --title "[FREE DISK SPACE]" --yesno "Are you sure to delete OS IMAGE?" 10 50
+		response=$?
+		case $response in 
+			0)
+				sudo rm -r /home/partimag/
+				sudo sh $TEST_LOC/t.sh
+				exit 0 ;;
+			1)
+				
+				sudo sh $TEST_LOC/t.sh
+				exit 1 ;;
+		esac
 		;;
 	*)
 		clear
