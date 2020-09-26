@@ -1000,6 +1000,12 @@ onedrive_to_local(){
 
 os_image_sync(){
 	sshpass -p $(cat $PASS_LOC) sudo rsync -avzh --progress os_server@192.168.192.218:OS_IMAGE/$1 /home/partimag/ 
+	if [ $? = 0 ]; then
+		echo "- Check OS sync passed !" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "****** Check OS sync failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check OS sync failed !"
+	fi
 }
 
 os_image_clear(){
