@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh run_main.sh
+cd /home/production/hw_test; sudo sh Q715-VT2-1

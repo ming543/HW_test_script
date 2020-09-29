@@ -10,7 +10,7 @@
 
 #Get SN for Log
 #sn_get_dialog
-sn_get_nodata_dialog
+sn_get_nodate_dialog
 
 #Get BIOS OEM revision
 bios_rev_check QA31R912 QA32R912
@@ -29,11 +29,13 @@ lan_ping_check 192.168.4.1
 
 #check USB device
 #usb_dev_count "Bus 003" 5
-usb_dev_count "Bus 002" 3
-usb_dev_count "Bus 001" 6
+usb_dev_count "Bus 002" 7
+#usb_dev_count "Bus 001" 6
 
 
-at_check /dev/ttyUSB2 'at\r\n' OK
+#pci device check
+pci_dev_check 03:00
+#at_check /dev/ttyUSB2 'at\r\n' OK
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 
 
