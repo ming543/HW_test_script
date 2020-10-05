@@ -699,10 +699,9 @@ pass_green_dialog(){
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
 		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
-
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
-		   onedrive_log_sync
+		   #onedrive_log_sync
 		   sync
 		   poweroff
 		exit 0;;

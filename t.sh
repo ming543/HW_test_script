@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh Q715-VT2-1
+cd /home/production/hw_test; sudo sh TRITIUM-Q715QA5-T2
