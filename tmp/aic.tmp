@@ -1,5 +1,5 @@
 spawn /bin/bash
-]0;root@production-v2c: /home/production/hw_test/tools/EKit_L/release/X64root@production-v2c:/home/production/hw_test/tools/EKit_L/release/X64# sudo ./DMCT
+]0;production@production-v2c: ~/hw_test/tools/EKit_L/release/X64[01;32mproduction@production-v2c[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m$ sudo ./DMCT
 DMCT 1.20T01 on AIH
 Select function.
   ( 1) System Info.
@@ -100,13 +100,13 @@ Select sub-function.
 (Exit) the program
 4
 Hardware Monitoring:
-  HWMon  1 RTC           Voltage: 2.810 (V)
-  HWMon  2 3.3S          Voltage: 3.272 (V)
-  HWMon  3 3.3A          Voltage: 3.300 (V)
-  HWMon  4 5A            Voltage: 5.008 (V)
+  HWMon  1 RTC           Voltage: 2.813 (V)
+  HWMon  2 3.3S          Voltage: 3.279 (V)
+  HWMon  3 3.3A          Voltage: 3.311 (V)
+  HWMon  4 5A            Voltage: 5.014 (V)
   HWMon  5 5S            Voltage: 5.002 (V)
-  HWMon  6 12S           Voltage: 12.143 (V)
-  HWMon  7 12SB          Voltage: 12.066 (V)
+  HWMon  6 12S           Voltage: 12.182 (V)
+  HWMon  7 12SB          Voltage: 12.085 (V)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -380,8 +380,8 @@ Select sub-function.
 (Exit) the program
 3
 Fan Status:
-  Fan 1 RPM: 420    (rev/min)
-  Fan 2 RPM: 316    (rev/min)
+  Fan 1 RPM: 0      (rev/min)
+  Fan 2 RPM: 0      (rev/min)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -456,4 +456,4 @@ Select function.
 (Q)uit the procedure
 (Exit) the program
 exit
-]0;root@production-v2c: /home/production/hw_test/tools/EKit_L/release/X64root@production-v2c:/home/production/hw_test/tools/EKit_L/release/X64# exit
+]0;production@production-v2c: ~/hw_test/tools/EKit_L/release/X64[01;32mproduction@production-v2c[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m$ exit

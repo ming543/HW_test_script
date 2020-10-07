@@ -175,6 +175,20 @@ cpu_temp_check(){
         fi
 }
 
+display_check(){
+	 clear
+         dialog --title "[DISPLAY CHECK]" --yesno "Please check display of -- $1" 10 50
+         response=$?
+         case $response in
+         0)
+                echo "- Check display $1 passed!" | tee -a $LOG_LOC/$SN_LOG.log
+                ;;
+         1)
+                echo "- Check display $1 failed!" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check display $1 failed"
+                exit 1 ;;
+         esac
+}
 
 fail_red_dialog(){
         dialog --title  TESTING_RESULT  --colors --yesno\

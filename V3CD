@@ -13,6 +13,12 @@
 #Get SN for Log
 sn_get_nodate_dialog
 
+#Check display
+display_check DP1
+display_check DP2
+display_check DVI
+
+
 #Get AIC info for Log
 aic_info_get
 aic_fw_check 
