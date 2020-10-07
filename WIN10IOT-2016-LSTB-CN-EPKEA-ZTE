@@ -21,7 +21,7 @@ sn_get_dialog
 bios_sn_check
 
 #sshfs mount
-#os_image_sync $0
+os_image_sync $0
 
 #OS clone
 os_clone $0
