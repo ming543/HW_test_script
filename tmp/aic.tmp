@@ -1,5 +1,5 @@
 spawn /bin/bash
-]0;root@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mroot@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m# sudo ./DMCT
+]0;root@production-v2c: /home/production/hw_test/tools/EKit_L/release/X64root@production-v2c:/home/production/hw_test/tools/EKit_L/release/X64# sudo ./DMCT
 DMCT 1.20T01 on AIH
 Select function.
   ( 1) System Info.
@@ -100,12 +100,12 @@ Select sub-function.
 (Exit) the program
 4
 Hardware Monitoring:
-  HWMon  1 RTC           Voltage: 2.791 (V)
-  HWMon  2 3.3S          Voltage: 3.265 (V)
-  HWMon  3 3.3A          Voltage: 3.307 (V)
+  HWMon  1 RTC           Voltage: 2.810 (V)
+  HWMon  2 3.3S          Voltage: 3.272 (V)
+  HWMon  3 3.3A          Voltage: 3.300 (V)
   HWMon  4 5A            Voltage: 5.008 (V)
   HWMon  5 5S            Voltage: 5.002 (V)
-  HWMon  6 12S           Voltage: 12.162 (V)
+  HWMon  6 12S           Voltage: 12.143 (V)
   HWMon  7 12SB          Voltage: 12.066 (V)
 (Q)uit the procedure
 (Exit) the program
@@ -365,10 +365,10 @@ Select sub-function.
 (Exit) the program
 1
 Fan Config:
-Fan_Cfgs 1 1 40
-Fan_Cfgs 2 1 40
-  Fan 1 Auto: ON   PWM:  40 (%)
-  Fan 2 Auto: ON   PWM:  40 (%)
+Fan_Cfgs 1 0 20
+Fan_Cfgs 2 0 20
+  Fan 1 Auto: OFF  PWM:  20 (%)
+  Fan 2 Auto: OFF  PWM:  20 (%)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -380,8 +380,8 @@ Select sub-function.
 (Exit) the program
 3
 Fan Status:
-  Fan 1 RPM: 1247   (rev/min)
-  Fan 2 RPM: 1380   (rev/min)
+  Fan 1 RPM: 420    (rev/min)
+  Fan 2 RPM: 316    (rev/min)
 (Q)uit the procedure
 (Exit) the program
 q
@@ -456,4 +456,4 @@ Select function.
 (Q)uit the procedure
 (Exit) the program
 exit
-]0;root@production-desktop: ~/hw_test/tools/EKit_L/release/X64[01;32mroot@production-desktop[00m:[01;34m~/hw_test/tools/EKit_L/release/X64[00m# exit
+]0;root@production-v2c: /home/production/hw_test/tools/EKit_L/release/X64root@production-v2c:/home/production/hw_test/tools/EKit_L/release/X64# exit
