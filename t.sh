@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh Q718-T2
+cd /home/production/hw_test; sudo sh run_main.sh
