@@ -711,7 +711,7 @@ pass_green_dialog(){
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
-		   onedrive_log_sync
+		   #onedrive_log_sync
 		   echo "Back to shell" 
 		exit 1;;
                 255) 
