@@ -9,4 +9,4 @@ sudo apt-get install -y rclone
 sudo apt-get install -y curl
 sudo apt-get install -y clonezilla
 sudo apt-get install -y sshfs
-
+sudo apt-get install lm-sensors

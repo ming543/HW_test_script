@@ -35,10 +35,11 @@ lan_ping_check 192.168.4.1
 #check USB device
 #usb_dev_count "Bus 003" 5
 #usb_dev_count "Bus 002" 3
-usb_dev_count "Bus 001" 5
+usb_dev_count "Bus 001" 6
 
 
-at_check /dev/ttyUSB2 'at\r\n' OK
+at_check /dev/ttyUSB2 'ati\r\n' Rev
+at_check /dev/ttyUSB2 'at+qccid\r\n' CCID
 #at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 
 

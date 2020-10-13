@@ -62,14 +62,15 @@ at_check(){
 	sleep 2
 	sudo sh -c "echo '$2' > $1"
 	sleep 2 # wait for response
+	AT_GET=$(cat $AT_LOG | grep $3)
 	cat $AT_LOG | grep $3
 	if [ $? = 0 ];then
-		echo "- Check AT $3 passed!" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check AT $AT_GET " | tee -a $LOG_LOC/$SN_LOG.log
 		sudo killall -9 cat 
         else
-		echo "****** Check AT $(cat $AT_LOG | grep $3) failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check AT $AT_GET failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		sudo killall -9 cat 
-		fail_red_dialog "Check AT $(cat $AT_LOG | grep $3) failed!"
+		fail_red_dialog "Check AT $AT_GET failed!"
         fi
 }
 
