@@ -7,6 +7,9 @@
 #---Start Function---
 . ./u7_func
 
+#check BIOS time ex.2020
+hwclock_check 2020
+
 #Update time from NTP server
 #time_zone_set Europe/Berlin
 time_zone_set Asia/Taipei
