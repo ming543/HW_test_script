@@ -7,10 +7,12 @@ OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
 N1=WIN10IOT-2016-LSTB-ENG-EPKEA-AIM
-N2=WIN10IOT-2019-LSTC-ENG-EPKEA-AIMH
+N2=WIN10IOT-2016-LSTB-CN-EPKEA-SA50
 N3=WIN10IOT-2019-LSTC-ENG-EPKEA-U7130
-N4=WIN10IOT-2016-LSTB-CN-EPKEA-SA50
-N5=55015-000011-WIN10IOT-2019-LSTC-CHT-EPKEA-AIMH
+N4=WIN10IOT-2019-LSTC-ENG-EPKEA-AIMH
+N5=WIN10IOT-2019-LSTC-CHT-EPKEA-AIMH
+N6=WIN10IOT-2019-LSTC-CHT-PKEA-PKEA-AIMH
+
 
 
 
@@ -30,6 +32,7 @@ dialog --clear --title "[ OS_CLONE - MENU ]" \
 3 "$N3" \
 4 "$N4" \
 5 "$N5" \
+6 "$N6" \
 c "DISK_SPACE&IMAGE_CHECK" \
 2>$INPUT
 #2>"${INPUT}"
@@ -73,6 +76,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh $N5" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 5
+		;;
+	6) 
+		echo "6"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N6" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 6
 		;;
 	c)
 		clear
