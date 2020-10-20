@@ -1,1 +1,4 @@
-curl -X GET http://$1/__/system/info | jq
+#!/bin/bash
+DUT=192.168.3.170
+
+curl -X GET http://$DUT/__/system/info | jq
