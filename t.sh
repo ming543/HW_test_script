@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh WIN10IOT-2016-LSTB-CN-EPKEA-SA50
+cd /home/production/hw_test; sudo sh run_main.sh

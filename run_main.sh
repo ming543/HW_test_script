@@ -1,15 +1,16 @@
 #!/bin/bash
 # utilitymenu.sh - A sample shell script to display menus on screen
 # Store menu options selected by the user
-#set -xv
+set -xv
 INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
 
 # if temp files found, delete em
-rm $OUTPUT
-rm $INPUT
+#rm $OUTPUT
+#rm $INPUT
+
 
 ### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \
