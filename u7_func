@@ -394,6 +394,21 @@ dio_loopback_test(){
         fi
 }
 
+display_check(){
+	clear
+	dialog --title "[DISPLAY CHECK]" --yesno "Check Display is work (Yes/No) - $1 " 10 50
+        response=$?
+        case $response in 
+        	0)
+		echo "- Check Display is work - $1" | tee -a $LOG_LOC/$SN_LOG.log
+		;;
+        	1)
+		echo "****** Check Display is not work - $1 ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check Display is not work - $1 !"
+		;;
+        esac
+}
+
 q715_loopback_test(){
 	$IDIO_LOC/q715_loop > $IDIO_LOG
 	GPI_CHECK=$(cat $IDIO_LOG |grep GPI |awk '{print $18}')

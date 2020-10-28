@@ -24,8 +24,8 @@ memory_check 3805 3806
 lan_mac_check eno1 00:13:95
 lan_mac_check enp1s0 00:13:95
 
-#lan_ping_check 192.168.1.1
-#lan_ping_check 192.168.4.1
+lan_ping_check 192.168.1.1
+lan_ping_check 192.168.4.1
 
 #Update time from NTP server
 #time_ntp_set
@@ -46,6 +46,11 @@ serial_loop_test /dev/ttyS0
 
 #input spec of cpu temp low high limit to script ex.20 70
 cpu_temp_check +20 +45
+
+#Check Display 
+display_check DP
+display_check USB-TYPE-C
+
 
 #Show ALL TEST PASS to log
 pass_green_dialog
