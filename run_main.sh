@@ -15,8 +15,8 @@ TEST_LOC=/home/production/hw_test
 ### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
-7 "U7-SYSTEM Test" \
-q "Q71X-PCBA Test" \
+7 "SYSTEM Test" \
+q "PCBA Test" \
 v "V2C/V3C Test" \
 b "Burn-In Test" \
 o "OS CLONE" \

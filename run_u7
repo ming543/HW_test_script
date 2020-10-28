@@ -9,6 +9,7 @@ TEST_LOC=/home/production/hw_test
 N1=U7-PFT
 N2=U7-100PAS-T2
 N3=U7-100-T2
+N4=AIM8-JC370
 
 # if temp files found, delete em
 rm $OUTPUT
@@ -19,11 +20,12 @@ rm $INPUT
 
 
 ### display main menu ###<high><width><menu_hight>
-dialog --clear --title "[ U7-SYSTEM - MENU ]" \
+dialog --clear --title "[ SYSTEM Test - MENU ]" \
 --menu "Cancel=Back to MAIN-MENU \nUse 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
 1 "$N1" \
 2 "$N2" \
 3 "$N3" \
+4 "$N4" \
 2>$INPUT
 #2>"${INPUT}"
 
