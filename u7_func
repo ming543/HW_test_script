@@ -524,6 +524,28 @@ lan_mac_check(){
 	fi
 }
 
+lan_carrier_check(){
+        CARRIER=$(cat "/sys/class/net/$1/carrier")
+        if [ $CARRIER = 1 ] ; then
+                echo "- Check $1 LAN carrier link passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $1 LAN carrier failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $1 LAN carrier failed!"
+        fi
+}
+
+lan_ip_check(){
+	IP=$(ip addr show $1 | grep -w "inet" | awk '{print $2}')
+	IP_HEAD=$(ip addr show $1 | grep -w "inet" | awk '{print $2}' | cut -c 1-7)
+	if [ $IP_HEAD = "192.168" ] ; then
+                echo "- Check $1 IP ADDRESS $IP passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $1 IP $IP failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $1 IP $IP failed!"
+        fi
+}
+
+
 lan_mac_nocheck(){
 	listVar="eno1 enp1s0 enp2s0 enp3s0 enp4s0 enp5s0 enp6s0"
 	echo "- LAN MAC Record!" | tee -a $LOG_LOC/$SN_LOG.log
@@ -915,7 +937,7 @@ sn_get_nodate_dialog(){
 	SN_TMP=$TMP_LOC/sn.tmp
  	MODEL=$0
 	dialog --title "$MODEL Test" \
-	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
+	--inputbox "Please Scan the SN of Label:" \
 	10 40 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
@@ -923,7 +945,7 @@ sn_get_nodate_dialog(){
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
 		echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log	
 	else 
-		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
+#		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                 sudo sh $SCR_LOC/t.sh
 		exit 1
 	fi		
