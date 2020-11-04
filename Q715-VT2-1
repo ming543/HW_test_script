@@ -13,7 +13,7 @@
 sn_get_nodate_dialog
 
 #Get BIOS OEM revision
-bios_rev_check QA31R912 QA32R912
+bios_rev_check QC32R912
 
 #check BIOS time from internet
 hwclock_check 2020
@@ -21,22 +21,28 @@ hwclock_check 2020
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 #lan_mac_check enp2s0 00:13:95
+lan_carrier_check enp1s0
+lan_ip_check enp1s0
+lan_carrier_check enp4s0
+lan_ip_check enp4s0
+
 
 #lan1_ping_test
-lan_ping_check 192.168.1.1
+#lan_ping_check 192.168.1.1
 #lan2_ping_test
-lan_ping_check 192.168.4.1
+#lan_ping_check 192.168.4.1
 
 #check USB device
 #usb_dev_count "Bus 003" 5
-usb_dev_count "Bus 002" 7
+#usb_dev_count "Bus 002" 7
 #usb_dev_count "Bus 001" 6
 
 
 #pci device check
-pci_dev_check 03:00
-#at_check /dev/ttyUSB2 'at\r\n' OK
-#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
+#pci_dev_check 03:00
+at_check /dev/ttyUSB2 'at\r\n' OK
+at_check /dev/ttyUSB2 'at+cgmr\r\n' CGMR
+at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 
 
 #mSATA 

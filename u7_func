@@ -67,12 +67,12 @@ at_check(){
 	AT_GET=$(cat $AT_LOG | grep $3)
 	cat $AT_LOG | grep $3
 	if [ $? = 0 ];then
-		echo "- Check AT $AT_GET " | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check $2 AT $AT_GET " | tee -a $LOG_LOC/$SN_LOG.log
 		sudo killall -9 cat 
         else
-		echo "****** Check AT $AT_GET failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "****** Check $2 AT $AT_GET failed! ******" | tee -a $LOG_LOC/$SN_LOG.log
 		sudo killall -9 cat 
-		fail_red_dialog "Check AT $AT_GET failed!"
+		fail_red_dialog "Check $2 AT $AT_GET failed!"
         fi
 }
 
@@ -340,10 +340,10 @@ bios_oem_update(){
 bios_rev_check(){
 	BIOS_REV=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP /BIOS | grep "System BIOS" | awk '{print $4}')
 	if [ $BIOS_REV = $1 ] ; then
-		echo "- Check BIOS REV $BIOS_REV passed!, spec $1 $2!" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check BIOS REV $BIOS_REV passed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
-		echo "****** Check BIOS REV $BIOS_REV failed!, spec $1 $2!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
-		fail_red_dialog "Check BIOS REV $BIOS_REV failed!, spec $1 $2!"
+		echo "****** Check BIOS REV $BIOS_REV failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check BIOS REV $BIOS_REV failed!, spec $1 !"
 	fi
 }
 
