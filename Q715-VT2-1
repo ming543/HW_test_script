@@ -40,6 +40,12 @@ lan_ip_check enp4s0
 
 #pci device check
 #pci_dev_check 03:00
+
+#EC25
+#at_check /dev/ttyUSB2 'ati\r\n' Rev
+#at_check /dev/ttyUSB2 'at+qccid\r\n' CCID
+
+#SIM7600
 at_check /dev/ttyUSB2 'at\r\n' OK
 at_check /dev/ttyUSB2 'at+cgmr\r\n' CGMR
 at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID

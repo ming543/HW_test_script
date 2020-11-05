@@ -16,7 +16,7 @@ time_zone_set Asia/Taipei
 time_ntp_set
 
 #Get SN for Log
-sn_get_dialog
+sn_get_dialog_loop
 
 #Get BIOS OEM revision
 bios_oem_check QA5TRT01
@@ -31,20 +31,27 @@ lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp2s0 00:13:95
 
 #lan1_ping_test
-lan_ping_check 192.168.1.1
+#lan_ping_check 192.168.1.1
 #lan2_ping_test
-lan_ping_check 192.168.4.1
+#lan_ping_check 192.168.4.1
+lan_carrier_check enp1s0
+lan_carrier_check enp2s0
+lan_ip_check enp1s0
+lan_ip_check enp2s0
 
 #check USB device
 #usb_dev_count "Bus 003" 5
 #usb_dev_count "Bus 002" 3
 usb_dev_count "Bus 001" 6
 
-
+#EC25
 at_check /dev/ttyUSB2 'ati\r\n' Rev
 at_check /dev/ttyUSB2 'at+qccid\r\n' CCID
-#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 
+#SIM7600
+#at_check /dev/ttyUSB2 'at\r\n' OK
+#at_check /dev/ttyUSB2 'at+cgmr\r\n' CGMR
+#at_check /dev/ttyUSB2 'at+ciccid\r\n' ICCID
 
 #mSATA 
 #ssd_speed_check /dev/sda 200  
