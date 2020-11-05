@@ -22,8 +22,8 @@ hwclock_check 2020
 lan_mac_check enp1s0 80:7b:85
 #lan_mac_check enp2s0 00:13:95
 lan_carrier_check enp1s0
-lan_ip_check enp1s0
 lan_carrier_check enp4s0
+lan_ip_check enp1s0
 lan_ip_check enp4s0
 
 
