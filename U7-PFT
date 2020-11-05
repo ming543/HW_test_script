@@ -13,7 +13,7 @@ time_zone_set Asia/Taipei
 time_ntp_set
 
 #Get SN for Log
-sn_get_dialog
+sn_get_dialog_loop
 
 #Update BIOS default setting to OEM
 bios_oem_update

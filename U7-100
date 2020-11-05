@@ -8,7 +8,7 @@
 . ./u7_func
 
 #Get SN for Log
-sn_get_dialog
+sn_get_dialog_loop
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
