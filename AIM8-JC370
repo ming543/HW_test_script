@@ -16,7 +16,7 @@ bios_rev_check JVWLR124
 bios_sn_check 
 
 #Check Memory size
-memory_check 3805 3806
+memory_check 15883 
 #check BIOS time before ex.2020
 #hwclock_check 2020
 
@@ -40,11 +40,11 @@ lan_ip_check enp1s0
 hwclock_check_live
 
 #check USB device
-usb_dev_count "Bus 001" 4
-usb_dev_count "Bus 002" 3
+usb_dev_count "Bus 001" 8
+usb_dev_count "Bus 002" 2
 
 #ssd speed check 
-ssd_speed_check /dev/sdb 200 
+ssd_speed_check /dev/sda 200 
 
 
 #RS232 loopback test

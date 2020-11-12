@@ -698,7 +698,8 @@ mic_loopback_test(){
 memory_check(){
         rm -r $MEM_LOG
         free -m | tee -a $MEM_LOG
-        TCHK=$(cat $MEM_LOG | grep "Mem" | cut -c 16-19)
+        #TCHK=$(cat $MEM_LOG | grep "Mem" | cut -c 16-19)
+        TCHK=$(cat $MEM_LOG | grep "Mem" | awk '{print $2}')
         if [ $TCHK -eq $1 ] || [ $TCHK -eq $2 ] ;then
                 echo "- Check Memory is $TCHK  passed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
