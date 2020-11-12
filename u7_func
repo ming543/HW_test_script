@@ -901,7 +901,7 @@ sn_get_dialog(){
  	MODEL=$0
 	dialog --title "$MODEL Test" \
 	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
-	10 40 2> $SN_TMP
+	20 50 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
