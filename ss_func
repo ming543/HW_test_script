@@ -15,17 +15,17 @@ LIB_LOC="$LOC/hw_test/lib"
 LOG_LOC="$LOC/EagleEyes_LOG"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
-AIC_LOG="$TMP_LOC/aic.tmp"
-AT_LOG="$LOC/hw_test/tmp/at.tmp"
-MIC_LOG="$LOC/hw_test/tmp/mic.tmp"
-DIO_LOG="$LOC/hw_test/tmp/dio.tmp"
-IDIO_LOG="$LOC/hw_test/tmp/idio.tmp"
+AIC_LOG="/tmp/aic.tmp"
+AT_LOG="/tmp/at.tmp"
+MIC_LOG="/tmp/mic.tmp"
+DIO_LOG="/tmp/dio.tmp"
+IDIO_LOG="/tmp/idio.tmp"
 BI_LOG="/tmp/bi.log"
-MAC_LOG="$LOC/hw_test/tmp/mac.tmp"
+MAC_LOG="/tmp/mac.tmp"
 MEM_LOG="/tmp/mem.tmp"
-MODEL_LOG="$LOC/hw_test/tmp/model.tmp"
-NVM_LOG="$LOC/hw_test/tmp/nvm.tmp"
-ADDR_LOG="$LOC/hw_test/tmp/addr.tmp"
+MODEL_LOG="/tmp/model.tmp"
+NVM_LOG="/tmp/nvm.tmp"
+ADDR_LOG="/tmp/addr.tmp"
 
 aic_info_get(){
 	rm $AIC_LOG
@@ -156,6 +156,16 @@ aic_gpio_check(){
         else
                 echo "- Check AIC GPIO is $AIC_GPIO fail ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check AIC GPIO is $AIC_GPIO fail ! spec is $1 !"
+        fi
+}
+
+bios_version_check(){
+	BIOS_V=$(sudo dmidecode -s bios-vesion)
+        if [ $BIOS_V = $1 ] ;then
+                echo "- Check BIOS version is $BIOS_V ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check BIOS version is $BIOS_V fail ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check BIOS version is $BIOS_V fail ! spec is $1 !"
         fi
 }
 
