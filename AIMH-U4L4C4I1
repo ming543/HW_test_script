@@ -33,6 +33,9 @@ aic_fan_cfg_check 1
 aic_fan_rpm_check 1
 aic_gpio_check FF00
 
+#Check BIOS version
+bios_version_check 1.10
+
 #Get MAC for log
 lan_mac_check eno1 80:7b:85
 lan_mac_check enp1s0 80:7b:85
