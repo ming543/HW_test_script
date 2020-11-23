@@ -302,6 +302,29 @@ lan_mac_check(){
         fi
 }
 
+
+lan_carrier_check(){
+        CARRIER=$(cat "/sys/class/net/$1/carrier")
+        if [ $CARRIER = 1 ] ; then
+                echo "- Check $1 LAN carrier link passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $1 LAN carrier failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $1 LAN carrier failed!"
+        fi
+}
+
+lan_ip_check(){
+        IP=$(ip addr show $1 | grep -w "inet" | awk '{print $2}')
+        IP_HEAD=$(ip addr show $1 | grep -w "inet" | awk '{print $2}' | cut -c 1-7)
+        if [ $IP_HEAD = "192.168" ] ; then
+                echo "- Check $1 IP ADDRESS $IP passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "****** Check $1 IP $IP failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check $1 IP $IP failed!"
+        fi
+}
+
+
 lan_ping_check(){
         sleep 1
         ping -c 1 $1
@@ -494,7 +517,7 @@ sn_get_nodate_dialog(){
 }
 
 
-usb_dev_count (){
+usb_dev_count(){
         count=$(lsusb | grep "$1" |wc -l)
         if [ $count = $2 ] || [ $count = $3 ] ; then
                 echo "- Check USB device count $1 X $count passed! spec $2 $3 !" | tee -a $LOG_LOC/$SN_LOG.log
@@ -523,6 +546,9 @@ time_ntp_set(){
         sudo hwclock -w
 }
 
+system_info_log(){
+	lshw -short | tee -a $LOG_LOC/$SN_LOG.log
+}
 
 usb_log_sync(){
         sudo rsync -avh $LOG_LOC /media/production/USB30/ss_log/

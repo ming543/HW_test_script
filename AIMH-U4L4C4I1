@@ -41,7 +41,12 @@ lan_mac_check eno1 80:7b:85
 lan_mac_check enp1s0 80:7b:85
 
 #ping test
-lan_ping_check 192.168.1.1
+#lan_ping_check 192.168.1.1
+lan_carrier_check eno1
+lan_carrier_check enp1s0
+
+lan_ip_check eno1
+lan_ip_check enp1s0
 
 #check USB device
 usb_dev_count "Bus 001" 7
@@ -58,6 +63,9 @@ cpu_temp_check +30 +40
 
 #check BIOS time from internet
 hwclock_check_live
+
+#system info log
+system_info_log
 
 #Show ALL TEST PASS to log
 pass_green_dialog
