@@ -341,16 +341,32 @@ lan_ping_check(){
         fi
 }
 
+alsabat_loopback_test(){
+	sudo rm $MIC_LOG
+	sleep 1
+        alsabat | tee -a $MIC_LOG
+	sleep 5
+	ALSA_CHECK=$(cat $MIC_LOG | grep "Return value" | awk '{print $4}' )
+	if [ $ALSA_CHECK = 0 ];then
+                echo "- Check audio loopback value is $ALSA_CHECK passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check audio loopbacl value is $ALSA_CHECK failed!" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check audio loopback value is $ALSA_CHECK failed !"
+        fi
+}
+
 mic_loopback_test(){
 	rm $MIC_LOG
         aplay $SERIAL_LOC/default_dual.wav & 
+	#sleep 1
 	arecord -d 3 -vvv -f dat /dev/null 2> $MIC_LOG
         sum=0
         i=0
         while [ $i -lt 10 ]
         do
                 i=$(($i+1))
-                MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 59)
+		MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 67)
+                #MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | awk '{print $7}' | cut -c 1-2)
                 sum=$(($sum+$MIC_CHECK))
         done
 

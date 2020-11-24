@@ -39,6 +39,7 @@
 #bios_oem_check
 #time_ntp_set
 #mic_test 40
+#alsabat_loopback_test
 mic_loopback_test 50
 #check BIOS time before BI ex.2020
 #hwclock_check 2020

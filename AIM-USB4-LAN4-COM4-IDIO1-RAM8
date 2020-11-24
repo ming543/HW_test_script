@@ -67,7 +67,7 @@ serial_loop_test_menu /dev/ttyS2 3
 serial_loop_test_menu /dev/ttyS3 4
 
 #Audio loopbakc test
-mic_loopback_test 50
+alsabat_loopback_test 
 
 #Display check
 display_check DP1

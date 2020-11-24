@@ -1,0 +1,20 @@
+Entering playback thread (ALSA).
+Get period size: 2756  buffer size: 22050
+Playing generated audio sine wave
+Entering capture thread (ALSA).
+Get period size: 2756  buffer size: 22050
+Recording ...
+Playback completed.
+Capture completed.
+
+BAT analysis: signal has 65536 frames at 44100 Hz, 1 channels, 1 bytes per sample.
+
+Channel 1 - Checking for target frequency 997.00 Hz
+Amplitude: 16.4; Percentage: [12]
+Detected peak at 997.26 Hz of 34.89 dB
+ Total 40.7 dB from 985.82 to 1008.70 Hz
+ PASS: Peak detected at target frequency
+Detected at least 1 signal(s) in total
+
+Return value is 0
+alsabat -P default -C default -f U8

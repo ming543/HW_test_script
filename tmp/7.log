@@ -1,0 +1,48 @@
+Entering playback thread (ALSA).
+Get period size: 940  buffer size: 7526
+Playing generated audio sine wave
+Entering capture thread (ALSA).
+Get period size: 940  buffer size: 7526
+Recording ...
+Playback completed.
+Capture completed.
+
+BAT analysis: signal has 65536 frames at 44100 Hz, 2 channels, 2 bytes per sample.
+
+Channel 1 - Checking for target frequency 17.00 Hz
+Amplitude: 12.6; Percentage: [0]
+WARNING: Signal too weak!
+Detected peak at 1.35 Hz of 19.04 dB
+ Total 28.0 dB from 0.67 to 20.19 Hz
+ WARNING: Found low peak 1.35 Hz, very close to DC
+Detected peak at 26.24 Hz of 13.59 dB
+ Total 28.8 dB from 21.53 to 27.59 Hz
+ FAIL: Peak freq too high 26.24 Hz
+Detected peak at 29.61 Hz of 11.00 dB
+ Total 29.1 dB from 29.61 to 32.30 Hz
+ FAIL: Peak freq too high 29.61 Hz
+Detected peak at 40.37 Hz of 12.11 dB
+ Total 29.5 dB from 35.66 to 40.37 Hz
+ FAIL: Peak freq too high 40.37 Hz
+Detected peak at 42.39 Hz of 10.36 dB
+ Total 29.5 dB from 42.39 to 42.39 Hz
+ FAIL: Peak freq too high 42.39 Hz
+Detected peak at 43.74 Hz of 10.33 dB
+ Total 29.7 dB from 43.74 to 46.43 Hz
+ FAIL: Peak freq too high 43.74 Hz
+Detected peak at 47.78 Hz of 9.16 dB
+ Total 29.7 dB from 47.78 to 47.78 Hz
+ FAIL: Peak freq too high 47.78 Hz
+Detected peak at 51.14 Hz of 11.76 dB
+ Total 29.8 dB from 50.47 to 51.14 Hz
+ FAIL: Peak freq too high 51.14 Hz
+Detected peak at 53.83 Hz of 9.09 dB
+ Total 29.9 dB from 53.16 to 54.51 Hz
+ FAIL: Peak freq too high 53.83 Hz
+Detected peak at 57.20 Hz of 7.97 dB
+ Total 29.9 dB from 57.20 to 57.20 Hz
+ FAIL: Peak freq too high 57.20 Hz
+Detected at least 10 signal(s) in total
+
+Return value is -1003
+alsabat -P default -C default -c2 -F 17:16547
