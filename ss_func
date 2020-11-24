@@ -26,6 +26,7 @@ MEM_LOG="/tmp/mem.tmp"
 MODEL_LOG="/tmp/model.tmp"
 NVM_LOG="/tmp/nvm.tmp"
 ADDR_LOG="/tmp/addr.tmp"
+BIOS_LOG="/tmp/bios.tmp"
 
 aic_info_get(){
 	rm $AIC_LOG
@@ -92,8 +93,8 @@ aic_poe_check(){
         if [ $AIC_POE != 0 ] ;then
                 echo "- Check AIC PoE $1 Volt is $AIC_POE !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "------ Check AIC PoE $1 Volt is $AIC_POE fail !" | tee -a $LOG_LOC/$SN_LOG.log
-                #fail_red_dialog "Check AIC PoE Volt is $AIC_POE fail !"
+                echo "- Check AIC PoE $1 Volt is $AIC_POE fail !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check AIC PoE Volt is $AIC_POE fail !"
         fi
 }
 
@@ -160,7 +161,9 @@ aic_gpio_check(){
 }
 
 bios_version_check(){
-	BIOS_V=$(sudo dmidecode -s bios-vesion)
+	rm $BIOS_LOG
+	sudo dmidecode -s bios-version >> $BIOS_LOG 
+	BIOS_V=$(cat $BIOS_LOG)
         if [ $BIOS_V = $1 ] ;then
                 echo "- Check BIOS version is $BIOS_V ! spec is $1 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
@@ -185,20 +188,22 @@ cpu_temp_check(){
         fi
 }
 
+
 display_check(){
-	 clear
-         dialog --title "[DISPLAY CHECK]" --yesno "Please check display of -- $1" 10 50
-         response=$?
-         case $response in
-         0)
-                echo "- Check display $1 passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        clear
+        dialog --title "[DISPLAY CHECK]" --yesno "Check Display is work (Yes/No) - $1 " 10 50
+        response=$?
+        case $response in
+                0)
+                echo "- Check Display is work - $1" | tee -a $LOG_LOC/$SN_LOG.log
                 ;;
-         1)
-                echo "- Check display $1 failed!" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check display $1 failed"
-                exit 1 ;;
-         esac
+                1)
+                echo "****** Check Display is not work - $1 ******" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check Display is not work - $1 !"
+                ;;
+        esac
 }
+
 
 fail_red_dialog(){
         dialog --title  TESTING_RESULT  --colors --yesno\
@@ -338,7 +343,7 @@ lan_ping_check(){
 
 mic_loopback_test(){
 	rm $MIC_LOG
-        aplay $SERIAL_LOC/Wav_868kb.wav & 
+        aplay $SERIAL_LOC/default_dual.wav & 
 	arecord -d 3 -vvv -f dat /dev/null 2> $MIC_LOG
         sum=0
         i=0
@@ -474,6 +479,18 @@ serial_loop_test(){
                 echo "- Check RS232 $1 loopback passed !" | tee -a $LOG_LOC/$SN_LOG.log
         else
                 echo "- Check RS232 $1 loopback failed !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check RS232 loopback $1 failed !"
+        fi
+}
+
+serial_loop_test_menu(){
+	clear
+        dialog --title "[SERIAL COM CHECK]" --msgbox "Check COM loopback at - $2 " 10 50
+        sudo $SERIAL_LOC/serial-test -p $1 -b 115200 -o 1 -i 3
+        if [ $? = 0 ]; then
+                echo "- Check RS232 $2 $1 loopback passed !" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check RS232 $2 $1 loopback failed !" | tee -a $LOG_LOC/$SN_LOG.log
                 fail_red_dialog "Check RS232 loopback $1 failed !"
         fi
 }

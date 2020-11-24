@@ -5,7 +5,8 @@
 #set -xv
 
 #---Start Function---
-. ./u7_func
+. ./ss_func
+#. ./u7_func
 #. ./bi_func
 #lan_mac_check enp2s0 00:13:95
 
@@ -38,7 +39,7 @@
 #bios_oem_check
 #time_ntp_set
 #mic_test 40
-#mic_loopback_test 80
+mic_loopback_test 50
 #check BIOS time before BI ex.2020
 #hwclock_check 2020
 
@@ -47,7 +48,7 @@
 #RS232 loopback test
 #LAN test
 #os_image_mount
-os_image_sync 123
+#os_image_sync 123
 #bi check
 #burnintest_script
 #bi_log_check

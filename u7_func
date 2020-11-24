@@ -681,7 +681,7 @@ mic_loopback_test(){
         while [ $i -lt 10 ]
         do
                 i=$(($i+1))
-                MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 59)
+                MIC_CHECK=$(tail $MIC_LOG | awk NR==$i | cut -c 58)
                 sum=$(($sum+$MIC_CHECK))
         done
 
@@ -1032,7 +1032,7 @@ time_ntp_set(){
 	fi
 	timedatectl set-ntp yes
 	timedatectl
-	sleep 1
+	sleep 3
 	sudo hwclock -w
 }
 

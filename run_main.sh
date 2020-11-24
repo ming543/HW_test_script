@@ -15,8 +15,10 @@ TEST_LOC=/home/production/hw_test
 ### display main menu ###<high><width><menu_hight>
 dialog --clear --title "[ M A I N - M E N U ]" \
 --menu "Use 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
-7 "SYSTEM Test" \
-q "PCBA Test" \
+m "AIM SYSTEM Test" \
+h "AIH SYSTEM Test" \
+7 "U7XX SYSTEM Test" \
+q "Q7XX PCBA Test" \
 v "V2C/V3C Test" \
 b "Burn-In Test" \
 o "OS CLONE" \
@@ -31,6 +33,20 @@ menuitem=$(cat $INPUT)
 # make decsion 
 
 case $(cat $INPUT) in
+	m)
+		echo "m"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_aim" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit m
+		;;
+	h)
+		echo "h"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_aih" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit h
+		;;
 	7)
 		echo "7"
 		clear
@@ -71,12 +87,12 @@ case $(cat $INPUT) in
 		echo "c"
 		sudo timedatectl set-ntp yes
 		sudo timedatectl 
+		sleep 2
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sudo rclone copy /home/production/EagleEyes_LOG onedrive:General/EagleEyes_LOG -P
 		sudo rsync -avh /home/production/EagleEyes_LOG /media/production/USB30/EagleEyes_LOG
 		sudo rsync -avh /home/production/u7_log /media/production/USB30/u7_log
 		sleep 2
-		#sudo sh /home/production/hw_test/x.sh
 		sudo sh /home/production/hw_test/t.sh
 		exit 0
 		;;

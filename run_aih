@@ -1,0 +1,74 @@
+#!/bin/bash
+# utilitymenu.sh - A sample shell script to display menus on screen
+# Store menu options selected by the user
+#set -xv
+INPUT=/tmp/menu
+OUTPUT=/tmp/output
+REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
+TEST_LOC=/home/production/hw_test
+N1=AIH
+N2=NA
+N3=NA
+N4=NA
+
+# if temp files found, delete em
+rm $OUTPUT
+rm $INPUT
+
+
+
+
+
+### display main menu ###<high><width><menu_hight>
+dialog --clear --title "[ AIH SYSTEM Test - MENU ]" \
+--menu "Cancel=Back to MAIN-MENU \nUse 1-9 choose test item \nBuild by EFCO SamLee REV:$REV" 30 50 15 \
+1 "$N1" \
+2 "$N2" \
+3 "$N3" \
+4 "$N4" \
+2>$INPUT
+#2>"${INPUT}"
+
+menuitem=$(cat $INPUT)
+#response=$?
+# make decsion 
+
+case $(cat $INPUT) in
+	1)
+		clear
+		echo "cd $TEST_LOC; sudo sh $N1" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 0
+		;;
+	2) 
+		echo "2"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N2" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 2
+		;;
+	3) 
+		echo "3"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N3" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 3
+		;;
+	4) 
+		echo "4"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N4" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 4
+		;;
+	*)
+		clear
+                echo "cd $TEST_LOC; sudo sh run_main.sh" > $TEST_LOC/t.sh
+                sudo sh $TEST_LOC/t.sh
+                exit 1
+                ;;
+
+esac
+
+
+
