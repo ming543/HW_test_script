@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh AIM-USB4-LAN4-COM4-IDIO1-RAM8
+cd /home/production/hw_test; sudo sh WIN10IOT-2016-LSTB-CN-EPKEA-SA50-ZTE-ADMIN2

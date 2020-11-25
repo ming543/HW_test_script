@@ -12,4 +12,6 @@ sudo apt-get install -y curl
 sudo apt-get install -y clonezilla
 sudo apt-get install -y sshfs
 sudo apt-get install -y lm-sensors
+sudo apt-get install -y ecryptfs-utils
+
 
