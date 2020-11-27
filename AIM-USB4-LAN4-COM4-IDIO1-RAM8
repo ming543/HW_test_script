@@ -42,6 +42,9 @@ bios_version_check 1.10
 #Check Memory size
 memory_check 7868
 
+#Audio loopbakc test
+alsabat_loopback_test 
+
 #Get MAC for log
 lan_mac_check eno1 80:7b:85
 lan_mac_check enp1s0 80:7b:85
@@ -66,8 +69,7 @@ serial_loop_test_menu /dev/ttyS1 2
 serial_loop_test_menu /dev/ttyS2 3
 serial_loop_test_menu /dev/ttyS3 4
 
-#Audio loopbakc test
-alsabat_loopback_test 
+
 
 #Display check
 display_check DP1

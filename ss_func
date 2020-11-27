@@ -17,6 +17,7 @@ USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 
 AIC_LOG="/tmp/aic.tmp"
 AT_LOG="/tmp/at.tmp"
+ALSA_LOG="/tmp/alsa.tmp"
 MIC_LOG="/tmp/mic.tmp"
 DIO_LOG="/tmp/dio.tmp"
 IDIO_LOG="/tmp/idio.tmp"
@@ -342,11 +343,11 @@ lan_ping_check(){
 }
 
 alsabat_loopback_test(){
-	sudo rm $MIC_LOG
+	sudo rm $ALSA_LOG
 	sleep 1
-        alsabat | tee -a $MIC_LOG
-	sleep 5
-	ALSA_CHECK=$(cat $MIC_LOG | grep "Return value" | awk '{print $4}' )
+        alsabat -Dplughw:0,0 | tee -a $ALSA_LOG
+	#sleep 5
+	ALSA_CHECK=$(cat $ALSA_LOG | grep "Return value" | awk '{print $4}' )
 	if [ $ALSA_CHECK = 0 ];then
                 echo "- Check audio loopback value is $ALSA_CHECK passed!" | tee -a $LOG_LOC/$SN_LOG.log
         else
