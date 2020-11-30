@@ -939,7 +939,7 @@ sn_get_nodate_dialog(){
 	#SN_TMP=$TMP_LOC/sn.tmp
  	MODEL=$0
 	dialog --title "$MODEL Test" \
-	--inputbox "Please Scan the SN of Label:" \
+	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
@@ -947,7 +947,7 @@ sn_get_nodate_dialog(){
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
 		echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log	
 	else 
-#		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
+		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                 sudo sh $SCR_LOC/t.sh
 		exit 1
 	fi		
