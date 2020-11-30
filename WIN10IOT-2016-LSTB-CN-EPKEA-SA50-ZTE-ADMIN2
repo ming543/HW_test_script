@@ -17,9 +17,9 @@ sn_get_dialog_loop
 
 #Get BIOS OEM revision
 #bios_oem_check QA5TRT01
-#bios_oem_check SA50MK01
+bios_oem_check SA50MK01
 #bios_rev_check SA50MK01
-#bios_sn_check
+bios_sn_check
 
 #sshfs mount
 #os_image_sync $0
