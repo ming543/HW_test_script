@@ -18,9 +18,9 @@ mac_addr_write /NIC=1
 
 
 #Set BIOS time
-hwclock_write 2020-06-14
+#hwclock_write 2020-06-14
 #check BIOS time ex.2020
-hwclock_check 2020
+#hwclock_check 2020
 
 #Show ALL TEST PASS to log
 pass_green_dialog

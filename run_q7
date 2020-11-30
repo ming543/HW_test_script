@@ -13,6 +13,7 @@ N4=Q718-T2
 N5=Q715-T2
 N6=TRITIUM-Q715QA5-T2
 N7=Q715-VT2-1
+N8=Q71X-MAC-PROG
 
 # if temp files found, delete em
 rm $OUTPUT
@@ -32,6 +33,7 @@ dialog --clear --title "[ PCBA Test- MENU ]" \
 5 "$N5" \
 6 "$N6" \
 7 "$N7" \
+8 "$N8" \
 2>$INPUT
 #2>"${INPUT}"
 
@@ -87,6 +89,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh $N7" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 7
+		;;
+	8) 
+		echo "8"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N8" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 8
 		;;
 	*)
 		clear
