@@ -35,7 +35,7 @@ usb_dev_count "Bus 002" 7
 #usb30 speed check 
 usb30_speed_check 
 
-ssd_speed_check /dev/sda 200 
+ssd_speed_check /dev/sdb 200 
 
 
 #DIO loopback test
