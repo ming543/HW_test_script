@@ -17,14 +17,11 @@ bios_oem_check QC31U134
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp4s0 00:13:95
-#lan1_ping_test
-#lan_down enp4s0
-#lan_up enp1s0
-lan_ping_check 192.168.1.1
-#lan2_ping_test
-#lan_down enp1s0
-#lan_up enp4s0
-lan_ping_check 192.168.4.1
+#lan_test
+lan_carrier_check enp1s0
+lan_carrier_check enp4s0
+lan_ip_check enp1s0
+lan_ip_check enp4s0
 
 #Update time from NTP server
 #time_ntp_set
