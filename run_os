@@ -13,6 +13,7 @@ N4=WIN10IOT-2019-LSTC-ENG-EPKEA-AIMH
 N5=WIN10IOT-2019-LSTC-CHT-EPKEA-AIMH
 N6=WIN10IOT-2019-LSTC-CHT-PKEA-PKEA-AIMH
 N7=WIN10IOT-1909-SAC-ENG-PKEA-PKEA-JC370
+N8=WIN10IOT-2019-LSTC-CHT-EPKEA-U7130P
 
 
 
@@ -35,6 +36,7 @@ dialog --clear --title "[ OS_CLONE - MENU ]" \
 5 "$N5" \
 6 "$N6" \
 7 "$N7" \
+8 "$N8" \
 c "DISK_SPACE&IMAGE_CHECK" \
 2>$INPUT
 #2>"${INPUT}"
@@ -92,6 +94,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh $N7" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 7
+		;;
+	8) 
+		echo "8"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N8" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 8
 		;;
 	c)
 		clear
