@@ -46,11 +46,12 @@
 #hwclock_check 2020
 
 #check USB device
+bios_oem_update
 
 #RS232 loopback test
 #LAN test
 #os_image_mount
-os_image_sync 123
+#os_image_sync 123
 #bi check
 #burnintest_script
 #bi_log_check

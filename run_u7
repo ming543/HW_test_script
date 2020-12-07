@@ -10,6 +10,7 @@ N1=U7-PFT
 N2=U7-100PAS-T2
 N3=U7-100-T2
 N4=AIM8-JC370
+N5=U7-BIOS-OEM-UPDATE
 
 # if temp files found, delete em
 rm $OUTPUT
@@ -26,6 +27,7 @@ dialog --clear --title "[ SYSTEM Test - MENU ]" \
 2 "$N2" \
 3 "$N3" \
 4 "$N4" \
+5 "$N5" \
 2>$INPUT
 #2>"${INPUT}"
 
@@ -60,6 +62,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh $N4" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 4
+		;;
+	5) 
+		echo "5"
+		clear
+		echo "cd $TEST_LOC; sudo sh $N5" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 5
 		;;
 	*)
 		clear
