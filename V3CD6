@@ -14,9 +14,9 @@
 sn_get_nodate_dialog
 
 #Check display
-display_check DP1
-display_check DP2
-display_check DVI
+#display_check DP1
+#display_check DP2
+#display_check DVI
 
 
 #Get AIC info for Log
@@ -29,8 +29,8 @@ aic_hwmon_check 3.3S 3
 aic_hwmon_check 3.3A 3
 aic_hwmon_check 5A 5 4
 aic_hwmon_check 5S 5 4
-aic_12mon_check 12S 12 12
-aic_12mon_check 12SB 12 12
+aic_12mon_check 12S 12 11
+aic_12mon_check 12SB 12 11
 
 #aic_com_check 1
 aic_com_check 1 RS232
@@ -60,11 +60,12 @@ aic_gpio_check FF00
 
 #Get MAC for log
 lan_mac_check eno1 80:7b:85
+lan_mac_check enp1s0 80:7b:85
 lan_mac_check enp2s0 80:7b:85
-lan_mac_check enp3s0 80:7b:85
+lan_mac_check enp7s0 80:7b:85
 lan_mac_check enp8s0 80:7b:85
 lan_mac_check enp9s0 80:7b:85
-lan_mac_check enp10s0 80:7b:85
+
 
 #ping test
 #lan_ping_check 192.168.1.1
