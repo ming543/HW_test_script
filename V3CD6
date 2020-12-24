@@ -56,7 +56,7 @@ aic_fan_cfg_check 1
 aic_fan_cfg_check 2
 aic_fan_rpm_check 1 250
 aic_fan_rpm_check 2 250
-aic_gpio_check FF00
+#aic_gpio_check FF00
 
 #Get MAC for log
 lan_mac_check eno1 80:7b:85
