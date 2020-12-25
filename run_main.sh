@@ -18,6 +18,7 @@ dialog --clear --title "[ M A I N - M E N U ]" \
 m "AIM SYSTEM Test" \
 h "AIH SYSTEM Test" \
 7 "U7XX SYSTEM Test" \
+8 "OTHER SYSTEM Test" \
 q "Q7XX PCBA Test" \
 v "V2C/V3C Test" \
 b "Burn-In Test" \
@@ -53,6 +54,13 @@ case $(cat $INPUT) in
 		echo "cd $TEST_LOC; sudo sh run_u7" > $TEST_LOC/t.sh
 		sudo sh $TEST_LOC/t.sh
 		exit 7
+		;;
+	8)
+		echo "8"
+		clear
+		echo "cd $TEST_LOC; sudo sh run_other" > $TEST_LOC/t.sh
+		sudo sh $TEST_LOC/t.sh
+		exit 8
 		;;
 	q)
 		echo "q"

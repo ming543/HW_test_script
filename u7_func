@@ -35,6 +35,19 @@ NVM_LOG="/tmp/nvm.tmp"
 ADDR_LOG="/tmp/addr.tmp"
 SYNC_LOG="/tmp/sync.tmp"
 
+alsabat_loopback_test(){
+        sudo rm $ALSA_LOG
+        sleep 1
+        alsabat -Dplughw:0,0 | tee -a $ALSA_LOG
+        #sleep 5
+        ALSA_CHECK=$(cat $ALSA_LOG | grep "Return value" | awk '{print $4}' )
+        if [ $ALSA_CHECK = 0 ];then
+                echo "- Check audio loopback value is $ALSA_CHECK passed!" | tee -a $LOG_LOC/$SN_LOG.log
+        else
+                echo "- Check audio loopbacl value is $ALSA_CHECK failed!" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check audio loopback value is $ALSA_CHECK failed !"
+        fi
+}
 
 
 audio_codec_test(){
@@ -348,6 +361,16 @@ bios_rev_check(){
 	fi
 }
 
+
+bios_rev_dmidecode_get(){
+	BIOS_REV=$(sudo dmidecode -s bios-version)
+	if [ $? = 0 ] ; then
+		echo "- Check BIOS Revision is $BIOS_REV !" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "****** Check BIOS Revision $BIOS_REV failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check BIOS Revision $BIOS_REV failed!"
+	fi
+}
 
 bios_sn_check(){
 	BIOS_SN=$(sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP | grep "Serial Number" | awk '{print $3}')

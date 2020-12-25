@@ -14,9 +14,9 @@
 sn_get_nodate_dialog
 
 #Check display
-display_check DP1
-display_check DP2
-display_check DVI
+#display_check DP1
+#display_check DP2
+#display_check DVI
 
 
 #Get AIC info for Log
