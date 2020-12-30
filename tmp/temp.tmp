@@ -1,10 +1,10 @@
 coretemp-isa-0000
-Package id 0:  +36.0°C  (high = +105.0°C, crit = +105.0°C)
-Core 0:        +36.0°C  (high = +105.0°C, crit = +105.0°C)
-Core 1:        +36.0°C  (high = +105.0°C, crit = +105.0°C)
-Core 2:        +36.0°C  (high = +105.0°C, crit = +105.0°C)
-Core 3:        +36.0°C  (high = +105.0°C, crit = +105.0°C)
+Package id 0:  +32.0°C  (high = +105.0°C, crit = +105.0°C)
+Core 0:        +32.0°C  (high = +105.0°C, crit = +105.0°C)
+Core 1:        +32.0°C  (high = +105.0°C, crit = +105.0°C)
+Core 2:        +30.0°C  (high = +105.0°C, crit = +105.0°C)
+Core 3:        +30.0°C  (high = +105.0°C, crit = +105.0°C)
 
 acpitz-acpi-0
-temp1:        +35.0°C  (crit = +125.0°C)
+temp1:        +32.0°C  (crit = +125.0°C)
 
