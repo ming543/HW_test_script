@@ -11,7 +11,7 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-bios_oem_check QC31W134
+bios_rev_log QC50R151
 #bios_oem_check QC31U128
 
 #Get MAC for log
@@ -28,14 +28,12 @@ lan_ip_check enp2s0
 hwclock_check_live
 
 #check USB device
-usb_dev_count "Bus 003" 2
-usb_dev_count "Bus 002" 7
+usb_dev_count "Bus 001" 6
+usb_dev_count "Bus 002" 2
 
 
-#usb30 speed check 
-usb30_speed_check 
-
-ssd_speed_check /dev/sda 200 
+#usb30_speed_check 
+ssd_speed_check /dev/sdb 200 
 
 
 #DIO loopback test
@@ -46,7 +44,7 @@ dio_loopback_test
 #mic_test 40
 
 #RS232 loopback test
-serial_loop_test /dev/ttyS0
+serial_loop_test /dev/ttyS5
 
 #input spec of cpu temp low high limit to script ex.20 70
 cpu_temp_check +20 +45

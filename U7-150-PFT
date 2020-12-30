@@ -17,7 +17,7 @@ sn_get_dialog
 #sn_get_dialog_loop
 
 #Update BIOS default setting to OEM
-bios_oem_update
+#bios_oem_update
 #bios_oem_check QC31U134
 
 #Get MAC for log

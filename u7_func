@@ -264,7 +264,7 @@ bios_rev_log(){
 		QC32R912)
 			echo "- Check BIOS Version is $BIOS_REV " | tee -a $LOG_LOC/$SN_LOG.log
 			;;
-		QA50R000)
+		QA50R151)
 			echo "- Check BIOS Version is $BIOS_REV " | tee -a $LOG_LOC/$SN_LOG.log
 			;;
 		*)
