@@ -11,8 +11,7 @@
 sn_get_dialog
 
 #Get BIOS OEM revision
-bios_rev_log QC50R151
-#bios_oem_check QC31U128
+bios_oem_check QA50W151
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
