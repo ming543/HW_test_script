@@ -6,7 +6,7 @@ INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
-N1=U7-PFT
+N1=U7-100-PFT
 N2=U7-150-PFT
 N3=U7-100PAS-T2
 N4=U7-100-T2
@@ -30,6 +30,7 @@ dialog --clear --title "[ SYSTEM Test - MENU ]" \
 3 "$N3" \
 4 "$N4" \
 5 "$N5" \
+6 "$N6" \
 2>$INPUT
 #2>"${INPUT}"
 
