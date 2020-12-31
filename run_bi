@@ -6,9 +6,9 @@ INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
 TEST_LOC=/home/production/hw_test
-N1=BI-120M-U7-NOCOM1
-N2=BI-120M-COM1
-N3=
+N1=BI-120M-U7-100-NOCOM1
+N2=BI-120M-U7-150-NOCOM1
+N3=BI-120M-AIMH-COM1
 
 # if temp files found, delete em
 rm $OUTPUT
