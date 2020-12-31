@@ -36,7 +36,7 @@
 #mac_nvm_write /NIC=1
 ##mac_addr_write /NIC=1
 #bios_oem_update
-#bios_oem_check
+bios_oem_check
 #time_ntp_set
 #mic_test 40
 #alsabat_loopback_test
@@ -46,7 +46,7 @@
 #hwclock_check 2020
 
 #check USB device
-bios_oem_update
+#bios_oem_update
 
 #RS232 loopback test
 #LAN test
