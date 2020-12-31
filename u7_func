@@ -1067,10 +1067,14 @@ time_ntp_set(){
 		fail_red_dialog "Check ping ntp failed !"
 	fi
 	timedatectl set-ntp yes
+	timedatectl set-local-rtc 1
 	timedatectl
-	sleep 3
-	sudo hwclock -w
+
+#	sleep 3
+#	sudo hwclock -w
+
 }
+
 
 usb_log_sync(){
 	USB30_DEV=$(lsblk -f | grep USB30 | cut -c 7-10)
