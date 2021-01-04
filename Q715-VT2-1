@@ -16,7 +16,7 @@ sn_get_nodate_dialog
 bios_rev_check QC32R912
 
 #check BIOS time from internet
-hwclock_check 2020
+hwclock_check 2021
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85

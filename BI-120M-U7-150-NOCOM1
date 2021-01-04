@@ -15,7 +15,7 @@ sn_get_dialog
 lan_mac_check enp1s0 80:7b:85
 
 #check BIOS time from internet
-hwclock_check 2020
+hwclock_check 2021
 
 #BI for $3 x 10m
 bi_stress +20 +85 130
