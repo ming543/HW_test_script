@@ -94,7 +94,7 @@ bi_stress(){
 	sum=$(($3/10))
         i=0
 	count=0
-	sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G --timeout $3m --metrics-brief &
+	sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G -l 80 --timeout $3m --metrics-brief &
         while [ $i -lt $sum ]
         do
                 i=$(($i+1))
@@ -132,7 +132,7 @@ bi_stress_com(){
         sum=$(($3/10))
         i=0
         count=0
-        sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G --timeout $3m --metrics-brief &
+        sudo stress-ng --cpu 4 --vm 1 --vm-bytes 1G -l 80 --timeout $3m --metrics-brief &
         while [ $i -lt $sum ]
         do
                 i=$(($i+1))
