@@ -511,7 +511,9 @@ fail_red_dialog(){
 hwclock_write(){
 	sudo timedatectl set-ntp no
 	sudo timedatectl set-time "$1"
+	sudo timedatectl set-local-rtc 1
 	sudo hwclock -w	
+
 }
 
 hwclock_check(){

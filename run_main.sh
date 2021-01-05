@@ -95,6 +95,7 @@ case $(cat $INPUT) in
 		echo "c"
 		sudo timedatectl set-ntp yes
 		sudo timedatectl 
+        	sudo timedatectl set-local-rtc 1
 		sleep 2
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sudo rclone copy /home/production/EagleEyes_LOG onedrive:General/EagleEyes_LOG -P
