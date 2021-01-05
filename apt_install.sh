@@ -13,5 +13,6 @@ sudo apt-get install -y clonezilla
 sudo apt-get install -y sshfs
 sudo apt-get install -y lm-sensors
 sudo apt-get install -y ecryptfs-utils
+sudo apt-get install -y tmux
 
 
