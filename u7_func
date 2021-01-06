@@ -19,8 +19,9 @@ LOG_LOC="$LOC/u7_log"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 PASS_LOC="$LOC/pass"
 
-
+BOOT_COUNT="/tmp/boot.tmp"
 SN_TMP="/tmp/sn.tmp"
+SN_L="/tmp/snlog.tmp"
 AUDIO_LOG="/tmp/at.tmp"
 AT_LOG="/tmp/at.tmp"
 BIOS_LOG="/tmp/bios.tmp"
@@ -477,7 +478,7 @@ fail_red_dialog(){
 	case $response in
 		0)
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -488,7 +489,7 @@ fail_red_dialog(){
 	        
 		1) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -498,7 +499,7 @@ fail_red_dialog(){
 		
 		255) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
@@ -511,9 +512,7 @@ fail_red_dialog(){
 hwclock_write(){
 	sudo timedatectl set-ntp no
 	sudo timedatectl set-time "$1"
-	sudo timedatectl set-local-rtc 1
 	sudo hwclock -w	
-
 }
 
 hwclock_check(){
@@ -777,7 +776,7 @@ pass_green_dialog(){
         case $response in
                 0) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -787,7 +786,7 @@ pass_green_dialog(){
 		exit 0;;
                 1) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -796,7 +795,7 @@ pass_green_dialog(){
 		exit 1;;
                 255) 
 		   #echo "" >> $LOG_LOC/$SN_LOG.log
-		   echo Test End: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log
+		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
 		   #usb_log_sync
@@ -933,6 +932,41 @@ sn_get(){
 	echo Serial Number: $SN >> $LOG_LOC/$SN_LOG.log	
 }
 
+sn_get_aim(){
+	rm -r $BOOT_COUNT
+	echo 0 > $BOOT_COUNT
+	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
+ 	MODEL=$0
+	sudo dmidecode | grep UUID | awk '{print $2}' > $SN_TMP
+	if [ $? = 0 ]; then
+		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
+		SN_LOG=$(cat $SN_L)
+		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
+		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
+	else 
+		echo "****** Check sn failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		warning_yellow_dialog "Check sn failed!"
+	fi		
+}
+
+sn_get_cgut(){
+	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
+ 	MODEL=$0
+	sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP | grep "Serial Number" | awk '{print $3}' > $SN_TMP
+	if [ $? = 0 ]; then
+		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
+		SN_LOG=$(cat $SN_L)
+		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
+		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
+		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
+	        sudo $CGUT_LOC/cgutlcmd CGINFO /OT:BOARD /DUMP >> $LOG_LOC/$SN_LOG.log	
+	else 
+		echo "****** Check cgutlcmd sn failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		warning_yellow_dialog "Check sgutlcmd failed!"
+	fi		
+}
+
 sn_get_dialog(){
 	#SN_TMP=$TMP_LOC/sn.tmp
 #	rm -f $SN_TMP
@@ -944,7 +978,7 @@ sn_get_dialog(){
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-		echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log	
+		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
 	else 
 		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                 sudo sh $SCR_LOC/t.sh
@@ -963,7 +997,7 @@ sn_get_dialog_loop(){
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-		echo Test Start: $(date '+%Y%m%d%H%M%S') >> $LOG_LOC/$SN_LOG.log	
+		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
 	else 
 	#	echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                 sudo sh $SCR_LOC/t.sh
@@ -1069,10 +1103,9 @@ time_ntp_set(){
 		fail_red_dialog "Check ping ntp failed !"
 	fi
 	timedatectl set-ntp yes
-	timedatectl set-local-rtc 1
+	timedatectl set-local-rtc 1 #rtc not sync by 0 sync by 1 
 	timedatectl
-
-#	sleep 3
+#	sleep 1
 #	sudo hwclock -w
 
 }
@@ -1106,7 +1139,7 @@ os_image_sync(){
 	#sudo mkdir /home/partimag
 	#sudo chmod 777 /home/partimag
 	#sudo rclone sync onedrive:General/OS_IMAGE/$1 /home/partimag/$1 -P 
-	sudo rclone sync os:OS_IMAGE/$1 /home/partimag/$1 -P 
+	sudo rcloecho 0 > $BOOT_COUNTne sync os:OS_IMAGE/$1 /home/partimag/$1 -P 
 	if [ $? = 0 ]; then
 		echo "- Check OS sync passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
@@ -1123,3 +1156,25 @@ os_image_mount(){
 cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
 }
 
+wakeup_check(){
+	if [ -e "$BOOT_COUNT" ]
+	then
+		wakeup_count	
+	else
+		sn_get_aim
+	fi
+}
+
+wakeup_count(){
+	sum=$(cat $BOOT_COUNT | wc -l)
+
+	date '+%s' 
+	date '+%s' -d '+ 30 minutes'
+}
+
+wakeup_rtc(){
+	echo 1 >> $BOOT_COUNT
+	sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
+	sudo sh -c "echo `date '+%s' -d '+ 3 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
+	shutdown -h now
+}
