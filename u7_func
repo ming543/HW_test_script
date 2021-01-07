@@ -24,7 +24,7 @@ AUDIO_LOG="/tmp/at.tmp"
 AT_LOG="/tmp/at.tmp"
 BI_LOG="/tmp/bi.log"
 BIOS_LOG="/tmp/bios.tmp"
-BOOT_COUNT="/tmp/boot.tmp"
+BOOT_COUNT="$TMP_LOC/boot.tmp"
 DIO_LOG="/tmp/dio.tmp"
 IDIO_LOG="/tmp/idio.tmp"
 MAC_LOG="/tmp/mac.tmp"
@@ -32,10 +32,10 @@ MEM_LOG="/tmp/mem.tmp"
 MIC_LOG="/tmp/mic.tmp"
 MODEL_LOG="/tmp/model.tmp"
 NVM_LOG="/tmp/nvm.tmp"
-SN_TMP="/tmp/sn.tmp"
-SN_L="/tmp/snlog.tmp"
+SN_TMP="$TMP_LOC/sn.tmp"
+SN_L="$TMP_LOC/snlog.tmp"
 SYNC_LOG="/tmp/sync.tmp"
-TIME_STAMP="/tmp/stamp.tmp"
+TIME_STAMP="$TMP_LOC/stamp.tmp"
 
 
 
@@ -780,7 +780,6 @@ pass_green_dialog(){
         response=$?
         case $response in
                 0) 
-		   #echo "" >> $LOG_LOC/$SN_LOG.log
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
@@ -922,28 +921,14 @@ serial_check(){
 	fi
 }
 
-sn_get(){
-	#---Get SN---
-	#SN_TMP=$TMP_LOC/sn.tmp
-#	rm -f $SN_TMP
- 	MODEL=$0
-	read -p "Please input SN: " SN 
-	SN_LOG=$SN-$MODEL-$(date '+%Y%m%d%H%M%S')
-	#echo $SN-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_TMP #log with date
-	##echo $SN-$MODEL-$(date '+%H%M%S')  > $SN_TMP #log without date
-	#SN_LOG=$(<$SN_TMP)
-	echo Model: $0 >> $LOG_LOC/$SN_LOG.log
-	#cat $TMP_LOC/model.tmp >> $LOG_LOC/$SN_LOG.log   
-	echo Serial Number: $SN >> $LOG_LOC/$SN_LOG.log	
-}
 
 sn_get_aim(){
-	rm -r $BOOT_COUNT
-	echo 0 > $BOOT_COUNT
+	echo "0" >> $BOOT_COUNT
 	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
 	date '+%s' > $TIME_STAMP
-	sudo dmidecode | grep UUID | awk '{print $2}' > $SN_TMP
+	cat "/sys/class/net/eno1/address" > $SN_TMP
+	#sudo dmidecode | grep UUID | awk '{print $2}' > $SN_TMP
 	if [ $? = 0 ]; then
 		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
 		SN_LOG=$(cat $SN_L)
@@ -982,7 +967,9 @@ sn_get_dialog(){
 	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
-		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
+		SN_LOG=$(cat $SN_L)
 		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
@@ -1003,7 +990,9 @@ sn_get_dialog_loop(){
 	--inputbox "Please Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
-		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
+		SN_LOG=$(cat $SN_L)
 		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
@@ -1024,7 +1013,9 @@ sn_get_nodate_dialog(){
 	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
-		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
+		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
+		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
+		SN_LOG=$(cat $SN_L)
 		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
@@ -1151,7 +1142,7 @@ os_image_sync(){
 	#sudo mkdir /home/partimag
 	#sudo chmod 777 /home/partimag
 	#sudo rclone sync onedrive:General/OS_IMAGE/$1 /home/partimag/$1 -P 
-	sudo rcloecho 0 > $BOOT_COUNTne sync os:OS_IMAGE/$1 /home/partimag/$1 -P 
+	sudo rclone sync os:OS_IMAGE/$1 /home/partimag/$1 -P 
 	if [ $? = 0 ]; then
 		echo "- Check OS sync passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
@@ -1169,37 +1160,49 @@ cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o pa
 }
 
 wakeup_check(){
-	if [ -e "$BOOT_COUNT" ]
-	then
+	ls $BOOT_COUNT
+	if [ $? = 0 ];then
+		echo "boot_count"
+		cat $BOOT_COUNT
 		sum=$(cat $BOOT_COUNT | wc -l)
 		if [ $sum -le 6 ];then
 			SN_LOG=$(cat $SN_L)
-			echo - Wakeup Test Run : $sum >> $LOG_LOC/$SN_LOG.log
+			echo - Wakeup Test Run : $sum | tee -a $LOG_LOC/$SN_LOG.log
+			sleep 10
 			wakeup_count
 		else
-			bi_stress
+			echo - Wakeup Test Run done! | tee -a $LOG_LOC/$SN_LOG.log
+			sleep 10
+			sudo rm $BOOT_COUNT
+			sudo rm $SN_L
+			sudo rm $SN_TMP
+			sudo rm $TIME_STAMP
 		fi
 
 
 #	date '+%s' -d '+ 30 minutes'
 	else
+		time_zone_set
+		time_ntp_set
 		sn_get_aim
+		clear
+		echo "BI_START_AIM"
 		wakeup_count
 	fi
 }
 
 
 wakeup_count(){
-		echo 1 >> $BOOT_COUNT
+		sudo echo "1" >> $BOOT_COUNT
 		SN_LOG=$(cat $SN_L)
 		UPTIME_LOG=$(uptime)
         	CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
-                echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C! | tee -a $LOG_LOC/$SN_LOG.log
+                echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C!" | tee -a $LOG_LOC/$SN_LOG.log
 		
 		sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
 		sudo sh -c "echo `date '+%s' -d '+ 3 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
 		shutdown -h now
 }
 
-export -f
+
 

@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh QA5TRT01-BIOS-UPDATE
+cd /home/production/hw_test; sudo sh U7-100-T1

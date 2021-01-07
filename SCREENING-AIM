@@ -5,11 +5,8 @@
 #set -xv
 
 #---Start Function---
-source "/home/production/hw_test/u7_func"
+. ./u7_func
 
-
-time_zone_set
-time_ntp_set
 
 #check wakeup run or not
 wakeup_check
@@ -23,7 +20,7 @@ wakeup_check
 #hwclock_check 2021
 
 #BI for $3 x 10m
-#bi_stress +20 +85 130
+bi_stress +20 +85 10
 
 #RS232 loopback test
 #serial_loop_test /dev/ttyS0
