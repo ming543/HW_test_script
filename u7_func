@@ -19,22 +19,25 @@ LOG_LOC="$LOC/u7_log"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 PASS_LOC="$LOC/pass"
 
-BOOT_COUNT="/tmp/boot.tmp"
-SN_TMP="/tmp/sn.tmp"
-SN_L="/tmp/snlog.tmp"
+ADDR_LOG="/tmp/addr.tmp"
 AUDIO_LOG="/tmp/at.tmp"
 AT_LOG="/tmp/at.tmp"
+BI_LOG="/tmp/bi.log"
 BIOS_LOG="/tmp/bios.tmp"
-MIC_LOG="/tmp/mic.tmp"
+BOOT_COUNT="/tmp/boot.tmp"
 DIO_LOG="/tmp/dio.tmp"
 IDIO_LOG="/tmp/idio.tmp"
-BI_LOG="/tmp/bi.log"
 MAC_LOG="/tmp/mac.tmp"
 MEM_LOG="/tmp/mem.tmp"
+MIC_LOG="/tmp/mic.tmp"
 MODEL_LOG="/tmp/model.tmp"
 NVM_LOG="/tmp/nvm.tmp"
-ADDR_LOG="/tmp/addr.tmp"
+SN_TMP="/tmp/sn.tmp"
+SN_L="/tmp/snlog.tmp"
 SYNC_LOG="/tmp/sync.tmp"
+TIME_STAMP="/tmp/stamp.tmp"
+
+
 
 alsabat_loopback_test(){
         sudo rm $ALSA_LOG
@@ -128,6 +131,8 @@ bi_stress(){
                	    	fail_red_dialog "Check BI time $BI_TOTAL failed! spec $3"
 	fi
 }
+
+
 
 bi_stress_com(){
         sum=$(($3/10))
@@ -937,6 +942,7 @@ sn_get_aim(){
 	echo 0 > $BOOT_COUNT
 	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
+	date '+%s' > $TIME_STAMP
 	sudo dmidecode | grep UUID | awk '{print $2}' > $SN_TMP
 	if [ $? = 0 ]; then
 		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
@@ -970,12 +976,14 @@ sn_get_cgut(){
 sn_get_dialog(){
 	#SN_TMP=$TMP_LOC/sn.tmp
 #	rm -f $SN_TMP
+	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
 	dialog --title "$MODEL Test" \
 	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
 		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
@@ -989,12 +997,14 @@ sn_get_dialog(){
 sn_get_dialog_loop(){
 	#SN_TMP=$TMP_LOC/sn.tmp
 #	rm -f $SN_TMP
+	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
 	dialog --title "$MODEL Test" \
 	--inputbox "Please Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
+		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
 		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
@@ -1008,12 +1018,14 @@ sn_get_dialog_loop(){
 
 sn_get_nodate_dialog(){
 	#SN_TMP=$TMP_LOC/sn.tmp
+	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
 	dialog --title "$MODEL Test" \
 	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
 	10 60 2> $SN_TMP
 	if [ $? = 0 ]; then
 		SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
+		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
 		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
 		echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log	
@@ -1159,22 +1171,35 @@ cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o pa
 wakeup_check(){
 	if [ -e "$BOOT_COUNT" ]
 	then
-		wakeup_count	
+		sum=$(cat $BOOT_COUNT | wc -l)
+		if [ $sum -le 6 ];then
+			SN_LOG=$(cat $SN_L)
+			echo - Wakeup Test Run : $sum >> $LOG_LOC/$SN_LOG.log
+			wakeup_count
+		else
+			bi_stress
+		fi
+
+
+#	date '+%s' -d '+ 30 minutes'
 	else
 		sn_get_aim
+		wakeup_count
 	fi
 }
 
+
 wakeup_count(){
-	sum=$(cat $BOOT_COUNT | wc -l)
-
-	date '+%s' 
-	date '+%s' -d '+ 30 minutes'
+		echo 1 >> $BOOT_COUNT
+		SN_LOG=$(cat $SN_L)
+		UPTIME_LOG=$(uptime)
+        	CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
+                echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C! | tee -a $LOG_LOC/$SN_LOG.log
+		
+		sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
+		sudo sh -c "echo `date '+%s' -d '+ 3 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
+		shutdown -h now
 }
 
-wakeup_rtc(){
-	echo 1 >> $BOOT_COUNT
-	sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
-	sudo sh -c "echo `date '+%s' -d '+ 3 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
-	shutdown -h now
-}
+export -f
+

@@ -5,17 +5,19 @@
 #set -xv
 
 #---Start Function---
-. ./u7_func
+source "/home/production/hw_test/u7_func"
+
 
 time_zone_set
 time_ntp_set
 
-#Get SN for Log
-sn_get_aim
+#check wakeup run or not
+wakeup_check
+
 
 #wakeup_rtc
 #Get MAC for log
-lan_mac_check enp1s0 80:7b:85
+#lan_mac_check enp1s0 80:7b:85
 
 #check BIOS time from internet
 #hwclock_check 2021
