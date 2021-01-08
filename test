@@ -13,7 +13,7 @@
 #countdown $((2*60*60))
 #stopwatch 10
 #onedrive_to_local
-wakeup_debug
+wakeup_time_check
 #Get SN for Log
 #sn_get_dialog
 #bios_rev_check

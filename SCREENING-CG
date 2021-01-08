@@ -5,7 +5,7 @@
 #set -xv
 
 #---Start Function---
-. ./u7_func
+. ./sc_func
 
 time_zone_set
 time_ntp_set

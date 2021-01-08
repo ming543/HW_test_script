@@ -5,7 +5,7 @@
 #set -xv
 
 #---Start Function---
-. ./u7_func
+. ./sc_func
 
 
 screening_start

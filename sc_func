@@ -1,6 +1,6 @@
 #!/bin/bash
 # REVISON:R1
-# Script for U7 system function test by EFCO Sam
+# Script for screening system function test by EFCO Sam
 
 #For Debug
 #set -xv
@@ -97,6 +97,8 @@ at_check(){
 }
 
 bi_stress(){
+        echo " " | tee -a $LOG_LOC/$SN_LOG.log
+        echo "****** BI Stress Test Start ******" | tee -a $LOG_LOC/$SN_LOG.log
 	sum=$(($3/10))
         i=0
 	count=0
@@ -110,9 +112,9 @@ bi_stress(){
 			UPTIME_LOG=$(uptime)
         		CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
         			if [ $CPU_TEMP_LOG -ge $1 ] && [ $CPU_TEMP_LOG -le $2 ];then
-                			echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C passed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
+                			echo "-$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C passed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
         			else
-                			echo "Check CPU temp $CPU_TEMP_LOG C failed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
+                			echo "- Check CPU temp $CPU_TEMP_LOG C failed! spec $1 to $2 C" | tee -a $LOG_LOC/$SN_LOG.log
                 			fail_red_dialog "Check CPU temp $CPU_TEMP_LOG C failed! spec $1 - $2 C"
         			fi
 			sleep 10m
@@ -490,7 +492,7 @@ fail_red_dialog(){
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
 		   clear
-		   sh /home/production/hw_test/t.sh
+		   sh $SCR_LOC/screening.sh
 		   exit
 		exit 0 ;;
 	        
@@ -511,7 +513,7 @@ fail_red_dialog(){
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
 		   #usb_log_sync
 		   #echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
-                   sudo sh $SCR_LOC/t.sh
+                   sudo sh $SCR_LOC/screening.sh
 		exit 255 ;;
 	esac
 }
@@ -961,74 +963,8 @@ sn_get_cgut(){
 	fi		
 }
 
-sn_get_dialog(){
-	#SN_TMP=$TMP_LOC/sn.tmp
-#	rm -f $SN_TMP
-	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
- 	MODEL=$0
-	dialog --title "$MODEL Test" \
-	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
-	10 60 2> $SN_TMP
-	if [ $? = 0 ]; then
-		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
-		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
-		SN_LOG=$(cat $SN_L)
-		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
-		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
-		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
-	else 
-		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
-                sudo sh $SCR_LOC/t.sh
-		exit 1
-	fi		
-}
-
-sn_get_dialog_loop(){
-	#SN_TMP=$TMP_LOC/sn.tmp
-#	rm -f $SN_TMP
-	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
- 	MODEL=$0
-	dialog --title "$MODEL Test" \
-	--inputbox "Please Scan the SN of Label:" \
-	10 60 2> $SN_TMP
-	if [ $? = 0 ]; then
-		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S')
-		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
-		SN_LOG=$(cat $SN_L)
-		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
-		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
-		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
-	else 
-	#	echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
-                sudo sh $SCR_LOC/t.sh
-		exit 1
-	fi		
-}
 
 
-sn_get_nodate_dialog(){
-	#SN_TMP=$TMP_LOC/sn.tmp
-	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
- 	MODEL=$0
-	dialog --title "$MODEL Test" \
-	--inputbox "Cancel=Back to MAIN-MENU \nPlease Scan the SN of Label:" \
-	10 60 2> $SN_TMP
-	if [ $? = 0 ]; then
-		#SN_LOG=$(cat $SN_TMP)-$MODEL-$(date '+%H%M%S')
-		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
-		SN_LOG=$(cat $SN_L)
-		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
-		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
-		echo Serial Number: $(cat $SN_TMP) >> $LOG_LOC/$SN_LOG.log	
-		echo Test Start: $(date '+%H%M%S') >> $LOG_LOC/$SN_LOG.log	
-	else 
-		echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
-                sudo sh $SCR_LOC/t.sh
-		exit 1
-	fi		
-}
 
 usb_dev_check (){
 	echo " " | tee -a $LOG_LOC/$SN_LOG.log
@@ -1164,7 +1100,94 @@ os_image_mount(){
 cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
 }
 
+screening_start(){
+	ls $BOOT_COUNT
+	if [ $? = 0 ]; then
+		echo " "
+	else
+		cat "/sys/class/net/eno1/address" > $SN_TMP
+		clear
+		dialog --title "[SCREENING CHECK]" --yesno \
+			"Check Screening Start(Yes) or Power Off(No)\n\
+		SN : $(cat $SN_TMP)\
+	       	" 10 50
+        	response=$?
+        		case $response in 
+        		0)
+				echo "- The Screening started ! "
+	        		#sleep 10	
+				;;
+        		1)
+				echo "****** The Screening Stoped! ******" 
+				echo "****** The System Power Off After 10 Seconds! ******" 
+				sleep 10
+				sync
+				poweroff
+				;;
+        		esac
+	fi
+}
+
+wakeup_check(){
+	ls $BOOT_COUNT
+	if [ $? = 0 ];then
+		sum=$(cat $BOOT_COUNT | wc -l)
+		boot_time=$(((sum-1)*1800))
+		if [ $sum -le 6 ];then
+			echo - Wakeup Test Run : $sum | tee -a $LOG_LOC/$SN_LOG.log
+			wakeup_time_check $boot_time
+			sleep 10
+			wakeup_count
+		else
+			echo - Wakeup Test Run done! | tee -a $LOG_LOC/$SN_LOG.log
+			sleep 10
+			sudo rm $BOOT_COUNT
+		fi
 
 
+	else
+		time_zone_set
+		time_ntp_set
+		sn_get_aim
+		wakeup_count
+	fi
+}
 
+wakeup_debug(){
+
+	sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
+	cat /proc/driver/rtc
+	echo "wakeclarm 0 check"
+	sleep 10
+	sh -c "echo `date '+%s' -d '+ 1 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
+	cat /sys/class/rtc/rtc0/wakealarm 
+	echo "wakeclarm cat check"
+	sleep 10
+	echo "wakeclarm 1 check"
+	cat /proc/driver/rtc
+	sleep 10
+}
+
+wakeup_count(){
+	sudo echo "1" >> $BOOT_COUNT
+	UPTIME_LOG=$(uptime)
+       	CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
+        echo "-$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C!" | tee -a $LOG_LOC/$SN_LOG.log
+	sleep 10
+	sudo rtcwake -m off -s 30 
+}
+
+
+wakeup_time_check(){
+	date '+%s' > $NOW_TIME
+	B_TIME=$(cat $BEGIN_TIME)
+	N_TIME=$(cat $NOW_TIME)
+	ELAP_S=$((N_TIME - B_TIME))
+		if [ $ELAP_S -le $1 ];then
+			echo - Wakeup Test Time Check : $ELAP_S Seconds! Boot Time Limit $1 Secs | tee -a $LOG_LOC/$SN_LOG.log
+		else
+			echo - Wakeup Test Time Check : $ELAP_S Seconds Failed! Boot Time Limit $1 Secs | tee -a $LOG_LOC/$SN_LOG.log
+			fail_red_dialog "Wakeup Test Time Check : $ELAP_S Secs Failed! Boot Limit $1 Secs"
+		fi
+}
 
