@@ -10,9 +10,11 @@
 #Get SN for Log
 sn_get_dialog
 
+bios_sn_check
 
 #Get MAC for log
 lan_mac_check enp1s0 80:7b:85
+lan_mac_check enp2s0 00:13:95
 
 #check BIOS time from internet
 hwclock_check 2021

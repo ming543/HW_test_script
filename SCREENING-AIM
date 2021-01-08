@@ -8,6 +8,9 @@
 . ./u7_func
 
 
+screening_start
+
+
 #check wakeup run or not
 wakeup_check
 

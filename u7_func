@@ -38,6 +38,7 @@ SYNC_LOG="/tmp/sync.tmp"
 TIME_STAMP="$TMP_LOC/stamp.tmp"
 
 
+SN_LOG=$(cat $SN_L)
 
 alsabat_loopback_test(){
         sudo rm $ALSA_LOG
@@ -934,7 +935,8 @@ sn_get_aim(){
 		SN_LOG=$(cat $SN_L)
 		echo Test script Rev: $REV >> $LOG_LOC/$SN_LOG.log
 		echo Test Model: $0 >> $LOG_LOC/$SN_LOG.log
-		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log	
+		echo Test Start: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
+		echo - Wakeup Test Run : 1 | tee -a $LOG_LOC/$SN_LOG.log
 	else 
 		echo "****** Check sn failed!  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		warning_yellow_dialog "Check sn failed!"
@@ -1100,7 +1102,8 @@ time_zone_set() {
 time_ntp_set(){
 	ping ntp.ubuntu.com -c 1
 	if [ $? = 0 ]; then
-		echo "- Check ping ntp passed !" | tee -a $LOG_LOC/$SN_LOG.log
+		echo "- Check ping ntp passed !" 
+		#echo "- Check ping ntp passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
 		echo "****** Check ping ntp failed !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
 		fail_red_dialog "Check ping ntp failed !"
@@ -1159,14 +1162,39 @@ os_image_mount(){
 cat $PASS_LOC | sudo sshfs os_server@192.168.1.2:OS_IMAGE/ /home/partimag/ -o password_stdin,allow_other
 }
 
+screening_start(){
+	ls $BOOT_COUNT
+	if [ $? = 0 ]; then
+		echo " "
+	else
+		cat "/sys/class/net/eno1/address" > $SN_TMP
+		clear
+		dialog --title "[SCREENING CHECK]" --yesno \
+		"Check Screening Start (Yes/No)\n\
+		SN : $(cat $SN_TMP)\
+	       	" 10 50
+        	response=$?
+        		case $response in 
+        		0)
+				echo "- The Screening started After 10 Seconds! "
+	        		sleep 10	
+				;;
+        		1)
+				echo "****** The Screening Stoped! ******" 
+				echo "****** The System Power Off After 10 Seconds! ******" 
+				sleep 10
+				sync
+				poweroff
+				;;
+        		esac
+	fi
+}
 wakeup_check(){
 	ls $BOOT_COUNT
 	if [ $? = 0 ];then
 		echo "boot_count"
-		cat $BOOT_COUNT
 		sum=$(cat $BOOT_COUNT | wc -l)
 		if [ $sum -le 6 ];then
-			SN_LOG=$(cat $SN_L)
 			echo - Wakeup Test Run : $sum | tee -a $LOG_LOC/$SN_LOG.log
 			sleep 10
 			wakeup_count
@@ -1174,9 +1202,9 @@ wakeup_check(){
 			echo - Wakeup Test Run done! | tee -a $LOG_LOC/$SN_LOG.log
 			sleep 10
 			sudo rm $BOOT_COUNT
-			sudo rm $SN_L
-			sudo rm $SN_TMP
-			sudo rm $TIME_STAMP
+#			sudo rm $SN_L
+#			sudo rm $SN_TMP
+#			sudo rm $TIME_STAMP
 		fi
 
 
@@ -1185,23 +1213,32 @@ wakeup_check(){
 		time_zone_set
 		time_ntp_set
 		sn_get_aim
-		clear
-		echo "BI_START_AIM"
 		wakeup_count
 	fi
 }
 
+wakeup_debug(){
+
+		sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
+		cat /proc/driver/rtc
+		echo "wakeclarm 0 check"
+		sleep 10
+		sh -c "echo `date '+%s' -d '+ 1 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
+		cat /sys/class/rtc/rtc0/wakealarm 
+		echo "wakeclarm cat check"
+		sleep 10
+		echo "wakeclarm 1 check"
+		cat /proc/driver/rtc
+		sleep 10
+}
 
 wakeup_count(){
 		sudo echo "1" >> $BOOT_COUNT
-		SN_LOG=$(cat $SN_L)
 		UPTIME_LOG=$(uptime)
         	CPU_TEMP_LOG=$(sensors -A |grep "Core 0" |awk '{print $3}' |cut -c 1-3)
                 echo "$UPTIME_LOG , Check CPU temp $CPU_TEMP_LOG C!" | tee -a $LOG_LOC/$SN_LOG.log
-		
-		sudo sh -c "echo 0 > /sys/class/rtc/rtc0/wakealarm" 
-		sudo sh -c "echo `date '+%s' -d '+ 3 minutes'` > /sys/class/rtc/rtc0/wakealarm" 
-		shutdown -h now
+		sleep 10
+		sudo rtcwake -m off -s 60 
 }
 
 

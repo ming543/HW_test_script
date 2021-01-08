@@ -13,7 +13,7 @@
 #countdown $((2*60*60))
 #stopwatch 10
 #onedrive_to_local
-
+wakeup_debug
 #Get SN for Log
 #sn_get_dialog
 #bios_rev_check
@@ -36,7 +36,7 @@
 #mac_nvm_write /NIC=1
 ##mac_addr_write /NIC=1
 #bios_oem_update
-bios_oem_check
+#bios_oem_check
 #time_ntp_set
 #mic_test 40
 #alsabat_loopback_test
