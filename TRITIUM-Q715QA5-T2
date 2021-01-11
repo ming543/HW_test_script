@@ -16,7 +16,7 @@ time_zone_set Asia/Taipei
 time_ntp_set
 
 #Get SN for Log
-sn_get_dialog_loop
+sn_get_dialog
 
 #Get BIOS OEM revision
 bios_oem_check QA5TRT01
