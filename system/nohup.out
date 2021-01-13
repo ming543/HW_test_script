@@ -1,0 +1,23 @@
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+ssh: Could not resolve hostname : Name or service not known
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+5 updates can be installed immediately.
+0 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+cat: '/home/production/Documents/80:7b:85:50:10:d8.snlogtmp': 沒有此一檔案或目錄
+ls: 無法存取 '/home/production/Documents/80:7b:85:50:10:d8.bootcount': 沒有此一檔案或目錄
+'unknown': I need something more specific.
+Error opening terminal: unknown.
+****** The Screening Stoped! ******
+****** The System Power Off After 10 Seconds! ******
+Connection to 192.168.104.101 closed by remote host.
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+ssh: connect to host 192.168.104.101 port 22: Connection refused

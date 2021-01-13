@@ -15,7 +15,7 @@ SERIAL_LOC="$LOC/hw_test/tools"
 SCR_LOC="$LOC/hw_test"
 TMP_LOC="$LOC/Documents"
 LIB_LOC="$LOC/hw_test/lib"
-LOG_LOC="$LOC/u7_log"
+LOG_LOC="$LOC/screening_log"
 USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 PASS_LOC="$LOC/pass"
 
@@ -24,7 +24,6 @@ AUDIO_LOG="$TMP_LOC/at.tmp"
 AT_LOG="$TMP_LOC/at.tmp"
 BI_LOG="$TMP_LOC/bi.log"
 BIOS_LOG="$TMP_LOC/bios.tmp"
-BOOT_COUNT="$TMP_LOC/boot.tmp"
 DIO_LOG="$TMP_LOC/dio.tmp"
 IDIO_LOG="$TMP_LOC/idio.tmp"
 MAC_LOG="$TMP_LOC/mac.tmp"
@@ -32,13 +31,14 @@ MEM_LOG="$TMP_LOC/mem.tmp"
 MIC_LOG="$TMP_LOC/mic.tmp"
 MODEL_LOG="$TMP_LOC/model.tmp"
 NVM_LOG="$TMP_LOC/nvm.tmp"
-SN_TMP="$TMP_LOC/sn.tmp"
-SN_L="$TMP_LOC/snlog.tmp"
 SYNC_LOG="$TMP_LOC/sync.tmp"
-BEGIN_TIME="$TMP_LOC/begin_time.tmp"
-NOW_TIME="$TMP_LOC/now_time.tmp"
 
-
+MAC_ADDR=$(cat "/sys/class/net/eth0/address")
+BOOT_COUNT="$TMP_LOC/$MAC_ADDR.bootcount"
+BEGIN_TIME="$TMP_LOC/$MAC_ADDR.begintime"
+NOW_TIME="$TMP_LOC/$MAC_ADDR.nowtime"
+SN_TMP="$TMP_LOC/$MAC_ADDR.sntmp"
+SN_L="$TMP_LOC/$MAC_ADDR.snlogtmp"
 SN_LOG=$(cat $SN_L)
 
 alsabat_loopback_test(){
@@ -490,6 +490,7 @@ fail_red_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   clear
 		   sh $SCR_LOC/screening.sh
@@ -501,6 +502,7 @@ fail_red_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   sync
 		   poweroff
@@ -511,6 +513,7 @@ fail_red_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
 	 	   echo "****** TEST_FAILED! ****** " >> $LOG_LOC/$SN_LOG.log
 		   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-FAIL.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   #echo "cd $SCR_LOC; sudo sh run_main.sh" > $SCR_LOC/t.sh
                    sudo sh $SCR_LOC/screening.sh
@@ -787,6 +790,7 @@ pass_green_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   #onedrive_log_sync
 		   sync
@@ -797,6 +801,7 @@ pass_green_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   #onedrive_log_sync
 		   echo "Back to shell" 
@@ -806,6 +811,7 @@ pass_green_dialog(){
 		   echo Test End: $(date '+%Y/%m/%d-%H:%M:%S') >> $LOG_LOC/$SN_LOG.log
         	   echo "****** TEST_PASSED! ****** " >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-PASS.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		exit 255;;
         esac
@@ -839,6 +845,7 @@ warning_yellow_dialog(){
                 1) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		   onedrive_log_sync
 		   echo "Back to shell" 
@@ -846,6 +853,7 @@ warning_yellow_dialog(){
                 255) 
         	   echo "TEST_WARNING!" >> $LOG_LOC/$SN_LOG.log
         	   mv $LOG_LOC/$SN_LOG.log $LOG_LOC/$SN_LOG-WARN.log
+		   sudo rm $TMP_LOC/$MAC_ADDR.*
 		   #usb_log_sync
 		exit 255;;
         esac
@@ -930,8 +938,9 @@ sn_get_aim(){
 	echo "0" >> $BOOT_COUNT
 	REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
  	MODEL=$0
+	#cat "/sys/class/net/eno1/address" > $SN_TMP
+	cat "/sys/class/net/eth0/address" > $SN_TMP
 
-	cat "/sys/class/net/eno1/address" > $SN_TMP
 	#sudo dmidecode | grep UUID | awk '{print $2}' > $SN_TMP
 	if [ $? = 0 ]; then
 		echo $(cat $SN_TMP)-$MODEL-$(date '+%Y%m%d%H%M%S') > $SN_L
@@ -1105,7 +1114,8 @@ screening_start(){
 	if [ $? = 0 ]; then
 		echo " "
 	else
-		cat "/sys/class/net/eno1/address" > $SN_TMP
+		#cat "/sys/class/net/eno1/address" > $SN_TMP
+		cat "/sys/class/net/eth0/address" > $SN_TMP
 		clear
 		dialog --title "[SCREENING CHECK]" --yesno \
 			"Check Screening Start(Yes) or Power Off(No)\n\

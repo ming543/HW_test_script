@@ -27,7 +27,6 @@ c "Copy Log to Onedrive" \
 u "Update Test Script" \
 p "Power off Tester" \
 2>$INPUT
-#2>"${INPUT}"
 
 menuitem=$(cat $INPUT)
 #response=$?

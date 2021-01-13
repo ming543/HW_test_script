@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh U7-100-T1
+cd /home/production/hw_test; sudo sh run_main.sh
