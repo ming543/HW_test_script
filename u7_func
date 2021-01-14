@@ -20,6 +20,7 @@ USB30_LOC="$LOC/hw_test/tmp/usb30.tmp"
 PASS_LOC="$LOC/pass"
 
 ADDR_LOG="/tmp/addr.tmp"
+ALSA_LOG="/tmp/addr.tmp"
 AUDIO_LOG="/tmp/at.tmp"
 AT_LOG="/tmp/at.tmp"
 BI_LOG="/tmp/bi.log"
@@ -42,16 +43,16 @@ NOW_TIME="$TMP_LOC/now_time.tmp"
 SN_LOG=$(cat $SN_L)
 
 alsabat_loopback_test(){
-        sudo rm $ALSA_LOG
-        sleep 1
-        alsabat -Dplughw:0,0 | tee -a $ALSA_LOG
-        #sleep 5
+        #sudo rm $ALSA_LOG
+        #sleep 1
+        alsabat -Dplughw:0,0 > $ALSA_LOG 2>&1 &
+        sleep 5
         ALSA_CHECK=$(cat $ALSA_LOG | grep "Return value" | awk '{print $4}' )
         if [ $ALSA_CHECK = 0 ];then
-                echo "- Check audio loopback value is $ALSA_CHECK passed!" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check audio loopback value is $ALSA_CHECK passed!, spec 0!" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check audio loopbacl value is $ALSA_CHECK failed!" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check audio loopback value is $ALSA_CHECK failed !"
+                echo "- Check audio loopbacl value is $ALSA_CHECK failed!, spec 0" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check audio loopback value is $ALSA_CHECK failed!, spec 0!"
         fi
 }
 
@@ -413,6 +414,17 @@ bios_oem_check(){
 	fi
 }
 
+cpu_model_check(){
+	CPU_MODEL=$(lscpu | grep "Model name" | awk '{print $5}')
+	if [ $CPU_MODEL = $1 ] ; then
+		echo "- Check CPU Model $CPU_MODEL passed!, spec $1 !" | tee -a $LOG_LOC/$SN_LOG.log
+	else
+		echo "****** Check CPU Model $CPU_MODEL failed!, spec $1 !  ******" | tee -a $LOG_LOC/$SN_LOG.log 
+		fail_red_dialog "Check CPU Model $CPU_MODEL failed!, spec $1 !"
+	fi
+
+}
+
 cpu_temp_check(){
 	TEMP_LOG=$TMP_LOC/temp.tmp
 	rm -r $TEMP_LOG
@@ -451,6 +463,17 @@ display_check(){
 		fail_red_dialog "Check Display is not work - $1 !"
 		;;
         esac
+}
+
+fan_speed_check(){
+	sudo modprobe $1
+	FAN_SPEED=$(sensors -A |grep $2 |awk '{print $2}')
+	if [ $FAN_SPEED -ge $3 ] && [ $FAN_SPEED -le $4 ];then
+		echo "- Check $2 speed $FAN_SPEED RPM passed!, spec $3 to $4 RPM" | tee -a $LOG_LOC/$SN_LOG.log	
+	else
+		echo "****** Check $2 speed $FAN_SPEED RPM failed!, spec $3 to $4 RPM ******" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $2 speed $FAN_SPEED RPM failed!, spec $3 - $4 RPM"
+	fi
 }
 
 q715_loopback_test(){
@@ -745,10 +768,10 @@ memory_check(){
         #TCHK=$(cat $MEM_LOG | grep "Mem" | cut -c 16-19)
         TCHK=$(cat $MEM_LOG | grep "Mem" | awk '{print $2}')
         if [ $TCHK -eq $1 ] || [ $TCHK -eq $2 ] ;then
-                echo "- Check Memory is $TCHK  passed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                echo "- Check Memory is $TCHK MB passed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
         else
-                echo "- Check Memory is $TCHK  failed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
-                fail_red_dialog "Check Memory $sum failed!, spec $1 $2"
+                echo "- Check Memory is $TCHK MB failed!, spec $1 $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+                fail_red_dialog "Check Memory $TCHK MB failed!, spec $1 $2"
         fi
 }
 
@@ -1113,7 +1136,7 @@ time_ntp_set(){
 	timedatectl set-local-rtc 1 #rtc not sync by 0 sync by 1 
 	timedatectl
 	sleep 1
-#	sudo hwclock -w
+	sudo hwclock -w
 	date '+%s' > $BEGIN_TIME
 
 }

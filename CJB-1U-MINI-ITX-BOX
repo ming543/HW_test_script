@@ -3,6 +3,8 @@
 
 #For Debug
 #set -xv
+LAN1=enp1s0
+LAN2=enp0s31f6
 
 #---Start Function---
 . ./u7_func
@@ -19,21 +21,20 @@ sn_get_dialog
 #Get BIOS revision
 bios_rev_dmidecode_get
 
-#Display check
-display_check DP1
-display_check DP2
+#Check CPU model
+cpu_model_check i7-6700TE
 
 #memory check 
-memory_check 7868 7908
+memory_check 7865 7866
 
 #Get MAC for log
-lan_mac_check enp1s0 80:7b:85
-lan_mac_check enp4s0 00:13:95
-#lan_test
-lan_carrier_check enp1s0
-lan_carrier_check enp4s0
-lan_ip_check enp1s0
-lan_ip_check enp4s0
+lan_mac_check $LAN1 00:07:32
+lan_carrier_check $LAN1
+lan_ip_check $LAN1
+
+lan_mac_check $LAN2 00:07:32
+lan_carrier_check $LAN2
+lan_ip_check $LAN2
 
 #Update time from NTP server
 #time_ntp_set
@@ -42,14 +43,13 @@ lan_ip_check enp4s0
 hwclock_check_live
 
 #check USB device
-usb_dev_count "Bus 002" 7
-usb_dev_count "Bus 003" 2
+usb_dev_count "Bus 001" 4
+usb_dev_count "Bus 002" 2
 
 #ssd speed check 
-ssd_speed_check /dev/sdc1 200 
+#ssd_speed_check /dev/sdc1 200 
 #usb30 and mSATA speed check 
-ssd_speed_check /dev/sda 300 
-
+#ssd_speed_check /dev/sda 300 
 
 #Audio MIC test
 alsabat_loopback_test
@@ -57,9 +57,16 @@ alsabat_loopback_test
 #RS232 loopback test
 #serial_loop_test /dev/ttyS0
 
-
 #input spec of cpu temp low high limit to script ex.20 70
 cpu_temp_check +20 +50
+
+#fan speed check ex.driver_type/ fan1/ low/ high
+fan_speed_check nct6775 fan1 5000 5500
+fan_speed_check nct6775 fan2 2500 3000
+
+#Display check
+display_check DP1
+display_check DP2
 
 #Show ALL TEST PASS to log
 pass_green_dialog
