@@ -112,7 +112,7 @@ case $(cat $INPUT) in
 		git pull
 		sleep 5
 		#cp /home/production/hw_test/1 /home/production/
-		sudo sh /home/production/hw_test/t.sh
+		sudo sh /home/production/hw_test/run_main.sh
 		exit 0		
 		;;	
 	p)
