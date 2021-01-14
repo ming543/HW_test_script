@@ -1099,10 +1099,10 @@ ssd_speed_check (){
 	sudo hdparm -t $1 > $USB30_LOC
 	SSD_SPEED=$(cat $USB30_LOC | grep sec | awk '{print $5}')
 	if [ $SSD_SPEED -ge $2 ] ; then
-	        echo "- Check $1 speed $SSD_SPEED passed!, spec $2 !" | tee -a $LOG_LOC/$SN_LOG.log
+	        echo "- Check $1 heparm disk reads $SSD_SPEED MB passed!, spec $2 MB up!" | tee -a $LOG_LOC/$SN_LOG.log
 	else
-                echo "****** Check $1 speed $SSD_SPEED failed!, spec $2 ! *****" | tee -a $LOG_LOC/$SN_LOG.log
-		fail_red_dialog "Check $1 speed $SSD_SPEED failed!, spec $2 !" 
+                echo "****** Check $1 hdparm disk reads $SSD_SPEED MB failed!, spec $2 MB up! *****" | tee -a $LOG_LOC/$SN_LOG.log
+		fail_red_dialog "Check $1 hdparm disk reads $SSD_SPEED MB failed!, spec $2 MB up!" 
 	fi
 }
 

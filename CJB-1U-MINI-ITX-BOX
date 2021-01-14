@@ -47,7 +47,7 @@ usb_dev_count "Bus 001" 4
 usb_dev_count "Bus 002" 2
 
 #ssd speed check 
-#ssd_speed_check /dev/sdc1 200 
+ssd_speed_check /dev/sdb 1500 
 #usb30 and mSATA speed check 
 #ssd_speed_check /dev/sda 300 
 
