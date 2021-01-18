@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./u7_func
+
+#Get SN for Log
+sn_get_dialog
+
+#Get MAC for log
+lan_mac_check enp1s0 00:07:32
+
+#check BIOS time from internet
+hwclock_check 2021
+
+#BI for $3 x 10m
+bi_stress +20 +60 130
+
+#RS232 loopback test
+#serial_loop_test /dev/ttyS0
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+

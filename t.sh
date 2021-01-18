@@ -1,1 +1,1 @@
-cd /home/production/hw_test; sudo sh CJB-1U-MINI-ITX-BOX
+cd /home/production/hw_test; sudo sh BI-120M-CJB-BOX

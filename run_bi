@@ -9,6 +9,7 @@ TEST_LOC=/home/production/hw_test
 N1=BI-120M-U7-100-NOCOM1
 N2=BI-120M-U7-150-NOCOM1
 N3=BI-120M-AIMH-COM1
+N4=BI-120M-CJB-BOX
 
 # if temp files found, delete em
 rm $OUTPUT
@@ -24,6 +25,7 @@ dialog --clear --title "[ Burn-In - MENU ]" \
 1 "$N1" \
 2 "$N2" \
 3 "$N3" \
+4 "$N4" \
 2>$INPUT
 #2>"${INPUT}"
 
