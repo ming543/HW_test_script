@@ -61,7 +61,7 @@ alsabat_loopback_test
 cpu_temp_check +20 +50
 
 #fan speed check ex.driver_type/ fan1/ low/ high
-fan_speed_check nct6775 fan1 5000 5500
+fan_speed_check nct6775 fan1 4500 5500
 fan_speed_check nct6775 fan2 2500 3000
 
 #Display check
