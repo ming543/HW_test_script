@@ -1182,7 +1182,7 @@ os_image_sync(){
 	#sudo mkdir /home/partimag
 	#sudo chmod 777 /home/partimag
 	#sudo rclone sync onedrive:General/OS_IMAGE/$1 /home/partimag/$1 -P 
-	sudo rclone sync os:OS_IMAGE/$1 /home/partimag/$1 -P 
+	sudo rclone copy os:OS_IMAGE/$1 /home/partimag/$1 -P 
 	if [ $? = 0 ]; then
 		echo "- Check OS sync passed !" | tee -a $LOG_LOC/$SN_LOG.log
 	else
