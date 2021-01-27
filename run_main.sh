@@ -1,7 +1,7 @@
 #!/bin/bash
 # utilitymenu.sh - A sample shell script to display menus on screen
 # Store menu options selected by the user
-set -xv
+#set -xv
 INPUT=/tmp/menu
 OUTPUT=/tmp/output
 REV=$(cat /home/production/hw_test/revision | head -1 | awk '{print $1}')
@@ -91,6 +91,7 @@ case $(cat $INPUT) in
 		;;
 	c)	
 		clear
+		rm $INPUT
 		echo "c"
 		sudo timedatectl set-ntp yes
 		sudo timedatectl 
@@ -106,10 +107,11 @@ case $(cat $INPUT) in
 		;;
 	u)	
 		clear
+		rm $INPUT
 		echo "u"
 		cd /home/production/hw_test/
 		sudo sh git_reset.sh
-		sleep 5
+		sleep 3
 		sudo cp $TEST_LOC/tools/rclone/rclone.conf /root/.config/rclone/rclone.conf
 		sh $TEST_LOC/tools/rclone/rclone_script_to_local.sh
 		sudo sh $TEST_LOC/run_main.sh
@@ -117,6 +119,7 @@ case $(cat $INPUT) in
 		;;	
 	p)
 		echo "p"
+		rm $INPUT
 		sudo poweroff
 		exit 0
 		;;
