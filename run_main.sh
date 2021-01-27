@@ -98,10 +98,10 @@ case $(cat $INPUT) in
 		sleep 2
 		sudo rclone copy /home/production/u7_log onedrive:General/u7_log -P
 		sudo rclone copy /home/production/EagleEyes_LOG onedrive:General/EagleEyes_LOG -P
-		sudo rsync -avh /home/production/EagleEyes_LOG /media/production/USB30/EagleEyes_LOG
-		sudo rsync -avh /home/production/u7_log /media/production/USB30/u7_log
+		#sudo rsync -avh /home/production/EagleEyes_LOG /media/production/USB30/EagleEyes_LOG
+		#sudo rsync -avh /home/production/u7_log /media/production/USB30/u7_log
 		sleep 2
-		sudo sh /home/production/hw_test/t.sh
+		sudo sh $TEST_LOC/run_main.sh
 		exit 0
 		;;
 	u)	
@@ -109,10 +109,10 @@ case $(cat $INPUT) in
 		echo "u"
 		cd /home/production/hw_test/
 		sudo sh git_reset.sh
-		git pull
 		sleep 5
-		#cp /home/production/hw_test/1 /home/production/
-		sudo sh /home/production/hw_test/run_main.sh
+		sudo cp $TEST_LOC/tools/rclone/rclone.conf /root/.config/rclone/rclone.conf
+		sh $TEST_LOC/tools/rclone/rclone_script_to_local.sh
+		sudo sh $TEST_LOC/run_main.sh
 		exit 0		
 		;;	
 	p)
