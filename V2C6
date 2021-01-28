@@ -20,19 +20,19 @@ sn_get_nodate_dialog
 
 
 #Get AIC info for Log
-aic_info_get v3c_info.exp
+aic_info_get v2c_info.exp
 aic_fw_check 
 #aic_logo_check None
 #aic_hwmon_check RTC 3
-aic_hwmon_check RTC 2 3 
+aic_hwmon_check RTC 2 3
 aic_hwmon_check 3.3S 3
 aic_hwmon_check 3.3A 3
 aic_hwmon_check 5A 5 4
 aic_hwmon_check 5S 5 4
-aic_12mon_check 12S 12 11
-aic_12mon_check 12SB 12 11
+#aic_12mon_check 12S 12 11
+#aic_12mon_check 12SB 12 11
 
-#aic_poe_check 1
+#aic_com_check 1
 aic_com_check 1 RS232
 aic_com_check 2 RS232
 #aic_com_check 3 Loopback
@@ -48,23 +48,14 @@ aic_usb_check 1
 aic_usb_check 2
 aic_usb_check 3
 aic_usb_check 4
-aic_usb_check 5
-aic_usb_check 6
 
-#Fan info get
-aic_fan_cfg_check 1
-aic_fan_cfg_check 2
-aic_fan_rpm_check 1 250
-aic_fan_rpm_check 2 250
 #aic_gpio_check FF00
 
 #Get MAC for log
 lan_mac_check eno1 80:7b:85
 lan_mac_check enp1s0 80:7b:85
-lan_mac_check enp2s0 80:7b:85
-lan_mac_check enp7s0 80:7b:85
-lan_mac_check enp8s0 80:7b:85
-lan_mac_check enp9s0 80:7b:85
+
+
 
 #ping test
 #lan_ping_check 192.168.1.1
@@ -82,7 +73,7 @@ lan_mac_check enp9s0 80:7b:85
 #Audio loopbakc test
 #mic_loopback_test 80
 
-#Memory check $1 $2
+#Memory check
 memory_check 7868 7908
 #input spec of cpu temp low high limit to script ex.20 70
 #cpu_temp_check +30 +40

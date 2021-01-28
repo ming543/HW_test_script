@@ -43,6 +43,26 @@ case $PN in
 		cd $TEST_LOC; sudo sh IOMM-4GRP
 		exit 0
 		;;
+	000556)
+		clear
+		cd $TEST_LOC; sudo sh V2C6
+		exit 0
+		;;
+	000557)
+		clear
+		cd $TEST_LOC; sudo sh V2C6
+		exit 0
+		;;
+	000558)
+		clear
+		cd $TEST_LOC; sudo sh V2C6
+		exit 0
+		;;
+	000661)
+		clear
+		cd $TEST_LOC; sudo sh V2C6
+		exit 0
+		;;
 	*)	
 		clear
 		echo "\e[1;5;33;47m The PN not find for test! \e[0m"

@@ -20,7 +20,7 @@ sn_get_nodate_dialog
 
 
 #Get AIC info for Log
-aic_info_get
+aic_info_get v3c_info.exp
 aic_fw_check 
 #aic_logo_check None
 #aic_hwmon_check RTC 3
