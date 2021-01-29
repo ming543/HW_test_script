@@ -11,5 +11,5 @@ result_check(){
 	fi
 }
 
-sudo rclone copy /home/production/$N2 EFCO_test_script:/$N2 -P
+sudo rclone -v copy /home/production/$N2 EFCO_test_script:/$N2 -P
 result_check
