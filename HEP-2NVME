@@ -1,0 +1,45 @@
+#!/bin/bash
+# Script for system function test by EFCO Sam
+
+#For Debug
+#set -xv
+
+#---Start Function---
+. ./ss_func
+
+#Update time from NTP server
+time_ntp_set
+
+#Get SN for Log
+sn_get_dialog
+
+
+#Get AIC info for Log
+aic_info_get v3c_info.exp
+aic_fw_check 
+#aic_logo_check None
+#aic_hwmon_check RTC 3
+
+#USB info get
+#aic_usb_check 1
+
+#PCI device check
+#pci_dev_check 02:00
+
+#ssd speed check 
+ssd_check sdb 1500
+
+#check USB device
+#usb_dev_count "Bus 001" 5
+#usb_dev_count "Bus 002" 2
+
+
+#input spec of cpu temp low high limit to script ex.20 70
+#cpu_temp_check +30 +40
+
+#check BIOS time from internet
+#hwclock_check_live
+
+#Show ALL TEST PASS to log
+pass_green_dialog
+
