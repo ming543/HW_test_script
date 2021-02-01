@@ -123,8 +123,9 @@ case $(cat $INPUT) in
 		cd /home/production/hw_test/
 		sudo sh git_reset.sh
 		sleep 3
-		sudo cp $TEST_LOC/tools/rclone/rclone.conf /root/.config/rclone/rclone.conf
-		sudo rclone copy -L --ignore-size EFCO_test_script:/hw_test /home/production/hw_test -P
+		sudo rclone -v copy onedrive:/General/rclone/rclone.conf /tmp/rclone.conf -P
+		sudo cp /tmp/rclone.conf /root/.config/rclone/rclone.conf
+		sudo rclone -v copy -L --ignore-size EFCO_test_script:/hw_test /home/production/hw_test -P
 		if [ $? = 0 ];then echo "****** Run passed! ******"; else echo "****** Run failed! ******"; fi 
 		sleep 3
 		sudo sh $TEST_LOC/run_main.sh
@@ -133,7 +134,8 @@ case $(cat $INPUT) in
 	d)	
 		clear
 		rm $INPUT
-		sudo cp $TEST_LOC/tools/rclone/rclone.conf /root/.config/rclone/rclone.conf
+		sudo rclone -v copy onedrive:/General/rclone/rclone.conf /tmp/rclone.conf -P
+		sudo cp /tmp/rclone.conf /root/.config/rclone/rclone.conf
 		sudo rclone copy EFCO_test_script:/V23C_DOS /home/production/V23C_DOS -P
 		if [ $? = 0 ];then echo "****** Run passed! ******"; else echo "****** Run failed! ******"; fi 
 		sleep 3
