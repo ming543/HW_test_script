@@ -16,5 +16,7 @@ result_check(){
 	fi
 }
 
+sudo cp /home/production/$N1/tools/rclone.conf /root/.config/rclone/rclone.conf
+
 sudo rclone -v sync EFCO_test_script:/$N1 /home/production/$N1 -P
 result_check
